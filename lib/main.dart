@@ -29,7 +29,6 @@ import './screens/tests/full_length_tests_screen.dart';
 import './screens/tests/level_up_screen.dart';
 import './screens/tests/live_tests_screen.dart';
 import './screens/tests/test_start_screen.dart';
-import './screens/home/practice_screen.dart';
 //import './screens/home/home_screen.dart';
 
 Future<void> main() async {

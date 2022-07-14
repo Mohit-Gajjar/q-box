@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/utilities/dimensions.dart';
-import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../helpers/helpers.dart';
-import '../../provider/data_provider.dart';
 import '../../widgets/custom_button.dart';
 
 class TestStartScreen extends StatefulWidget {
@@ -32,7 +30,6 @@ class _TestStartScreenState extends State<TestStartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final List<Questions> questions = Provider.of<Data>(context).testQuestions;
 
     return Scaffold(
       backgroundColor: Colors.white,

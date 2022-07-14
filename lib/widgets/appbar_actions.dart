@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/profile.dart';
 import 'package:notes_app/utilities/dimensions.dart';
@@ -88,15 +86,15 @@ class _AppBarProfileIconState extends State<AppBarProfileIcon> {
     return null;
   }
 
-  Future<String> getUserImagePath() async {
-    final user = await FirebaseAuth.instance.currentUser;
-    final userRef = await FirebaseStorage.instance.ref();
-    String userEmail = user!.email.toString();
-    String? fileName = await GetUserProfileName(userEmail, 'profileImageName');
-    String urlPath = 'users/${userEmail}/UserProfile/${fileName}';
-    final userProfileUrl = await userRef.child(urlPath).getDownloadURL();
-    return userProfileUrl;
-  }
+  // Future<String> getUserImagePath() async {
+  //   final user = await FirebaseAuth.instance.currentUser;
+  //   final userRef = await FirebaseStorage.instance.ref();
+  //   String userEmail = user!.email.toString();
+  //   String? fileName = await GetUserProfileName(userEmail, 'profileImageName');
+  //   String urlPath = 'users/${userEmail}/UserProfile/${fileName}';
+  //   final userProfileUrl = await userRef.child(urlPath).getDownloadURL();
+  //   return userProfileUrl;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -112,25 +110,26 @@ class _AppBarProfileIconState extends State<AppBarProfileIcon> {
           borderRadius: BorderRadius.circular(Dimensions.borderRadius5 * 20),
         ),
         child: FutureBuilder(
-            future: getUserImagePath(),
+            // future: getUserImagePath(),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
-                return CircleAvatar(
-                  radius: widget.profileRadius,
-                  backgroundImage: NetworkImage(
-                    snapshot.data!,
-                  ),
-                );
-              }
-              if (snapshot.hasError) {
-                print(snapshot.error);
-              }
-              return Icon(
-                Icons.person,
-                size: (24 / 40) * widget.profileRadius * 2,
-              );
-            }),
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.hasData) {
+            return CircleAvatar(
+              radius: widget.profileRadius,
+              // backgroundImage:
+              //  NetworkImage(
+              //   snapshot.data!,
+              // ),
+            );
+          }
+          if (snapshot.hasError) {
+            print(snapshot.error);
+          }
+          return Icon(
+            Icons.person,
+            size: (24 / 40) * widget.profileRadius * 2,
+          );
+        }),
       ),
     );
   }
