@@ -1,0 +1,420 @@
+{
+  "users": {
+    "person1": {
+      "firstName": "first",
+      "lastName": "last",
+      "email": "emailId1",
+      "profilePicUrl": "......",
+      "phoneNumber": "+919876543210",
+      "role": "student",
+      "joinedDate": "",
+      "courses": ["course1", "course2"],
+      "batches": ["batches/batch1", "batches/batch2"],
+      "payments": [
+        {
+          "startDate": "DD/MM/YYYY",
+          "paymentType": "1month",
+          "amount": "1000",
+          "course": "cousrse1"
+        },
+        {
+          "startDate": "DD/MM/YYYY",
+          "paymentType": "6month",
+          "amount": "6000",
+          "course": "course2"
+        }
+      ],
+      "results": []
+    },
+    "person2": {
+      "firstName": "first1",
+      "lastName": "last1",
+      "phoneNumber": "+919876543210",
+      "email": "emailId2",
+      "profilePicUrl": "......",
+      "role": "student",
+      "joinedDate": "",
+      "courses": ["course1", "course2"],
+      "batches": ["batch1", "batch2"],
+      "payments": [
+        {
+          "startDate": "DD/MM/YYYY",
+          "paymentType": "1month",
+          "amount": "1000",
+          "course": "xxxxxxxx"
+        },
+        {
+          "startDate": "DD/MM/YYYY",
+          "paymentType": "1month",
+          "amount": "1000",
+          "course": "xxxxxxxx"
+        }
+      ],
+      "results": [
+        {
+          "courseName": "",
+          "result": ""
+        }
+      ]
+    }
+  },
+  "category": {
+    "engineeringId": {
+      "courses": {
+        "Jee": {
+          "courseName": "Jee",
+          "batches": ["batches/batch1", "batches/batch2"],
+          "practice": "practice/courseName1",
+          "levelUpSeries": "levelUpSeries/courseName1",
+          "videos": ["videos/video1", "video/video2"],
+          "payment": {
+            "1month": "1000",
+            "6month": "6000",
+            "12month": "12000",
+            "24months": "24000"
+          }
+        },
+        "Advance": {
+          "courseName": "Advance",
+          "batches": ["batches/batch1", "batches/batch2"],
+          "practice": "practice/courseName1",
+          "levelUpSeries": "levelUpSeries/courseName1",
+          "videos": ["videos/video1", "video/video2"],
+          "payment": {
+            "1month": "1000",
+            "6month": "6000",
+            "12month": "12000",
+            "24months": "24000"
+          }
+        }
+      },
+      "title": "",
+      "teachers": []
+    },
+    "medical": {
+      "courses": [
+        {
+          "course Name": "courseName1",
+          "subjects": "",
+          "batches": ["batches/batch1", "batches/batch2"],
+          "practice": ["practice/"],
+          "payment": {
+            "1month": "1000",
+            "6month": "6000",
+            "12month": "12000",
+            "24months": "24000"
+          }
+        }
+      ]
+    }
+  },
+  "batches": {
+    "Astra": {
+      "batchName": "Astra",
+      "teachers": ["teachers/ramesh", "tecahers/suresh"]
+    },
+    "King": {
+      "batchName": "King",
+      "teachers": ["teachers/ramesh"]
+    }
+  },
+  "teachers": {
+    "emailID1": {
+      "firstName": "first",
+      "lastName": "last",
+      "email": "emailId1",
+      "profilePicUrl": "......",
+      "country": {
+        "id": "+91",
+        "name": "India"
+      },
+      "phoneNumber": "+919876543210",
+      "role": "teacher",
+      "courses": ["course1", "course2"],
+      "batches": ["batches/batch1", "batches/batch2"],
+      "freeVideos": ["", ""],
+      "liveVideos": [""],
+      "subjects": [],
+      "review": {
+        "rating": 4.9,
+        "reviews": [
+          {
+            "userName": "",
+            "rating": 3.2,
+            "comment": ""
+          }
+        ]
+      }
+    },
+    "emailID2": {
+      "firstName": "first",
+      "lastName": "last",
+      "email": "emailId1",
+      "profilePicUrl": "......",
+      "country": {
+        "id": "+91",
+        "name": "India"
+      },
+      "phoneNumber": "+919876543210",
+      "role": "teacher",
+      "courses": ["course1", "course2"],
+      "batches": ["batches/batch1", "batches/batch2"],
+      "freeVideos": ["", ""],
+      "liveVideos": [""],
+      "subjects": [],
+      "review": {
+        "rating": 4.9,
+        "reviews": [
+          {
+            "userName": "",
+            "rating": 3.2,
+            "comment": ""
+          }
+        ]
+      }
+    }
+  },
+  "practice": {
+    "subjectName1": {
+      "uploadedTeacher": "",
+      "category": "",
+      "course": "",
+      "chapter": "",
+      "questions": {
+        "id0": {
+          "id": 1,
+          "question": "How to delete a directory in Linux?",
+          "description": "delete folder",
+          "answers": {
+            "answer_a": "ls",
+            "answer_b": "delete",
+            "answer_c": "remove",
+            "answer_d": "rmdir",
+            "answer_e": null,
+            "answer_f": null
+          },
+          "multiple_correct_answers": "false",
+          "correct_answers": {
+            "answer_a_correct": "false",
+            "answer_b_correct": "false",
+            "answer_c_correct": "false",
+            "answer_d_correct": "true",
+            "answer_e_correct": "false",
+            "answer_f_correct": "false"
+          },
+          "explanation": "rmdir deletes an empty directory",
+          "tip": null,
+          "tags": [],
+          "category": "linux",
+          "difficulty": "Easy"
+        },
+        "id1": {
+          "id": 2,
+          "question": "How to delete a directory in Linux?",
+          "description": "delete folder",
+          "answers": {
+            "answer_a": "ls",
+            "answer_b": "delete",
+            "answer_c": "remove",
+            "answer_d": "rmdir",
+            "answer_e": null,
+            "answer_f": null
+          },
+          "multiple_correct_answers": "false",
+          "correct_answers": {
+            "answer_a_correct": "false",
+            "answer_b_correct": "false",
+            "answer_c_correct": "false",
+            "answer_d_correct": "true",
+            "answer_e_correct": "false",
+            "answer_f_correct": "false"
+          },
+          "explanation": "rmdir deletes an empty directory",
+          "tip": null,
+          "tags": [],
+          "category": "linux",
+          "difficulty": "Easy"
+        }
+      }
+    },
+    "subjectName2": {
+      "uploadedTeacher": "",
+      "category": "",
+      "course": "",
+      "chapter": "",
+      "questions": {
+        "id1": {
+          "id": 1,
+          "question": "How to delete a directory in Linux?",
+          "description": "delete folder",
+          "options": {
+            "optionA": "ls",
+            "optionB": "delete",
+            "optionC": "remove",
+            "optionD": "rmdir"
+          },
+          "multiple_correct_answers": "false",
+          "correct_answers": {
+            "answer_a_correct": "false",
+            "answer_b_correct": "false",
+            "answer_c_correct": "false",
+            "answer_d_correct": "true"
+          },
+          "explanation": "rmdir deletes an empty directory",
+          "tip": "",
+          "tags": [],
+          "category": "linux",
+          "difficulty": "Easy"
+        },
+        "id2": {
+          "id": 2,
+          "question": "How to delete a directory in Linux?",
+          "description": "delete folder",
+          "answers": {
+            "answer_a": "ls",
+            "answer_b": "delete",
+            "answer_c": "remove",
+            "answer_d": "rmdir",
+            "answer_e": null,
+            "answer_f": null
+          },
+          "multiple_correct_answers": "false",
+          "correct_answers": {
+            "answer_a_correct": "false",
+            "answer_b_correct": "false",
+            "answer_c_correct": "false",
+            "answer_d_correct": "true",
+            "answer_e_correct": "false",
+            "answer_f_correct": "false"
+          },
+          "explanation": "rmdir deletes an empty directory",
+          "tip": null,
+          "tags": [],
+          "category": "linux",
+          "difficulty": "Easy"
+        }
+      }
+    }
+  },
+  "coupons": {
+    "coupon1": {
+      "title": "FIRSTDAY",
+      "discount": "12%",
+      "couponCode": "ZSCGFY",
+      "category": "jee",
+      "expiryDate": "DD/MM/YYYY:HH:mm",
+      "description": ""
+    },
+    "coupon2": {
+      "title": "FIRSTDAY",
+      "discount": "12%",
+      "couponCode": "ZSCGFY",
+      "category": "jee",
+      "expiryDate": "DD/MM/YYYY:HH:mm",
+      "description": ""
+    }
+  },
+  "freeVideos": {
+    "videoName1": {
+      "title": "PhotoShop",
+      "imageUrl": "https::/.....",
+      "likes": 0,
+      "videoUrl": "asdfghj",
+      "uploadDate": "xx-xx-xxxx-xx-xx",
+      "course": "xxxxx",
+      "category": "engineering",
+      "uploadedTeacherEmail": ""
+    },
+    "videoName": {
+      "title": "PhotoShop",
+      "imageUrl": "https::/.....",
+      "likes": 0,
+      "videpUrl": "asdfghj",
+      "uploadDate": "xx-xx-xxxx-xx-xx",
+      "course": "xxxxx",
+      "category": "engineering",
+      "subject": "web"
+    }
+  },
+  "levelUpSeries": {
+    "subjectName1": {
+      "uploadedTeacher": "",
+      "testName": "",
+      "examTime": "",
+      "duration": "",
+      "category": "",
+      "course": "",
+      "chapter": "",
+      "questions": {
+        "id": {
+          "id": 1,
+          "question": "How to delete a directory in Linux?",
+          "description": "delete folder",
+          "answers": {
+            "answer_a": "ls",
+            "answer_b": "delete",
+            "answer_c": "remove",
+            "answer_d": "rmdir",
+            "answer_e": null,
+            "answer_f": null
+          },
+          "multiple_correct_answers": "false",
+          "correct_answers": {
+            "answer_a_correct": "false",
+            "answer_b_correct": "false",
+            "answer_c_correct": "false",
+            "answer_d_correct": "true",
+            "answer_e_correct": "false",
+            "answer_f_correct": "false"
+          },
+          "explanation": "rmdir deletes an empty directory",
+          "tip": null,
+          "tags": [],
+          "category": "linux",
+          "difficulty": "Easy"
+        },
+        "id1": {
+          "id": 2,
+          "question": "How to delete a directory in Linux?",
+          "description": "delete folder",
+          "answers": {
+            "answer_a": "ls",
+            "answer_b": "delete",
+            "answer_c": "remove",
+            "answer_d": "rmdir",
+            "answer_e": null,
+            "answer_f": null
+          },
+          "multiple_correct_answers": "false",
+          "correct_answers": {
+            "answer_a_correct": "false",
+            "answer_b_correct": "false",
+            "answer_c_correct": "false",
+            "answer_d_correct": "true",
+            "answer_e_correct": "false",
+            "answer_f_correct": "false"
+          },
+          "explanation": "rmdir deletes an empty directory",
+          "tip": null,
+          "tags": [],
+          "category": "linux",
+          "difficulty": "Easy"
+        }
+      }
+    }
+  },
+  "liveVideos": {
+    "videoName1": {
+      "title": "PhotoShop",
+      "scheduleDate": "",
+      "course": "xxxxx",
+      "category": "engineering",
+      "link": ""
+    }
+  },
+  "subjects": {},
+
+  "results": {},
+  "fullLengthTest": {},
+  "blogging": {}
+}
