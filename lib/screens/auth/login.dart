@@ -9,6 +9,7 @@ import 'package:notes_app/screens/tabs_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/custom_button.dart';
 import 'package:pinput/pinput.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   static String routeName = 'login';
@@ -60,6 +61,11 @@ class _LoginState extends State<Login> {
             " is your OTP for mobile number verification. Please use it to proceed with your registration for free QRIOCTYBOX Classes. This is valid for 5 minutes!",
         context);
     setState(() {});
+  }
+
+  saveLoggedInSharedPrefs(bool isloggedin) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', isloggedin);
   }
 
   @override
@@ -127,76 +133,88 @@ class _LoginState extends State<Login> {
                 otpSent
                     ? otpSended
                         ? Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text("Enter OTP sent to your phone number",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        SizedBox(
-          height: 20,
-        ),
-        Text(_phoneNumberController.text,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        SizedBox(
-          height: 20,
-        ),
-        Center(
-          child: SizedBox(
-            height: 34,
-            child: Pinput(
-              androidSmsAutofillMethod:
-                  AndroidSmsAutofillMethod.smsRetrieverApi,
-              length: length,
-              controller: _otpController,
-              focusNode: _otpFocusNode,
-              defaultPinTheme: defaultPinTheme,
-              onCompleted: (pin) {
-                setState(() {
-                  if (pin == otp) {
-                     Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        TabsScreen()));
-                    Fluttertoast.showToast(
-                        msg: "Phone number verified Sucessfully");
-                  } else
-                    Fluttertoast.showToast(msg: "Envalid OTP");
-                });
-              },
-              focusedPinTheme: defaultPinTheme.copyWith(
-                height: 34,
-                width: 32,
-                decoration: defaultPinTheme.decoration!.copyWith(
-                  border: Border.all(color: borderColor),
-                ),
-              ),
-              errorPinTheme: defaultPinTheme.copyWith(
-                decoration: BoxDecoration(
-                  color: errorColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Text("Didn't receive OTP?",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        TextButton(
-            onPressed: () {
-              setState(() => otpSent = false);
-            },
-            child: Text(
-              "Resend OTP",
-              style:
-                  TextStyle(fontSize: 20, decoration: TextDecoration.underline),
-            )),
-      ],
-    )
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text("Enter OTP sent to your phone number",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(_phoneNumberController.text,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Center(
+                                child: SizedBox(
+                                  height: 34,
+                                  child: Pinput(
+                                    androidSmsAutofillMethod:
+                                        AndroidSmsAutofillMethod
+                                            .smsRetrieverApi,
+                                    length: length,
+                                    controller: _otpController,
+                                    focusNode: _otpFocusNode,
+                                    defaultPinTheme: defaultPinTheme,
+                                    onCompleted: (pin) {
+                                      setState(() {
+                                        if (pin == otp) {
+                                          saveLoggedInSharedPrefs(true);
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      TabsScreen()));
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Phone number verified Sucessfully");
+                                        } else
+                                          Fluttertoast.showToast(
+                                              msg: "Envalid OTP");
+                                      });
+                                    },
+                                    focusedPinTheme: defaultPinTheme.copyWith(
+                                      height: 34,
+                                      width: 32,
+                                      decoration:
+                                          defaultPinTheme.decoration!.copyWith(
+                                        border: Border.all(color: borderColor),
+                                      ),
+                                    ),
+                                    errorPinTheme: defaultPinTheme.copyWith(
+                                      decoration: BoxDecoration(
+                                        color: errorColor,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text("Didn't receive OTP?",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                              TextButton(
+                                  onPressed: () {
+                                    setState(() => otpSent = false);
+                                  },
+                                  child: Text(
+                                    "Resend OTP",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        decoration: TextDecoration.underline),
+                                  )),
+                            ],
+                          )
                         : Center(child: CircularProgressIndicator())
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,

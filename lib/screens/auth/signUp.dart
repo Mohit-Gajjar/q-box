@@ -9,6 +9,7 @@ import 'package:notes_app/screens/otp/otp_verifier.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pinput/pinput.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
   static String routeName = 'signUp';
@@ -68,6 +69,11 @@ class _SignUpState extends State<SignUp> {
     setState(() {});
     print(otpSended);
     print(otp);
+  }
+
+  saveLoggedInSharedPrefs(bool isloggedin) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', isloggedin);
   }
 
   @override
@@ -163,6 +169,7 @@ class _SignUpState extends State<SignUp> {
                                         setState(() {
                                           if (pin == otp) {
                                             signUp();
+                                            saveLoggedInSharedPrefs(true);
                                             Fluttertoast.showToast(
                                                 msg:
                                                     "Phone number verified Sucessfully");
