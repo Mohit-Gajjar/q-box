@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
           primaryColor: const Color(0xFFFFC600),
           primarySwatch: Colors.amber,
         ),
-        home: TabsScreen(),
+        home: AuthPath(),
         routes: {
           TabsScreen.routeName: (_) => const TabsScreen(),
           Home.routeName: (_) => Home(),

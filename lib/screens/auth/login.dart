@@ -1,15 +1,9 @@
-// ignore_for_file: deprecated_member_use
-
-import 'dart:math';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/screens/auth/signUp.dart';
-import 'package:notes_app/screens/otp/otp_verifier.dart';
 import 'package:notes_app/screens/tabs_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
-import 'package:notes_app/widgets/custom_button.dart';
-import 'package:pinput/pinput.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   static String routeName = 'login';
@@ -20,69 +14,27 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  bool otpSent = false;
-  bool otpSended = false;
-  bool isVerified = false;
-  TextEditingController _otpController = TextEditingController();
-  TextEditingController _phoneNumberController = TextEditingController();
-  FocusNode _otpFocusNode = FocusNode();
+  bool _signInFetching = false;
+
+  final _formKey = GlobalKey<FormState>();
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  final _auth = FirebaseAuth.instance;
+
+  String? errorMessage;
 
   @override
   void dispose() {
-    _otpController.dispose();
-    _otpFocusNode.dispose();
+    // TODO: implement dispose
     super.dispose();
-  }
-
-  String otp = '';
-  Future<void> generateOtpAndSendOtp() async {
-    print("Generate Otp Methord Called");
-    int one = Random().nextInt(9);
-    int two = Random().nextInt(9);
-    int three = Random().nextInt(9);
-    int four = Random().nextInt(9);
-    int five = Random().nextInt(9);
-    int six = Random().nextInt(9);
-
-    String _otp = one.toString() +
-        two.toString() +
-        three.toString() +
-        four.toString() +
-        five.toString() +
-        six.toString();
-
-    otp = _otp;
-    setState(() {});
-    otpSended = await OTP().sendOtp(
-        _otp,
-        _phoneNumberController.text,
-        "QBUSER",
-        _otp +
-            " is your OTP for mobile number verification. Please use it to proceed with your registration for free QRIOCTYBOX Classes. This is valid for 5 minutes!",
-        context);
-    setState(() {});
-  }
-
-  saveLoggedInSharedPrefs(bool isloggedin) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isLoggedIn', isloggedin);
+    _emailController.dispose();
+    _passwordController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final length = 6;
-    const borderColor = Color.fromRGBO(114, 178, 238, 1);
-    const errorColor = Color.fromRGBO(255, 234, 238, 1);
-    const fillColor = Color.fromRGBO(222, 231, 240, .57);
-    final defaultPinTheme = PinTheme(
-      height: 34,
-      width: 32,
-      decoration: BoxDecoration(
-        color: fillColor,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.transparent),
-      ),
-    );
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -96,239 +48,247 @@ class _LoginState extends State<Login> {
             ),
           ),
           child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Login Account',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Login Account',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: Dimensions.width10,
-                    ),
-                    const Icon(Icons.person),
-                    Expanded(
-                      child: SizedBox(),
-                    ),
-                    CircleAvatar(
-                      backgroundImage:
-                          AssetImage('assets/images/indian_flag.png'),
-                    ),
-                    Icon(Icons.arrow_drop_down),
-                  ],
-                ),
-                Text(
-                  ' Q-Box ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 60,
+                      SizedBox(
+                        width: Dimensions.width10,
+                      ),
+                      const Icon(Icons.person),
+                      Expanded(
+                        child: SizedBox(),
+                      ),
+                      CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/images/indian_flag.png'),
+                      ),
+                      Icon(Icons.arrow_drop_down),
+                    ],
                   ),
-                ),
-                otpSent
-                    ? otpSended
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text("Enter OTP sent to your phone number",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                              SizedBox(
-                                height: 20,
+                  Text(
+                    ' Q-Box ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 60,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(Dimensions.padding20 / 2),
+                        child: TextFormField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          onSaved: (value) {
+                            _emailController.text = value!;
+                          },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return ("Please Enter Your Email");
+                            }
+                            // reg expression for email validation
+                            if (!RegExp(
+                                    "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                                .hasMatch(value)) {
+                              return ("Please Enter a valid email");
+                            }
+                            return null;
+                          },
+                          textInputAction: TextInputAction.next,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.white,
                               ),
-                              Text(_phoneNumberController.text,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                              SizedBox(
-                                height: 20,
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
                               ),
-                              Center(
-                                child: SizedBox(
-                                  height: 34,
-                                  child: Pinput(
-                                    androidSmsAutofillMethod:
-                                        AndroidSmsAutofillMethod
-                                            .smsRetrieverApi,
-                                    length: length,
-                                    controller: _otpController,
-                                    focusNode: _otpFocusNode,
-                                    defaultPinTheme: defaultPinTheme,
-                                    onCompleted: (pin) {
-                                      setState(() {
-                                        if (pin == otp) {
-                                          saveLoggedInSharedPrefs(true);
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      TabsScreen()));
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Phone number verified Sucessfully");
-                                        } else
-                                          Fluttertoast.showToast(
-                                              msg: "Envalid OTP");
-                                      });
-                                    },
-                                    focusedPinTheme: defaultPinTheme.copyWith(
-                                      height: 34,
-                                      width: 32,
-                                      decoration:
-                                          defaultPinTheme.decoration!.copyWith(
-                                        border: Border.all(color: borderColor),
-                                      ),
-                                    ),
-                                    errorPinTheme: defaultPinTheme.copyWith(
-                                      decoration: BoxDecoration(
-                                        color: errorColor,
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text("Didn't receive OTP?",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                              TextButton(
-                                  onPressed: () {
-                                    setState(() => otpSent = false);
-                                  },
-                                  child: Text(
-                                    "Resend OTP",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        decoration: TextDecoration.underline),
-                                  )),
-                            ],
-                          )
-                        : Center(child: CircularProgressIndicator())
-                    : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text("Verify Phone Number",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          SizedBox(
-                            height: 20,
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            hintText: "Email",
+                            fillColor: Colors.grey[100],
+                            filled: true,
                           ),
-                          TextFormField(
-                            controller: _phoneNumberController,
-                            keyboardType: TextInputType.phone,
-                            onSaved: (value) {
-                              _phoneNumberController.text = value!;
-                            },
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return ("Please Enter Your Number");
-                              }
-                              return null;
-                            },
-                            textInputAction: TextInputAction.next,
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Colors.white,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.borderRadius12),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(Dimensions.padding20 / 2),
+                        child: TextFormField(
+                          obscureText: true,
+                          controller: _passwordController,
+                          onSaved: (value) {
+                            _passwordController.text = value!;
+                          },
+                          textInputAction: TextInputAction.done,
+                          validator: (value) {
+                            RegExp regex = RegExp(r'^.{6,}$');
+                            if (value!.isEmpty) {
+                              return ("Password is required for login");
+                            }
+                            if (!regex.hasMatch(value)) {
+                              return ("Enter Valid Password(Min. 6 Character)");
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.white,
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.borderRadius12),
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
                               ),
-                              hintText: "Phone Number",
-                              fillColor: Colors.grey[100],
-                              filled: true,
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius12),
+                            ),
+                            hintText: "password",
+                            fillColor: Colors.grey[100],
+                            filled: true,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _signInFetching = true;
+                          });
+                          signIn(
+                              _emailController.text, _passwordController.text);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(Dimensions.padding20 / 2),
+                          child: Container(
+                            width: double.infinity,
+                            height: 51,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(
+                                  Dimensions.borderRadius5),
+                            ),
+                            child: Center(
+                              child: _signInFetching
+                                  ? CircularProgressIndicator(
+                                      color: Colors.white,
+                                    )
+                                  : Text(
+                                      "Sign In",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                             ),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          CustomButton(
-                            backColor: Theme.of(context).primaryColor,
-                            onTapHandler: () {
-                              if (_phoneNumberController.text.isEmpty) {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                          title: Text("Error"),
-                                          content: Text(
-                                              "Please enter your phone number"),
-                                          actions: [
-                                            FlatButton(
-                                              child: Text("OK"),
-                                              onPressed: () {
-                                                Navigator.of(context).pop();
-                                              },
-                                            )
-                                          ],
-                                        ));
-                              } else {
-                                setState(() => otpSent = true);
-                                generateOtpAndSendOtp();
-                                if (isVerified) {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => TabsScreen()));
-                                }
-                              }
-                            },
-                            text: "Verify",
-                          ),
-                        ],
+                        ),
                       ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: Divider(
-                      color: Theme.of(context).primaryColor,
-                    )),
-                    Text("Sign up with Us"),
-                    Expanded(
-                        child: Divider(
-                      color: Theme.of(context).primaryColor,
-                    )),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: Text("Not Yet Register?"),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, SignUp.routeName);
-                      },
-                      child: Text('Create Account'),
-                    ),
-                  ],
-                ),
-                SizedBox(),
-              ],
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: Divider(
+                        color: Theme.of(context).primaryColor,
+                      )),
+                      Text("Sign up with Us"),
+                      Expanded(
+                          child: Divider(
+                        color: Theme.of(context).primaryColor,
+                      )),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Text("Not Yet Register?"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, SignUp.routeName);
+                        },
+                        child: Text('Create Account'),
+                      ),
+                    ],
+                  ),
+                  SizedBox(),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  Future<void> signIn(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .signInWithEmailAndPassword(
+                email: _emailController.text.trim(),
+                password: _passwordController.text.trim())
+            .then((uid) => {
+                  setState(() {
+                    _signInFetching = false;
+                  }),
+                  Fluttertoast.showToast(msg: 'Sign In Successful'),
+                  Navigator.popAndPushNamed(context, TabsScreen.routeName),
+                });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        setState(() {
+          _signInFetching = false;
+        });
+      }
+    }
+    setState(() {
+      _signInFetching = false;
+    });
   }
 }
