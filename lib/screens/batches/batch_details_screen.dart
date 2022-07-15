@@ -44,7 +44,7 @@ class BatcheDetailsScreen extends StatelessWidget {
                 children: [
                   for (var teach in routeArgs['teachers'])
                     TeacherProfileCard(
-                        text: teach.name,
+                        text: teach,
                         onTaphandler: () {
                           Navigator.of(context).pushNamed(
                               TeacherDetailsScreen.routeName,

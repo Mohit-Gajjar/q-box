@@ -66,12 +66,11 @@ class _MyAppState extends State<MyApp> {
           primaryColor: const Color(0xFFFFC600),
           primarySwatch: Colors.amber,
         ),
-        home: AuthPath(),
+        home: TabsScreen(),
         routes: {
           TabsScreen.routeName: (_) => const TabsScreen(),
           Home.routeName: (_) => Home(),
           QuestionsBank.routeName: (_) => const QuestionsBank(),
-          // Practice.routeName: (_) => const Practice(),
           BatchesScreen.routeName: (_) => const BatchesScreen(),
           BatcheDetailsScreen.routeName: (_) => BatcheDetailsScreen(),
           TeacherDetailsScreen.routeName: (_) => const TeacherDetailsScreen(),

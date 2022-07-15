@@ -471,8 +471,9 @@ class _PaymentOptionState extends State<PaymentOption> {
                 ),
               ),
               TextButton(
-                onPressed: () =>
-                    Navigator.pushNamed(context, TabsScreen.routeName),
+                onPressed: () {},
+                // onPressed: () =>
+                //     Navigator.pushNamed(context, TabsScreen.routeName),
                 child: Text(
                   'Dismiss',
                   style: TextStyle(fontSize: 15, letterSpacing: 2),
