@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/home/home.dart';
+import 'package:notes_app/screens/payments/payment_option.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
@@ -15,6 +16,7 @@ class TabsScreen extends StatefulWidget {
   State<TabsScreen> createState() => _TabsScreenState();
 }
 
+
 class _TabsScreenState extends State<TabsScreen> {
   int curIdx = 0;
 
@@ -23,9 +25,9 @@ class _TabsScreenState extends State<TabsScreen> {
     BatchesScreen(),
     TestsScreen(),
     QuestionsBank(),
-    // Practice(),
-    Home()
+    PaymentOption()
   ];
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

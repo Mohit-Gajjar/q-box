@@ -16,23 +16,22 @@ class _QuestionsBankState extends State<QuestionsBank> {
   String subjectName = '';
   String difficulty = '';
 
-  // Future GetQuestions() async {
-  //   if (subjectName != '' && difficulty != '') {
-  //     final docData =
-  //         FirebaseFirestore.instance.collection('tests').doc(subjectName);
-  //     final snapshot = await docData.get();
-  //     print('snapshot is ${snapshot}');
-  //     if (snapshot.exists) {
-  //       var data = snapshot.data() as Map<String, dynamic>;
-  //       print('data is ${data}');
+  Future getQuestions() async {
+    if (subjectName != '' && difficulty != '') {
+      final docData =
+          FirebaseFirestore.instance.collection('tests').doc(subjectName);
+      final snapshot = await docData.get();
+      print('snapshot is ${snapshot}');
+      if (snapshot.exists) {
+        var data = snapshot.data() as Map<String, dynamic>;
+        print('data is ${data}');
 
-  //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-  //         return Practice(subjectName: subjectName);
-  //       }));
-  //       return data['chapters']['chapterCount'].toString();
-  //     }
-  //   }
-  // }
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return Practice(subjectName: subjectName);
+        }));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

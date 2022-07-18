@@ -7,7 +7,10 @@ import 'package:notes_app/widgets/appbar_actions.dart';
 import './live_classes_screen.dart';
 import '../../widgets/custom_button_full.dart';
 
-class TeacherDetailsScreen extends StatelessWidget {
+class 
+
+
+TeacherDetailsScreen extends StatelessWidget {
   const TeacherDetailsScreen({Key? key}) : super(key: key);
   static const String routeName = '/teacher-details-screen';
 
@@ -15,7 +18,7 @@ class TeacherDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final routeArgs =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    TeacherModel teacher = routeArgs['teacher'];
+    TeacherModel.fromJson(routeArgs['teacher']);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -46,11 +49,11 @@ class TeacherDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Teacher Name : ${teacher.name.toString().toUpperCase()}',
+                  'Teacher Name : ${TeacherModel().name.toString().toUpperCase()}',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'Subject Name : ${teacher.subjectName.toString().toUpperCase()}',
+                  'Subject Name : no value in database',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 Text(
@@ -79,8 +82,8 @@ class TeacherDetailsScreen extends StatelessWidget {
                   backColor: Colors.orange,
                   onTaphandler: () async {
                     List<VideoModel> completedVideoData = [];
-                    if (teacher.completedClasses != null) {
-                      for (var video in teacher.completedClasses!) {
+                    if (TeacherModel().completedClasses != null) {
+                      for (var video in TeacherModel().completedClasses!) {
                         final snapshot = await video.get();
                         if (snapshot.exists) {
                           var data = snapshot.data() as Map<String, dynamic>;
@@ -96,7 +99,7 @@ class TeacherDetailsScreen extends StatelessWidget {
                         context, CompletedClassesScreen.routeName,
                         arguments: {
                           'videosLists': completedVideoData,
-                          'teacherName': teacher.name,
+                          'teacherName': TeacherModel().name,
                           'subjectName': routeArgs['batchName'],
                         });
                   },

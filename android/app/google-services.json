@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "41577480555",
-    "project_id": "notes-app-6da4e",
-    "storage_bucket": "notes-app-6da4e.appspot.com"
+    "project_number": "398666846999",
+    "project_id": "q-box-ef801",
+    "storage_bucket": "q-box-ef801.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:41577480555:android:a086a6c8e0e4a761b64c2e",
+        "mobilesdk_app_id": "1:398666846999:android:46efe7e66d656a19cb1d52",
         "android_client_info": {
           "package_name": "com.example.notes_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "41577480555-fqb9aoqs44optra3cplhdciggi4lh9r6.apps.googleusercontent.com",
+          "client_id": "398666846999-2krfrcdpk7om94sfmp2bmk5k2249nila.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDEhiqU3Wtag0Q-02RLDAneUHfBs48ATI4"
+          "current_key": "AIzaSyBBZL1AxDjpc68aDx24PtyR7p_vk7yu2TY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "41577480555-fqb9aoqs44optra3cplhdciggi4lh9r6.apps.googleusercontent.com",
+              "client_id": "398666846999-2krfrcdpk7om94sfmp2bmk5k2249nila.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -21,23 +21,20 @@ class Practice extends StatefulWidget {
 }
 
 class _PracticeState extends State<Practice> {
-  int questionNumber = 0;
+  int questionNumber = 1;
   bool isOptionChosen = false;
   bool isVideoSolenabled = false;
   bool isSliderOpen = false;
   final List<int> _allSelectedChoices = List.filled(20, 0);
   PracticeModel? practiceModel;
+  // ignore: unused_field
+  Map<String, dynamic>? _userQuestions = {};
+  Map<String, dynamic>? _options = {};
+  Map<String, dynamic>? _correctAnswers = {};
   @override
   void initState() {
-    fetchData();
+    getQuestions();
     super.initState();
-  }
-
-  fetchData() async {
-    var data = await getQuestions();
-    practiceModel = PracticeModel.fromJson(data);
-    print(practiceModel!.category);
-    // print(practiceModel!.questions![0].options!.optionA!);
   }
 
   FlickManager? flickManager;
@@ -51,40 +48,40 @@ class _PracticeState extends State<Practice> {
     if (snapshot.docs.isNotEmpty) {
       print('data is found ${snapshot.docs[0].data().isNotEmpty}');
       Map<String, dynamic> data = snapshot.docs[0].data();
-      print(data);
-      // print(_practiceModel!.category);
+      _userQuestions = data['questions'] as Map<String, dynamic>;
+
+      setState(() {
+        _options = _userQuestions!["id" + questionNumber.toString()]['options']
+            as Map<String, dynamic>;
+        _correctAnswers = _userQuestions!["id" + questionNumber.toString()]
+            ['correct_answers'] as Map<String, dynamic>;
+      });
       return data;
     }
     return {};
   }
 
+  List<bool> correctOptions = [];
   List<String> options = [];
-  List<bool> correctAnswersArray = [];
 
   @override
   void dispose() {
     super.dispose();
     flickManager?.dispose();
-    // _controller?.dispose();
   }
 
   int correctAnswers = 0;
-
   optionsMaker(int index) {
-    if (practiceModel != null) {
+    if (_userQuestions!.isNotEmpty) {
       setState(() {
-        options.add(practiceModel!.questions![index].options!.optionA!);
-        options.add(practiceModel!.questions![index].options!.optionB!);
-        options.add(practiceModel!.questions![index].options!.optionC!);
-        options.add(practiceModel!.questions![index].options!.optionD!);
-        correctAnswersArray.add(
-            practiceModel!.questions![index].correctAnswers!.answerACorrect!);
-        correctAnswersArray.add(
-            practiceModel!.questions![index].correctAnswers!.answerBCorrect!);
-        correctAnswersArray.add(
-            practiceModel!.questions![index].correctAnswers!.answerCCorrect!);
-        correctAnswersArray.add(
-            practiceModel!.questions![index].correctAnswers!.answerDCorrect!);
+        correctOptions.add(_correctAnswers!["answer_a_correct"]);
+        correctOptions.add(_correctAnswers!["answer_b_correct"]);
+        correctOptions.add(_correctAnswers!["answer_c_correct"]);
+        correctOptions.add(_correctAnswers!["answer_d_correct"]);
+        options.add(_options!["optionA"]);
+        options.add(_options!["optionB"]);
+        options.add(_options!["optionC"]);
+        options.add(_options!["optionD"]);
       });
     }
   }
@@ -128,9 +125,8 @@ class _PracticeState extends State<Practice> {
                         child: Padding(
                           padding: EdgeInsets.all(Dimensions.padding20 / 2),
                           child: Text(
-                            practiceModel!
-                                    .questions![questionNumber].question ??
-                                "No Questions Found",
+                            _userQuestions!['id' + questionNumber.toString()]
+                                ['question'],
                             style: HelperFunctions.textstyle(),
                             textAlign: TextAlign.start,
                           ),
@@ -148,6 +144,20 @@ class _PracticeState extends State<Practice> {
                             setState(() {
                               // index = i;
                             });
+
+                            if (correctOptions[i + 1] == true) {
+                              showCustomSnackbar(
+                                text: 'Correct',
+                                icon: Icons.done,
+                                context: context,
+                              );
+                            } else {
+                              showCustomSnackbar(
+                                text: 'Wrong',
+                                icon: Icons.close,
+                                context: context,
+                              );
+                            }
                             // if (_allSelectedChoices[questionNumber] == 0) {
                             //   setState(() {
                             //     isOptionChosen = true;
@@ -191,7 +201,7 @@ class _PracticeState extends State<Practice> {
                             decoration: BoxDecoration(
                               border: Border.all(
                                 width: 2,
-                                color: Colors.white,
+                                color: Colors.green,
                               ),
                               borderRadius: BorderRadius.circular(
                                   Dimensions.borderRadius12),
@@ -310,13 +320,11 @@ class _PracticeState extends State<Practice> {
                         CustomButton(
                           backColor: const Color(0xff000088),
                           onTapHandler: () {
-                            if (questionNumber < questions1!.length - 1) {
-                              setState(() {
-                                questionNumber++;
-                                isOptionChosen = false;
-                                isVideoSolenabled = false;
-                              });
-                            }
+                            setState(() {
+                              questionNumber++;
+                              isOptionChosen = false;
+                              isVideoSolenabled = false;
+                            });
                           },
                           text: 'Next',
                         ),

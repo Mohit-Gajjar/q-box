@@ -62,7 +62,7 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
                                 title: Center(child: Text("Subjects")),
                                 content: StreamBuilder<QuerySnapshot>(
                                   stream: FirebaseFirestore.instance
-                                      .collection('tests')
+                                      .collection('levelUpTest')
                                       .snapshots(), // path to collection of documents that is listened to as a stream
                                   builder: (context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {

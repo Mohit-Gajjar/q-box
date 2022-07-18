@@ -29,11 +29,13 @@ import './screens/tests/full_length_tests_screen.dart';
 import './screens/tests/level_up_screen.dart';
 import './screens/tests/live_tests_screen.dart';
 import './screens/tests/test_start_screen.dart';
-//import './screens/home/home_screen.dart';
+import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   runApp(const MyApp());
 }
@@ -55,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         )
       ],
       child: GetMaterialApp(
-        title: 'Notes App',
+        title: 'Q-Box',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Bai',
