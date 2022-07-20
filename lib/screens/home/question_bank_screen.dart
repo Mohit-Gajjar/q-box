@@ -16,19 +16,6 @@ class _QuestionsBankState extends State<QuestionsBank> {
   String subjectName = '';
   String chapter = '';
 
-  Future getQuestions() async {
-    if (subjectName != '' && chapter != '') {
-      final docData =
-          FirebaseFirestore.instance.collection('tests').doc(subjectName);
-      final snapshot = await docData.get();
-      if (snapshot.exists) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return Practice(subjectName: subjectName, chapter: chapter);
-        }));
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,6 +129,7 @@ class _QuestionsBankState extends State<QuestionsBank> {
                           child: StreamBuilder<QuerySnapshot>(
                             stream: FirebaseFirestore.instance
                                 .collection('practice')
+                                .where("subject", isEqualTo: subjectName)
                                 .snapshots(),
                             builder: (context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -184,14 +172,14 @@ class _QuestionsBankState extends State<QuestionsBank> {
                   child: CustomButton(
                     backColor: const Color(0xff0CBC8B),
                     onTapHandler: () async {
-                      print(subjectName);
-                      print(chapter);
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Practice(
-                                  subjectName: subjectName, chapter: chapter)));
+                      if (subjectName.isNotEmpty && chapter.isNotEmpty) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Practice(
+                                    subjectName: subjectName,
+                                    chapter: chapter)));
+                      }
                     },
                     text: 'Practice',
                   ),
