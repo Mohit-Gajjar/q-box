@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/batches/live_classes_screen.dart';
+import 'package:notes_app/screens/course/select_course.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/category_style.dart';
 import 'package:notes_app/widgets/home_display_screen.dart';
@@ -22,7 +23,7 @@ class _HomeState extends State<Home> {
   ];
 
   List<String> categoryFunction = [
-    '',
+    SelectCourse.routeName,
     LiveClassesScreen.routeName,
     '',
     '',

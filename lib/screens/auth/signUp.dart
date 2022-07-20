@@ -71,11 +71,6 @@ class _SignUpState extends State<SignUp> {
     print(otp);
   }
 
-  saveLoggedInSharedPrefs(bool isloggedin) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isLoggedIn', isloggedin);
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -169,7 +164,7 @@ class _SignUpState extends State<SignUp> {
                                         setState(() {
                                           if (pin == otp) {
                                             signUp();
-                                            saveLoggedInSharedPrefs(true);
+
                                             Fluttertoast.showToast(
                                                 msg:
                                                     "Phone number verified Sucessfully");
@@ -682,8 +677,7 @@ class _SignUpState extends State<SignUp> {
         Fluttertoast.showToast(msg: errorMessage!);
       }
     }
-    setState(() {
-      _signUpFetching = false;
-    });
+    _signUpFetching = false;
+    setState(() {});
   }
 }

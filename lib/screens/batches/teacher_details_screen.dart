@@ -7,10 +7,7 @@ import 'package:notes_app/widgets/appbar_actions.dart';
 import './live_classes_screen.dart';
 import '../../widgets/custom_button_full.dart';
 
-class 
-
-
-TeacherDetailsScreen extends StatelessWidget {
+class TeacherDetailsScreen extends StatelessWidget {
   const TeacherDetailsScreen({Key? key}) : super(key: key);
   static const String routeName = '/teacher-details-screen';
 
@@ -18,7 +15,7 @@ TeacherDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final routeArgs =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    TeacherModel.fromJson(routeArgs['teacher']);
+    // TeacherModel.fromJson(routeArgs['teacher']);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -49,7 +46,7 @@ TeacherDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Teacher Name : ${TeacherModel().name.toString().toUpperCase()}',
+                  'Teacher Name : ${routeArgs['teacher']}',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 Text(

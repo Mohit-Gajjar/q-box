@@ -27,7 +27,7 @@ class OTP {
         print(json);
         if (json['status'] == "success") {
           return true;
-        } else
+        } else 
           return false;
       } else {
         return false;

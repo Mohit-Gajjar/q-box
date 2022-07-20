@@ -81,7 +81,7 @@ class _QuestionsBankState extends State<QuestionsBank> {
                           child: StreamBuilder<QuerySnapshot>(
                             stream: FirebaseFirestore.instance
                                 .collection('practice')
-                                .snapshots(), // path to collection of documents that is listened to as a stream
+                                .snapshots(), 
                             builder: (context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (snapshot.hasError) {
@@ -108,22 +108,7 @@ class _QuestionsBankState extends State<QuestionsBank> {
                                     },
                                     title: Text(data['subject']),
                                   );
-                                  // return GestureDetector(
-                                  //   onTap: () {
-                                  //     setState(() {
-                                  //       subjectName = document.id;
-                                  //     });
-                                  //   },
-                                  //   child: ListTile(
-                                  //     title: Text(
-                                  //       "",
-                                  //       style: TextStyle(
-                                  //         fontSize: 16.0,
-                                  //         fontWeight: FontWeight.w500,
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // );
+                                
                                 }).toList(), // casts to list for passing to children parameter
                               );
                             },

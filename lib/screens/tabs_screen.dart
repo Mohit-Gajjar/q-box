@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/home/home.dart';
 import 'package:notes_app/screens/payments/payment_option.dart';
+import 'package:notes_app/screens/subscription/subscription.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
@@ -25,7 +26,7 @@ class _TabsScreenState extends State<TabsScreen> {
     BatchesScreen(),
     TestsScreen(),
     QuestionsBank(),
-    PaymentOption()
+    SubscriptionPage()
   ];
   
   @override

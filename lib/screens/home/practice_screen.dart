@@ -56,6 +56,7 @@ class _PracticeState extends State<Practice> {
         _correctAnswers = _userQuestions!["id" + questionNumber.toString()]
             ['correct_answers'] as Map<String, dynamic>;
       });
+
       return data;
     }
     return {};
@@ -74,14 +75,14 @@ class _PracticeState extends State<Practice> {
   optionsMaker(int index) {
     if (_userQuestions!.isNotEmpty) {
       setState(() {
-        correctOptions.add(_correctAnswers!["answer_a_correct"]);
-        correctOptions.add(_correctAnswers!["answer_b_correct"]);
-        correctOptions.add(_correctAnswers!["answer_c_correct"]);
-        correctOptions.add(_correctAnswers!["answer_d_correct"]);
-        options.add(_options!["optionA"]);
-        options.add(_options!["optionB"]);
-        options.add(_options!["optionC"]);
-        options.add(_options!["optionD"]);
+        correctOptions.add(_correctAnswers!["answer_a_correct"] ?? false);
+        correctOptions.add(_correctAnswers!["answer_b_correct"] ?? false);
+        correctOptions.add(_correctAnswers!["answer_c_correct"] ?? false);
+        correctOptions.add(_correctAnswers!["answer_d_correct"] ?? false);
+        options.add(_options!["optionA"] ?? "No Options");
+        options.add(_options!["optionB"] ?? "No Options");
+        options.add(_options!["optionC"] ?? "No Options");
+        options.add(_options!["optionD"] ?? "No Options");
       });
     }
   }
@@ -141,9 +142,6 @@ class _PracticeState extends State<Practice> {
                         child: InkWell(
                           onTap: () {
                             print("Option ${i + 1} is clicked");
-                            setState(() {
-                              // index = i;
-                            });
 
                             if (correctOptions[i + 1] == true) {
                               showCustomSnackbar(
@@ -158,33 +156,6 @@ class _PracticeState extends State<Practice> {
                                 context: context,
                               );
                             }
-                            // if (_allSelectedChoices[questionNumber] == 0) {
-                            //   setState(() {
-                            //     isOptionChosen = true;
-                            //   });
-                            //   //if correct
-                            //   if (i ==
-                            //       questions[questionNumber].correctOption - 1) {
-                            //     setState(() {
-                            //       _allSelectedChoices[questionNumber] = 1;
-                            //     });
-                            //     showCustomSnackbar(
-                            //       text: 'Correct',
-                            //       icon: Icons.done,
-                            //       context: context,
-                            //     );
-                            //   } //if wrong
-                            //   else {
-                            //     setState(() {
-                            //       _allSelectedChoices[questionNumber] = -1;
-                            //     });
-                            //     showCustomSnackbar(
-                            //       text: 'Wrong',
-                            //       icon: Icons.close,
-                            //       context: context,
-                            //     );
-                            //   }
-                            // }
                           },
                           borderRadius:
                               BorderRadius.circular(Dimensions.borderRadius5),
@@ -320,11 +291,14 @@ class _PracticeState extends State<Practice> {
                         CustomButton(
                           backColor: const Color(0xff000088),
                           onTapHandler: () {
-                            setState(() {
-                              questionNumber++;
-                              isOptionChosen = false;
-                              isVideoSolenabled = false;
-                            });
+                            if (_userQuestions!.keys.toList().length >
+                                questionNumber) {
+                              setState(() {
+                                questionNumber++;
+                                isOptionChosen = false;
+                                isVideoSolenabled = false;
+                              });
+                            }
                           },
                           text: 'Next',
                         ),

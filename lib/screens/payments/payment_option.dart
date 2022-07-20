@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/batches/batches_screen.dart';
+import 'package:notes_app/screens/course/select_course.dart';
 import 'package:notes_app/screens/payments/checkout_page.dart';
-import 'package:notes_app/screens/tabs_screen.dart';
+import 'package:notes_app/screens/payments/fill_payment_info.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 class PaymentOption extends StatefulWidget {
@@ -14,9 +17,16 @@ class PaymentOption extends StatefulWidget {
 
 class _PaymentOptionState extends State<PaymentOption> {
   bool activateMaterial = true;
+  Map<String, dynamic> payments = {};
 
   @override
   Widget build(BuildContext context) {
+    final routeArgs =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    print(routeArgs['course']);
+    setState(() {
+      payments = routeArgs['payment'] as Map<String, dynamic>;
+    });
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
@@ -144,7 +154,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                     ),
                                   ),
                                   Text(
-                                    'Lorem text ipsoum trvg sxjvvtybuancimiubaickvai bucicm',
+                                    "Selected Course: ${routeArgs['course']}",
                                     textAlign: TextAlign.center,
                                   ),
                                   Column(
@@ -152,7 +162,9 @@ class _PaymentOptionState extends State<PaymentOption> {
                                       FittedBox(
                                         fit: BoxFit.fitWidth,
                                         child: Text(
-                                          'Rs.1000/Inc Gst',
+                                          payments['1month'] != null
+                                              ? '₹ ${payments['1month']}/Inc GST'
+                                              : '₹ 0/Inc GST',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.blueAccent,
@@ -199,11 +211,16 @@ class _PaymentOptionState extends State<PaymentOption> {
                                         Dimensions.borderRadius12),
                                     child: MaterialButton(
                                       onPressed: () {
-                                        // Navigator.pushNamed(
-                                        //     context, CheckOut.routeName);
-
-                                        Navigator.pushNamed(
-                                            context, BatchesScreen.routeName);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    FillPaymentInformation(
+                                                      price:
+                                                          payments['1month'],
+                                                      selectedCourse:
+                                                          routeArgs['course'],
+                                                    ))));
                                       },
                                       child: Text('Pay Now'),
                                     ),
@@ -232,7 +249,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                     ),
                                   ),
                                   Text(
-                                    'Lorem text ipsoum trvg sxjvvtybuancimiubaickvai bucicm',
+                                    "Selected Course: ${routeArgs['course']}",
                                     textAlign: TextAlign.center,
                                   ),
                                   Column(
@@ -240,7 +257,9 @@ class _PaymentOptionState extends State<PaymentOption> {
                                       FittedBox(
                                         fit: BoxFit.fitWidth,
                                         child: Text(
-                                          'Rs.6000/Inc Gst',
+                                          payments['6month'] != null
+                                              ? '₹ ${payments['6month']}/Inc GST'
+                                              : '₹ 0/Inc GST',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.blueAccent,
@@ -287,8 +306,16 @@ class _PaymentOptionState extends State<PaymentOption> {
                                         Dimensions.borderRadius12),
                                     child: MaterialButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, CheckOut.routeName);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    FillPaymentInformation(
+                                                      price:
+                                                          payments['6month'],
+                                                      selectedCourse:
+                                                          routeArgs['course'],
+                                                    ))));
                                       },
                                       child: Text('Pay Now'),
                                     ),
@@ -317,7 +344,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                     ),
                                   ),
                                   Text(
-                                    'Lorem text ipsoum trvg sxjvvtybuancimiubaickvai bucicm',
+                                    "Selected Course: ${routeArgs['course']}",
                                     textAlign: TextAlign.center,
                                   ),
                                   Column(
@@ -325,7 +352,9 @@ class _PaymentOptionState extends State<PaymentOption> {
                                       FittedBox(
                                         fit: BoxFit.fitWidth,
                                         child: Text(
-                                          'Rs.1000/Inc Gst',
+                                          payments['12month'] != null
+                                              ? '₹ ${payments['12month']}/Inc GST'
+                                              : '₹ 0/Inc GST',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.blueAccent,
@@ -372,8 +401,16 @@ class _PaymentOptionState extends State<PaymentOption> {
                                         Dimensions.borderRadius12),
                                     child: MaterialButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, CheckOut.routeName);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    FillPaymentInformation(
+                                                      price:
+                                                          payments['12month'],
+                                                      selectedCourse:
+                                                          routeArgs['course'],
+                                                    ))));
                                       },
                                       child: Text('Pay Now'),
                                     ),
@@ -395,14 +432,14 @@ class _PaymentOptionState extends State<PaymentOption> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    '2 Year',
+                                    "2 year",
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                   Text(
-                                    'Lorem text ipsoum trvg sxjvvtybuancimiubaickvai bucicm',
+                                    "Selected Course: ${routeArgs['course']}",
                                     textAlign: TextAlign.center,
                                   ),
                                   Column(
@@ -410,7 +447,9 @@ class _PaymentOptionState extends State<PaymentOption> {
                                       FittedBox(
                                         fit: BoxFit.fitWidth,
                                         child: Text(
-                                          'Rs.6000/Inc Gst',
+                                          payments['24months'] != null
+                                              ? '₹ ${payments['24months']}/Inc GST'
+                                              : '₹ 0/Inc GST',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               color: Colors.blueAccent,
@@ -457,8 +496,16 @@ class _PaymentOptionState extends State<PaymentOption> {
                                         Dimensions.borderRadius12),
                                     child: MaterialButton(
                                       onPressed: () {
-                                        Navigator.pushNamed(
-                                            context, CheckOut.routeName);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    FillPaymentInformation(
+                                                      price:
+                                                          payments['24months'],
+                                                      selectedCourse:
+                                                          routeArgs['course'],
+                                                    ))));
                                       },
                                       child: Text('Pay Now'),
                                     ),
@@ -471,9 +518,8 @@ class _PaymentOptionState extends State<PaymentOption> {
                 ),
               ),
               TextButton(
-                onPressed: () {},
-                // onPressed: () =>
-                //     Navigator.pushNamed(context, TabsScreen.routeName),
+                onPressed: () =>
+                    Navigator.pushNamed(context, SelectCourse.routeName),
                 child: Text(
                   'Dismiss',
                   style: TextStyle(fontSize: 15, letterSpacing: 2),

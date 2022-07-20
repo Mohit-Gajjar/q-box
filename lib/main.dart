@@ -7,6 +7,7 @@ import 'package:notes_app/helpers/auth_path.dart';
 import 'package:notes_app/screens/auth/login.dart';
 import 'package:notes_app/screens/auth/signUp.dart';
 import 'package:notes_app/screens/batches/completed_classes_screen.dart';
+import 'package:notes_app/screens/course/select_course.dart';
 import 'package:notes_app/screens/explore.dart';
 import 'package:notes_app/screens/home/home.dart';
 import 'package:notes_app/screens/home/question_bank_screen.dart';
@@ -70,6 +71,7 @@ class _MyAppState extends State<MyApp> {
         ),
         home: AuthPath(),
         routes: {
+          SelectCourse.routeName: (context) => SelectCourse(),
           TabsScreen.routeName: (_) => const TabsScreen(),
           Home.routeName: (_) => Home(),
           QuestionsBank.routeName: (_) => const QuestionsBank(),

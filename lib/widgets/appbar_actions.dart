@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/profile.dart';
+import 'package:notes_app/screens/search/search_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 class AppBarActions extends StatelessWidget {
@@ -33,9 +34,13 @@ class AppBarActions extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(right: Dimensions.padding20),
-          child: const Icon(
-            Icons.search,
-            color: Colors.black,
+          child: IconButton(
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SearchScreen())),
+            icon: const Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
           ),
         ),
         Container(
