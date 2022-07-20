@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/home/home.dart';
 import 'package:notes_app/screens/payments/payment_option.dart';
@@ -17,7 +18,6 @@ class TabsScreen extends StatefulWidget {
   State<TabsScreen> createState() => _TabsScreenState();
 }
 
-
 class _TabsScreenState extends State<TabsScreen> {
   int curIdx = 0;
 
@@ -28,7 +28,7 @@ class _TabsScreenState extends State<TabsScreen> {
     QuestionsBank(),
     SubscriptionPage()
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +89,7 @@ class _TabsScreenState extends State<TabsScreen> {
               icon: Icon(
                 Icons.subscriptions_rounded,
               ),
-              label: 'Practice'),
+              label: 'DPB'),
           NavigationDestination(
             icon: Icon(
               Icons.video_library_rounded,

@@ -14,20 +14,16 @@ class QuestionsBank extends StatefulWidget {
 
 class _QuestionsBankState extends State<QuestionsBank> {
   String subjectName = '';
-  String difficulty = '';
+  String chapter = '';
 
   Future getQuestions() async {
-    if (subjectName != '' && difficulty != '') {
+    if (subjectName != '' && chapter != '') {
       final docData =
           FirebaseFirestore.instance.collection('tests').doc(subjectName);
       final snapshot = await docData.get();
-      print('snapshot is ${snapshot}');
       if (snapshot.exists) {
-        var data = snapshot.data() as Map<String, dynamic>;
-        print('data is ${data}');
-
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return Practice(subjectName: subjectName);
+          return Practice(subjectName: subjectName, chapter: chapter);
         }));
       }
     }
@@ -81,7 +77,7 @@ class _QuestionsBankState extends State<QuestionsBank> {
                           child: StreamBuilder<QuerySnapshot>(
                             stream: FirebaseFirestore.instance
                                 .collection('practice')
-                                .snapshots(), 
+                                .snapshots(),
                             builder: (context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (snapshot.hasError) {
@@ -108,7 +104,6 @@ class _QuestionsBankState extends State<QuestionsBank> {
                                     },
                                     title: Text(data['subject']),
                                   );
-                                
                                 }).toList(), // casts to list for passing to children parameter
                               );
                             },
@@ -128,6 +123,7 @@ class _QuestionsBankState extends State<QuestionsBank> {
                   ),
                   color: Colors.white,
                   elevation: 4.0,
+                  borderOnForeground: false,
                   margin: EdgeInsets.symmetric(horizontal: Dimensions.width15),
                   child: ExpansionTile(
                     childrenPadding: EdgeInsets.only(
@@ -137,101 +133,48 @@ class _QuestionsBankState extends State<QuestionsBank> {
                     title: Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: Dimensions.width15),
-                      child: Text(
-                          difficulty == '' ? 'Select difficulty' : difficulty),
+                      child: Text(chapter == '' ? 'Select Chapter' : chapter),
                     ),
                     children: [
-                      if (subjectName == '')
-                        ListTile(
-                            title: Text('Please select the Subject First!'))
-                      else
-                        Container(
-                          height: Dimensions.height10 * 17,
-                          child: SingleChildScrollView(
-                            child: FutureBuilder<DocumentSnapshot>(
-                              future: FirebaseFirestore.instance
-                                  .collection('tests')
-                                  .doc(subjectName)
-                                  .get(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                if (snapshot.hasError) {
-                                  return Text("Something went wrong");
-                                }
-
-                                if (snapshot.hasData &&
-                                    !snapshot.data!.exists) {
-                                  return Text("Document does not exist");
-                                }
-
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  Map<String, dynamic> data = snapshot.data!
-                                      .data() as Map<String, dynamic>;
-                                  print(data['chapters']);
-                                  print(data['chapters']['chapter']);
-                                  return data['chapters']['chapterCount'] == 0
-                                      ? ListTile(
-                                          title: Text('No chapters to prepare'),
-                                        )
-                                      : ListView(
-                                          shrinkWrap: true,
-                                          physics: ClampingScrollPhysics(),
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  difficulty = 'easy';
-                                                });
-                                              },
-                                              child: ListTile(
-                                                  title: Text(
-                                                'easy',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              )),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  difficulty = 'medium';
-                                                });
-                                              },
-                                              child: ListTile(
-                                                  title: Text(
-                                                'medium',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              )),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  difficulty = 'hard';
-                                                });
-                                              },
-                                              child: ListTile(
-                                                  title: Text(
-                                                'hard',
-                                                style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              )),
-                                            ),
-                                          ],
-                                        );
-                                }
-
-                                return Text("loading");
-                              },
-                            ),
+                      Container(
+                        height: Dimensions.height10 * 17,
+                        child: SingleChildScrollView(
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('practice')
+                                .snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasError) {
+                                return Text('Something went wrong');
+                              }
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              return ListView(
+                                shrinkWrap: true,
+                                physics: ClampingScrollPhysics(),
+                                children: snapshot.data!.docs
+                                    .map((DocumentSnapshot document) {
+                                  Map<String, dynamic> data =
+                                      document.data()! as Map<String, dynamic>;
+                                  return ListTile(
+                                    onTap: () {
+                                      setState(() {
+                                        chapter = data['chapter'];
+                                      });
+                                    },
+                                    title: Text(data['chapter']),
+                                  );
+                                }).toList(), // casts to list for passing to children parameter
+                              );
+                            },
                           ),
                         ),
+                      ),
                     ],
                   ),
                 ),
@@ -241,13 +184,14 @@ class _QuestionsBankState extends State<QuestionsBank> {
                   child: CustomButton(
                     backColor: const Color(0xff0CBC8B),
                     onTapHandler: () async {
-                      // List<QuestionModel> questionsData = [];
+                      print(subjectName);
+                      print(chapter);
 
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  Practice(subjectName: subjectName)));
+                              builder: (context) => Practice(
+                                  subjectName: subjectName, chapter: chapter)));
                     },
                     text: 'Practice',
                   ),

@@ -11,8 +11,8 @@ import '../../provider/data_provider.dart';
 import '../../widgets/custom_button.dart';
 
 class Practice extends StatefulWidget {
-  final String subjectName;
-  const Practice({Key? key, required this.subjectName}) : super(key: key);
+  final String subjectName, chapter;
+  const Practice({Key? key, required this.subjectName, required this.chapter}) : super(key: key);
 
   static const routeName = '/practice-screen';
 
@@ -43,7 +43,7 @@ class _PracticeState extends State<Practice> {
   Future<Map<String, dynamic>> getQuestions() async {
     final docData = FirebaseFirestore.instance
         .collection('practice')
-        .where("subject", isEqualTo: widget.subjectName);
+        .where("subject", isEqualTo: widget.subjectName).where( "chapter", isEqualTo: widget.chapter);
     final snapshot = await docData.get();
     if (snapshot.docs.isNotEmpty) {
       print('data is found ${snapshot.docs[0].data().isNotEmpty}');

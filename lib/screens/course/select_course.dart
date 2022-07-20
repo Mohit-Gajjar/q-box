@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/screens/course/select_branch.dart';
 import 'package:notes_app/screens/payments/payment_option.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
@@ -15,7 +14,7 @@ class SelectCourse extends StatefulWidget {
 
 class _SelectCourseState extends State<SelectCourse> {
   @override
-  Widget build(BuildContext context) {
+  Widget build( context) {
     return Scaffold(
         appBar: AppBar(
           title: Text('Select Course'),
@@ -50,6 +49,41 @@ class _SelectCourseState extends State<SelectCourse> {
           ),
         ));
   }
+}
+
+void selectCourse(BuildContext context) {
+  return showAboutDialog(
+    context: context,
+    children: [
+      StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('cat').snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text('Something went wrong!');
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              }
+              return ListView(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                  Map<String, dynamic> data =
+                      document.data()! as Map<String, dynamic>;
+                  Map<String, dynamic> courses =
+                      data['courses'] as Map<String, dynamic>;
+
+                  return CourseTile(
+                      title: document.id.toUpperCase(),
+                      subtitle: courses.keys.toList(), paymentOptions: courses,);
+                }).toList(),
+              );
+            },
+          ),
+        
+    ]
+  );
 }
 
 class CourseTile extends StatelessWidget {
