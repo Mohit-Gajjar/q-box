@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/constants/constants.dart';
@@ -21,7 +22,9 @@ class _FillPaymentInformationState extends State<FillPaymentInformation> {
   TextEditingController _emailController = TextEditingController();
   bool hasEnterdEmail = false;
   Map<String, dynamic> _userData = {};
-  fetchInfo() async {
+  String _userId = "";
+  bool hasSetedUpPayment = false;
+  void fetchInfo() async {
     FirebaseFirestore.instance
         .collection('users')
         .where('email', isEqualTo: _emailController.text)
@@ -38,28 +41,44 @@ class _FillPaymentInformationState extends State<FillPaymentInformation> {
     });
   }
 
+  @override
+  void initState() {
+    fetchUserId();
+    super.initState();
+  }
+
+  void fetchUserId() async {
+    User user = await FirebaseAuth.instance.currentUser!;
+    setState(() {
+      _userId = user.uid;
+    });
+    print(_userId);
+  }
+
   Future<String> generateHash() async {
     var digest = sha512.convert(utf8.encode(
-        '${merchantKey}asdhfaklsjhf${widget.selectedCourse}${widget.price}${_userData['firstName']}${_userData['lastName']}${_userData['address']}${_userData['email']}${_userData['phone']}${saltVersion1}'));
+        '${merchantKey}${_userId}${widget.selectedCourse}${widget.price}${_userData['firstName']}${_userData['email']}${_userData['phone']}${saltVersion1}'));
     return digest.toString();
   }
 
-  fillPaymentInfo() async {
+  void setupPayment() async {
+    bool response = await PaymentHelper().setupPayment();
+    setState(() {
+      hasSetedUpPayment = response;
+    });
+  }
+
+  void fillPaymentInfo() async {
+    setupPayment();
     var hash = await generateHash();
     PaymentHelper().createPayment(
-      merchantKey,
-      "asdhfaklsjhf",
+      _userId,
       widget.price,
-      widget.selectedCourse,
       _userData['firstName'],
-      _userData['lastName'],
-      _userData['address'],
       _userData['email'],
       _userData['phone'],
-      sucessUrl,
-      failedUrl,
+      widget.selectedCourse,
       hash,
-      serviceProvider,
     );
   }
 
@@ -71,8 +90,8 @@ class _FillPaymentInformationState extends State<FillPaymentInformation> {
         ),
         floatingActionButton: FloatingActionButton.extended(
             icon: Icon(Icons.done),
-            onPressed: () async {
-              await fillPaymentInfo();
+            onPressed: () {
+              fillPaymentInfo();
             },
             label: Text("Confirm")),
         body: hasEnterdEmail

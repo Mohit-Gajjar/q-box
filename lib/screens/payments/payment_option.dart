@@ -1,9 +1,7 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
-import 'package:notes_app/screens/batches/batches_screen.dart';
 import 'package:notes_app/screens/course/select_course.dart';
-import 'package:notes_app/screens/payments/checkout_page.dart';
 import 'package:notes_app/screens/payments/fill_payment_info.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
