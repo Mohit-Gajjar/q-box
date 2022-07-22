@@ -34,7 +34,7 @@ dependencies:
   dio: ^4.0.6
   shared_preferences: ^2.0.15
   crypto: ^3.0.2
-  payu_money_flutter: ^0.0.3
+  flutter_payu_unofficial: ^1.0.3
 
 dev_dependencies:
   flutter_test:

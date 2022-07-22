@@ -9,7 +9,6 @@ import 'package:notes_app/screens/otp/otp_verifier.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pinput/pinput.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
   static String routeName = 'signUp';
@@ -403,78 +402,6 @@ class _SignUpState extends State<SignUp> {
                             Padding(
                               padding: EdgeInsets.all(Dimensions.padding20 / 2),
                               child: TextFormField(
-                                controller: _courseController,
-                                keyboardType: TextInputType.text,
-                                onSaved: (value) {
-                                  _courseController.text = value!;
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return ("Please Enter Your Prefered Course");
-                                  }
-                                  return null;
-                                },
-                                textInputAction: TextInputAction.next,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        Dimensions.borderRadius12),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        Dimensions.borderRadius12),
-                                  ),
-                                  hintText: "Course",
-                                  fillColor: Colors.grey[100],
-                                  filled: true,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(Dimensions.padding20 / 2),
-                              child: TextFormField(
-                                controller: _classController,
-                                keyboardType: TextInputType.text,
-                                onSaved: (value) {
-                                  _classController.text = value!;
-                                },
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return ("Please Enter Your Class");
-                                  }
-                                  return null;
-                                },
-                                textInputAction: TextInputAction.next,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Colors.white,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        Dimensions.borderRadius12),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                    borderRadius: BorderRadius.circular(
-                                        Dimensions.borderRadius12),
-                                  ),
-                                  hintText: "Class",
-                                  fillColor: Colors.grey[100],
-                                  filled: true,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(Dimensions.padding20 / 2),
-                              child: TextFormField(
                                 obscureText: true,
                                 controller: _passwordController,
                                 onSaved: (value) {
@@ -658,8 +585,7 @@ class _SignUpState extends State<SignUp> {
               phoneNumber: _phoneNumberController.text.trim(),
               email: _emailController.text.trim(),
               address: _addressController.text.trim(),
-              className: _classController.text.trim(),
-              course: _courseController.text.trim(),
+              course: [],
             ).toJson())
             .then((value) => print("User Added"))
             .catchError((error) => print("Failed to add user: $error"));

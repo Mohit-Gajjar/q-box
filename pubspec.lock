@@ -216,6 +216,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_payu_unofficial:
+    dependency: "direct main"
+    description:
+      name: flutter_payu_unofficial
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -387,13 +394,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  payu_money_flutter:
-    dependency: "direct main"
-    description:
-      name: payu_money_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   pinput:
     dependency: "direct main"
     description:

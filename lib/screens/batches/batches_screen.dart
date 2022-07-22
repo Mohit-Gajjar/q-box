@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/models/teacherModel.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 import './batch_details_screen.dart';

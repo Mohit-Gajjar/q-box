@@ -5,8 +5,7 @@ class UserModel {
   String? email;
   String? address;
   String? profileImageName;
-  String? className;
-  String? course;
+  List? course;
 
   // String? address;
 
@@ -17,7 +16,6 @@ class UserModel {
       this.email,
       this.profileImageName,
       this.address,
-      this.className,
       this.course});
 
   // UserModel fromJson(Map<String, dynamic> json) {
@@ -37,8 +35,7 @@ class UserModel {
             profileImageName: json['profileImageName'] as String,
             phoneNumber: json['phone']! as String,
             address: json['address'] as String,
-            className: json['className'] as String,
-            course: json['course'] as String);
+            course: json['selectedCourse'] as List);
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -48,8 +45,7 @@ class UserModel {
     data['email'] = this.email;
     data['profileImageName'] = this.profileImageName;
     data['address'] = this.address;
-    data['className'] = this.className;
-    data['course'] = this.course;
+    data['selectedCourse'] = this.course;
     return data;
   }
 }

@@ -114,12 +114,12 @@ class CourseTile extends StatelessWidget {
                         title: Text(subtitle[index]),
                         onTap: () {
                           print([paymentOptions[subtitle[index]]['payment']]);
-                          Navigator.popAndPushNamed(
-                              context, PaymentOption.routeName,
-                              arguments: {
-                                'course': subtitle[index],
-                                'payment': paymentOptions[subtitle[index]]['payment'],
-                              });
+                          // Navigator.popAndPushNamed(
+                            
+                          //     arguments: {
+                          //       'course': subtitle[index],
+                          //       'payment': paymentOptions[subtitle[index]]['payment'],
+                          //     });
                         },
                       );
                     },

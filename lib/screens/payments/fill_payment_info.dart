@@ -57,27 +57,19 @@ class _FillPaymentInformationState extends State<FillPaymentInformation> {
 
   Future<String> generateHash() async {
     var digest = sha512.convert(utf8.encode(
-        '${merchantKey}${_userId}${widget.selectedCourse}${widget.price}${_userData['firstName']}${_userData['email']}${_userData['phone']}${saltVersion1}'));
+        "${merchantKey}|${_userId}|${widget.price}|${widget.selectedCourse}|${_userData['firstName']}|${_userData['email']}|udf1|udf2|udf3|udf4|udf5||||||${saltVersion1}"));
     return digest.toString();
   }
 
-  void setupPayment() async {
-    bool response = await PaymentHelper().setupPayment();
-    setState(() {
-      hasSetedUpPayment = response;
-    });
-  }
-
   void fillPaymentInfo() async {
-    setupPayment();
     var hash = await generateHash();
-    PaymentHelper().createPayment(
+    PaymentHelper().initializePayment(
       _userId,
       widget.price,
+      widget.selectedCourse,
       _userData['firstName'],
       _userData['email'],
-      _userData['phone'],
-      widget.selectedCourse,
+      _userData['phone'].toString().replaceFirst("91", ""),
       hash,
     );
   }

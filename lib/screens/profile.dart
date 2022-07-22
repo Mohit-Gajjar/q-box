@@ -10,6 +10,8 @@ import 'package:notes_app/helpers/auth_path.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
+import 'active_course/active_course.dart';
+
 class Profile extends StatefulWidget {
   static String routeName = "profile";
 
@@ -191,10 +193,11 @@ class _ProfileState extends State<Profile> {
                 title: Text('Coins'),
               ),
               ListTile(
+                onTap: ()=> Navigator.push(context, MaterialPageRoute(builder:(context) => ActiveCourses() )),
                 leading: Icon(
-                  Icons.color_lens_outlined,
+                  Icons.class_,
                 ),
-                title: Text('Active Color'),
+                title: Text('Active Courses'),
               ),
               ListTile(
                 leading: Icon(
