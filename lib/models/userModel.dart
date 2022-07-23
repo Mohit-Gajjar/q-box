@@ -3,6 +3,7 @@ class UserModel {
   String? lastName;
   String? phoneNumber;
   String? email;
+  String? dateOfJoin;
   String? address;
   String? profileImageName;
   List? course;
@@ -16,6 +17,7 @@ class UserModel {
       this.email,
       this.profileImageName,
       this.address,
+        this.dateOfJoin,
       this.course});
 
   // UserModel fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class UserModel {
             profileImageName: json['profileImageName'] as String,
             phoneNumber: json['phone']! as String,
             address: json['address'] as String,
+            dateOfJoin: json['dateOfJoin'] as String,
             course: json['selectedCourse'] as List);
 
   Map<String, dynamic> toJson() {
@@ -45,6 +48,7 @@ class UserModel {
     data['email'] = this.email;
     data['profileImageName'] = this.profileImageName;
     data['address'] = this.address;
+    data['dateOfJoin']=this.dateOfJoin;
     data['selectedCourse'] = this.course;
     return data;
   }
