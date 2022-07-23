@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/constants/constants.dart';
 import 'package:notes_app/screens/payments/payment_helper.dart';
+import 'package:notes_app/screens/payments/payuIntegration.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 class FillPaymentInformation extends StatefulWidget {
   final String selectedCourse, price;
-  const FillPaymentInformation(
+  const
+  FillPaymentInformation(
       {Key? key, required this.selectedCourse, required this.price})
       : super(key: key);
 
@@ -61,17 +63,19 @@ class _FillPaymentInformationState extends State<FillPaymentInformation> {
     return digest.toString();
   }
 
-  void fillPaymentInfo() async {
-    var hash = await generateHash();
-    PaymentHelper().initializePayment(
-      _userId,
-      widget.price,
-      widget.selectedCourse,
-      _userData['firstName'],
-      _userData['email'],
-      _userData['phone'].toString().replaceFirst("91", ""),
-      hash,
-    );
+  void fillPaymentInfo() {
+    // var hash = await generateHash();
+    // PaymentHelper().initializePayment(
+    //   _userId,
+    //   widget.price,
+    //   widget.selectedCourse,
+    //   _userData['firstName'],
+    //   _userData['email'],
+    //   _userData['phone'].toString().replaceFirst("91", ""),
+    //   hash,
+    // );
+
+    initializePayment(_userData['email'], _userData['firstName'], _userData['phone'].toString().replaceFirst("91", ""), widget.price, widget.selectedCourse);
   }
 
   @override

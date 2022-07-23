@@ -94,7 +94,9 @@ class _CheckOutState extends State<CheckOut> {
               child: MaterialButton(
                 color: Colors.amber,
                 padding: EdgeInsets.all(Dimensions.padding20),
-                onPressed: () {},
+                onPressed: () {
+
+                },
                 child: Text(
                   'Proceed',
                   style: TextStyle(fontSize: 18),
