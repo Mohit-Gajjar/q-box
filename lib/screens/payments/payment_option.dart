@@ -246,16 +246,15 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Dimensions.borderRadius12),
                                           child: MaterialButton(
                                             onPressed: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: ((context) =>
-                                              //             FillPaymentInformation(
-                                              //               price: payments['1month'],
-                                              //               selectedCourse:
-                                              //                   courseDuration[
-                                              //                       'course'],
-                                              //             ))));
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: ((context) =>
+                                                          FillPaymentInformation(
+                                                            price: courseDurationPrice[0],
+                                                            selectedCourse:
+                                                                widget.courseName,
+                                                          ))));
                                             },
                                             child: Text('Pay Now'),
                                           ),
@@ -344,16 +343,15 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Dimensions.borderRadius12),
                                           child: MaterialButton(
                                             onPressed: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: ((context) =>
-                                              //             FillPaymentInformation(
-                                              //               price: payments['6month'],
-                                              //               selectedCourse:
-                                              //                   courseDuration[
-                                              //                       'course'],
-                                              //             ))));
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: ((context) =>
+                                                          FillPaymentInformation(
+                                                            price: courseDurationPrice[1],
+                                                            selectedCourse:
+                                                            widget.courseName,
+                                                          ))));
                                             },
                                             child: Text('Pay Now'),
                                           ),
@@ -442,17 +440,15 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Dimensions.borderRadius12),
                                           child: MaterialButton(
                                             onPressed: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: ((context) =>
-                                              //             FillPaymentInformation(
-                                              //               price:
-                                              //                   payments['12month'],
-                                              //               selectedCourse:
-                                              //                   courseDuration[
-                                              //                       'course'],
-                                              //             ))));
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: ((context) =>
+                                                          FillPaymentInformation(
+                                                            price: courseDurationPrice[2],
+                                                            selectedCourse:
+                                                            widget.courseName,
+                                                          ))));
                                             },
                                             child: Text('Pay Now'),
                                           ),
@@ -541,17 +537,15 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Dimensions.borderRadius12),
                                           child: MaterialButton(
                                             onPressed: () {
-                                              // Navigator.push(
-                                              //     context,
-                                              //     MaterialPageRoute(
-                                              //         builder: ((context) =>
-                                              //             FillPaymentInformation(
-                                              //               price:
-                                              //                   payments['24months'],
-                                              //               selectedCourse:
-                                              //                   courseDuration[
-                                              //                       'course'],
-                                              //             ))));
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: ((context) =>
+                                                          FillPaymentInformation(
+                                                            price: courseDurationPrice[3],
+                                                            selectedCourse:
+                                                            widget.courseName,
+                                                          ))));
                                             },
                                             child: Text('Pay Now'),
                                           ),
