@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/home/practice_screen.dart';
+import 'package:notes_app/screens/payments/payment_option.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import '../../widgets/custom_button.dart';
 
@@ -37,135 +38,92 @@ class _QuestionsBankState extends State<QuestionsBank> {
                 SizedBox(
                   height: Dimensions.height10 * 2,
                 ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.borderRadius15),
-                  ),
-                  color: Colors.white,
-                  elevation: 4.0,
-                  borderOnForeground: false,
-                  margin: EdgeInsets.symmetric(horizontal: Dimensions.width15),
-                  child: ExpansionTile(
-                    childrenPadding: EdgeInsets.only(
-                        bottom: Dimensions.height10 * 1.5,
-                        left: Dimensions.width10 * 2,
-                        right: Dimensions.width10 * 2),
-                    title: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: Dimensions.width15),
-                      child: Text(
-                          subjectName == '' ? 'Select Subject' : subjectName),
-                    ),
-                    children: [
-                      Container(
-                        height: Dimensions.height10 * 17,
-                        child: SingleChildScrollView(
-                          child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('practice')
-                                .snapshots(),
-                            builder: (context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (snapshot.hasError) {
-                                return Text('Something went wrong');
-                              }
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                              return ListView(
-                                shrinkWrap: true,
-                                physics: ClampingScrollPhysics(),
-                                children: snapshot.data!.docs
-                                    .map((DocumentSnapshot document) {
-                                  Map<String, dynamic> data =
-                                      document.data()! as Map<String, dynamic>;
-                                  return ListTile(
-                                    onTap: () {
-                                      setState(() {
-                                        subjectName = data['subject'];
-                                      });
-                                    },
-                                    title: Text(data['subject']),
-                                  );
-                                }).toList(), // casts to list for passing to children parameter
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: Dimensions.height10 * 2,
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.borderRadius15),
-                  ),
-                  color: Colors.white,
-                  elevation: 4.0,
-                  borderOnForeground: false,
-                  margin: EdgeInsets.symmetric(horizontal: Dimensions.width15),
-                  child: ExpansionTile(
-                    childrenPadding: EdgeInsets.only(
-                        bottom: Dimensions.height10 * 1.5,
-                        left: Dimensions.width10 * 2,
-                        right: Dimensions.width10 * 2),
-                    title: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: Dimensions.width15),
-                      child: Text(chapter == '' ? 'Select Chapter' : chapter),
-                    ),
-                    children: [
-                      Container(
-                        height: Dimensions.height10 * 17,
-                        child: SingleChildScrollView(
-                          child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('practice')
-                                .where("subject", isEqualTo: subjectName)
-                                .snapshots(),
-                            builder: (context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (snapshot.hasError) {
-                                return Text('Something went wrong');
-                              }
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-                              return ListView(
-                                shrinkWrap: true,
-                                physics: ClampingScrollPhysics(),
-                                children: snapshot.data!.docs
-                                    .map((DocumentSnapshot document) {
-                                  Map<String, dynamic> data =
-                                      document.data()! as Map<String, dynamic>;
-                                  return ListTile(
-                                    onTap: () {
-                                      setState(() {
-                                        chapter = data['chapter'];
-                                      });
-                                    },
-                                    title: Text(data['chapter']),
-                                  );
-                                }).toList(), // casts to list for passing to children parameter
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('practice')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong!');
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            Map<String, dynamic> data =
+                                snapshot.data!.docs[index].data()!
+                                    as Map<String, dynamic>;
+
+                            return ListTile(
+                              title: Text(data['subject']),
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('Select Chapter'),
+                                        content: Container(
+                                            width: Dimensions.height10,
+                                            child: StreamBuilder(
+                                                stream: FirebaseFirestore
+                                                    .instance
+                                                    .collection('practice')
+                                                    .where("subject",
+                                                        isEqualTo:
+                                                            data['subject'])
+                                                    .snapshots(),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot<QuerySnapshot>
+                                                        snapshot) {
+                                                  return snapshot.hasData
+                                                      ? ListView.builder(
+                                                          shrinkWrap: true,
+                                                          physics:
+                                                              ClampingScrollPhysics(),
+                                                          itemCount: snapshot
+                                                              .data!
+                                                              .docs
+                                                              .length,
+                                                          itemBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  int index) {
+                                                            Map<String, dynamic>
+                                                                data1 = snapshot
+                                                                        .data!
+                                                                        .docs[index]
+                                                                        .data()!
+                                                                    as Map<
+                                                                        String,
+                                                                        dynamic>;
+                                                            print('chapter');
+                                                            return ListTile(
+                                                                title: Text(data1[
+                                                                    'chapter']),
+                                                                onTap: () {
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) => Practice(
+                                                                              subjectName: data['subject'],
+                                                                              chapter: data1['chapter'])));
+                                                                });
+                                                          },
+                                                        )
+                                                      : Center(
+                                                          child:
+                                                              CircularProgressIndicator());
+                                                })),
+                                      );
+                                    });
+                              },
+                            );
+                          });
+                    }),
                 const Spacer(),
                 Align(
                   alignment: Alignment.centerRight,
