@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class PracticeModel {
   String? uploadedTeacher;
   String? category;
@@ -27,6 +29,7 @@ class PracticeModel {
       });
     }
   }
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
