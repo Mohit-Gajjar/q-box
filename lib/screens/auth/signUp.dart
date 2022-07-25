@@ -585,6 +585,7 @@ class _SignUpState extends State<SignUp> {
               phoneNumber: _phoneNumberController.text.trim(),
               email: _emailController.text.trim(),
               address: _addressController.text.trim(),
+              dateOfJoin: DateTime.now().toString(),
               course: [],
             ).toJson())
             .then((value) => print("User Added"))

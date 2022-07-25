@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/screens/payments/payment_option.dart';
 
 class SubscriptionPage extends StatefulWidget {
@@ -20,6 +21,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   }
 
   List selectedCourses = [];
+  String dateOfJoin="";
   getUserEmail() async {
     final User user = await FirebaseAuth.instance.currentUser!;
     setState(() {
@@ -37,9 +39,24 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       Map<String, dynamic>? data = value.data();
       setState(() {
         selectedCourses = data!['selectedCourse'] as List;
+        dateOfJoin = data['dateOfJoin'];
       });
       print(selectedCourses);
+      print(dateOfJoin);
     });
+  }
+
+  bool trialChecker(){
+    int days = DateTime.now().difference(DateTime.parse(dateOfJoin)).inDays;
+    if(days>=7)
+      return false;
+    return true;
+  }
+
+  bool showPayment(String mode){
+    if(!trialChecker() && mode=="unpaid")
+      return true;
+    return false;
   }
 
   @override
@@ -67,12 +84,14 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         title: Text("${index + 1}). " +
                             selectedCourses[index].toString().split("@")[0]),
                         onTap: (() {
+                          (showPayment(selectedCourses[index].toString().split("@")[1]))?
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => PaymentOption(
                                         courseName: selectedCourses[index],
-                                      )));
+                                      )))
+                              : Fluttertoast.showToast(msg: "Can be accessed");
                         }),
                       );
                     }),
