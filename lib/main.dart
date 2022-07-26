@@ -31,7 +31,7 @@ import './screens/tests/live_tests_screen.dart';
 import './screens/tests/test_start_screen.dart';
 import 'firebase_options.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

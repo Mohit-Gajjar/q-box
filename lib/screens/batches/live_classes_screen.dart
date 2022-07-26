@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:notes_app/models/live.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
-
-import './live_video_play_screen.dart';
 
 class LiveClassesScreen extends StatelessWidget {
   const LiveClassesScreen({Key? key}) : super(key: key);
@@ -38,49 +39,46 @@ class LiveClassesScreen extends StatelessWidget {
             right: Dimensions.padding20 * (3 / 4),
             top: Dimensions.padding20,
           ),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushNamed(LiveVideoPlayScreen.routeName);
-                      },
-                      borderRadius: BorderRadius.circular(
-                          Dimensions.borderRadius12 * (2 / 3)),
-                      child: Container(
-                        height: Dimensions.height10 * 13,
-                        margin:
-                            EdgeInsets.symmetric(vertical: Dimensions.height10),
-                        padding: EdgeInsets.all(Dimensions.padding20 / 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              Dimensions.borderRadius5 * 3),
-                        ),
-                        child: Stack(
-                          children: [
-                            SizedBox(
-                              height: Dimensions.height10 * 10,
-                              child: Image.asset(
-                                'assets/images/thumbnail.png',
-                              ),
-                            ),
-                            const Align(
-                              child:
-                                  Text('Chapter name, Start time , End time'),
-                              alignment: Alignment.bottomCenter,
-                            ),
-                          ],
-                        ),
-                      ),
+          child: StreamBuilder(
+            stream:
+                FirebaseFirestore.instance.collection('liveVideos').snapshots(),
+            builder:
+                ((BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              print(snapshot.data!.docs[0].data());
+              return snapshot.hasData
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        Map<String, dynamic> data = snapshot.data!.docs[index]
+                            .data() as Map<String, dynamic>;
+                        bool isLive = data['live'] as bool;
+                        return ListTile(
+                          onTap: () {
+                            if (isLive) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => JoinMeeting(
+                                            nameText: data['title'],
+                                            roomText:
+                                                snapshot.data!.docs[index].id,
+                                            subjectText: data['course'],
+                                          )));
+                            } else
+                              Fluttertoast.showToast(
+                                  msg: "Live Class not started");
+                          },
+                          title: Text(
+                            data['title'],
+                          ),
+                          subtitle: Text(data['course']),
+                        );
+                      })
+                  : Center(
+                      child: CircularProgressIndicator(),
                     );
-                  },
-                ),
-              )
-            ],
+            }),
           ),
         ),
       ),
