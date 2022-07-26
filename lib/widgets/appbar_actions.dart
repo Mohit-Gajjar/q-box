@@ -36,7 +36,7 @@ class AppBarActions extends StatelessWidget {
           padding: EdgeInsets.only(right: Dimensions.padding20),
           child: IconButton(
             onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SearchScreen())),
+                MaterialPageRoute(builder: (context) => SearchScreen(keyy: "",))),
             icon: const Icon(
               Icons.search,
               color: Colors.black,
