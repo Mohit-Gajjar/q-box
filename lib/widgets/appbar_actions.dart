@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/ChatUi.dart';
 import 'package:notes_app/screens/profile.dart';
 import 'package:notes_app/screens/search/search_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
@@ -26,9 +27,13 @@ class AppBarActions extends StatelessWidget {
         Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(right: Dimensions.padding20),
-          child: const Icon(
-            Icons.notifications_none_rounded,
-            color: Colors.black,
+          child: IconButton(
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ChatScreen())),
+            icon: const Icon(
+              Icons.notifications_none_rounded,
+              color: Colors.black,
+            ),
           ),
         ),
         Container(
@@ -47,6 +52,54 @@ class AppBarActions extends StatelessWidget {
           margin: EdgeInsets.only(right: Dimensions.width10),
           child: AppBarProfileIcon(
             profileRadius: Dimensions.width10 * 2,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class AppBarActions2 extends StatelessWidget{
+  const AppBarActions2({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(right: Dimensions.padding20),
+          child: const Icon(
+            Icons.cast,
+            color: Colors.black,
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(right: Dimensions.padding20),
+          child: IconButton(
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ChatScreen())),
+            icon: const Icon(
+              Icons.notifications_none_rounded,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(right: Dimensions.padding20),
+          child: IconButton(
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SearchScreen(keyy: "",))),
+            icon: const Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
           ),
         ),
       ],
