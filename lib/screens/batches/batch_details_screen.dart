@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
@@ -13,6 +16,8 @@ class BatcheDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final routeArgs =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+
+
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -44,16 +49,9 @@ class BatcheDetailsScreen extends StatelessWidget {
                 children: [
                   for (var teach in routeArgs['teachers'])
                     TeacherProfileCard(
-                        text: teach,
-                        onTaphandler: () {
-                          print(teach);
-                          Navigator.of(context).pushNamed(
-                              TeacherDetailsScreen.routeName,
-                              arguments: {
-                                'batchName': routeArgs['batchName'],
-                                'teacher': teach,
-                              });
-                        }),
+                        text: teach.toString(),
+                        batch: routeArgs['batchName'],
+                        ),
                 ],
               ),
             ),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/provider/get_user_details.dart';
 import 'package:notes_app/helpers/auth_path.dart';
+import 'package:notes_app/screens/followedTeachers/followedTeachersScreen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
@@ -200,6 +201,7 @@ class _ProfileState extends State<Profile> {
                 title: Text('Active Courses'),
               ),
               ListTile(
+                onTap: ()=> Navigator.push(context, MaterialPageRoute(builder:(context) => FollowedTeachersScreen() )),
                 leading: Icon(
                   Icons.follow_the_signs_rounded,
                 ),
