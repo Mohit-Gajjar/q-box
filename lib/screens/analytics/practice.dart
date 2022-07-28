@@ -15,14 +15,13 @@ class _DigitalPracticeBookState extends State<DigitalPracticeBook> {
       appBar: AppBar(
         title: Text(
           "Dpb",
-          
         ),
         actions: [
-         IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, TabsScreen.routeName);
-                },
-                icon: Icon(Icons.home)),
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, TabsScreen.routeName);
+              },
+              icon: Icon(Icons.home)),
         ],
         backgroundColor: Colors.white70,
       ),

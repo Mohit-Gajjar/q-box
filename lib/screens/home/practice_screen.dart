@@ -1,21 +1,18 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:notes_app/models/practice_model.dart';
 import 'package:notes_app/utilities/dimensions.dart';
-import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import '../../helpers/helpers.dart';
-import '../../provider/data_provider.dart';
 import '../../widgets/custom_button.dart';
 
 class Practice extends StatefulWidget {
   final String subjectName, chapter;
   const Practice({Key? key, required this.subjectName, required this.chapter})
       : super(key: key);
-
   static const routeName = '/practice-screen';
 
   @override
@@ -41,6 +38,8 @@ class _PracticeState extends State<Practice> {
     getQuestions();
     super.initState();
   }
+
+
 
   bool isLoading = false;
 

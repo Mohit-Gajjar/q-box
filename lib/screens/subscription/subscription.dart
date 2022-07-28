@@ -21,12 +21,13 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   }
 
   List selectedCourses = [];
-  String dateOfJoin="";
+  String dateOfJoin = "";
   getUserEmail() async {
     final User user = await FirebaseAuth.instance.currentUser!;
     setState(() {
       userEmail = user.email!;
     });
+    print(userEmail);
     checkSelectedCourses();
   }
 
@@ -46,16 +47,14 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     });
   }
 
-  bool trialChecker(){
+  bool trialChecker() {
     int days = DateTime.now().difference(DateTime.parse(dateOfJoin)).inDays;
-    if(days>=7)
-      return false;
+    if (days >= 7) return false;
     return true;
   }
 
-  bool showPayment(String mode){
-    if(!trialChecker() && mode=="unpaid")
-      return true;
+  bool showPayment(String mode) {
+    if (!trialChecker() && mode == "unpaid") return true;
     return false;
   }
 
@@ -84,13 +83,15 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         title: Text("${index + 1}). " +
                             selectedCourses[index].toString().split("@")[0]),
                         onTap: (() {
-                          (showPayment(selectedCourses[index].toString().split("@")[1]))?
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PaymentOption(
-                                        courseName: selectedCourses[index],
-                                      )))
+                          (showPayment(selectedCourses[index]
+                                  .toString()
+                                  .split("@")[1]))
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PaymentOption(
+                                            courseName: selectedCourses[index],
+                                          )))
                               : Fluttertoast.showToast(msg: "Can be accessed");
                         }),
                       );
