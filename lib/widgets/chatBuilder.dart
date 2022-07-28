@@ -70,58 +70,60 @@ class _ChatUiState extends State<ChatUi> {
     return Container(
       height: height,
       width: width,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top : 8.0),
-            child: Container(
-                height: height/1.35,
-                width: width,
-                child: buildChat(msgs)
-            ),
-          ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Related Questions", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-                ),
-                SizedBox(height: 20,),
-                Container(
-                  height: 100,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top : 8.0),
+              child: Container(
+                  height: height/1.35,
                   width: width,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: relatedMsg.length,
-                    itemBuilder: (context, index){
-                      return Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: GestureDetector(
-                          onTap: (){
-                            setState((){
-                              msgs.add({"msg":relatedMsg[index], "user": "2"});
-                            });
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Colors.grey
-                            ),
-                            child: Text(relatedMsg[index]),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                )
-              ],
+                  child: buildChat(msgs)
+              ),
             ),
-          )
-        ],
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Related Questions", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                  ),
+                  SizedBox(height: 20,),
+                  Container(
+                    height: 100,
+                    width: width,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: relatedMsg.length,
+                      itemBuilder: (context, index){
+                        return Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: GestureDetector(
+                            onTap: (){
+                              setState((){
+                                msgs.add({"msg":relatedMsg[index], "user": "2"});
+                              });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.grey
+                              ),
+                              child: Text(relatedMsg[index]),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

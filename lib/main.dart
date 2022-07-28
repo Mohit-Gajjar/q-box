@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
 }
 
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'high_importance_channel',
+  'High Importance Notifications',
+  description: 'This channel is used for important notifications.',
+  importance: Importance.max,
+);
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -49,6 +59,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+
+  await flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+      ?.createNotificationChannel(channel);
   runApp(const MyApp());
 }
 
@@ -63,12 +78,33 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     fcbConfigutation();
+    getUserEmail();
+    getToken();
     super.initState();
+  }
+
+  String userEmail = "";
+  getUserEmail() async {
+    var user = await FirebaseAuth.instance.currentUser;
+    setState(() {
+      userEmail = user!.email!;
+    });
+  }
+
+  getToken() async {
+    FirebaseMessaging.instance.getToken().then((value) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userEmail)
+          .update({"token": value});
+    });
   }
 
   void fcbConfigutation() async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
-
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+            alert: true, badge: true, sound: true);
     NotificationSettings settings = await messaging.requestPermission(
       alert: true,
       announcement: false,
@@ -80,20 +116,15 @@ class _MyAppState extends State<MyApp> {
     );
 
     print('User granted permission: ${settings.authorizationStatus}');
-    const AndroidNotificationChannel channel = AndroidNotificationChannel(
-      'high_importance_channel', // id
-      'High Importance Notifications', // title
 
-      description:
-          'This channel is used for important notifications.', // description
-      importance: Importance.max,
-    );
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
 
       if (notification != null && android != null) {
-        FlutterLocalNotificationsPlugin().show(
+        print("========>>>" + notification.hashCode.toString());
+        print("Message: " + notification.body.toString());
+        flutterLocalNotificationsPlugin.show(
             notification.hashCode,
             notification.title,
             notification.body,
@@ -103,9 +134,28 @@ class _MyAppState extends State<MyApp> {
                 channel.name,
                 channelDescription: channel.description,
                 icon: android.smallIcon,
-                // other properties...
               ),
             ));
+      }
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      if (notification != null && android != null) {
+        showDialog(
+            context: (context),
+            builder: (_) {
+              return AlertDialog(
+                title: Text(notification.title!),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text(notification.body!)],
+                  ),
+                ),
+              );
+            });
       }
     });
   }

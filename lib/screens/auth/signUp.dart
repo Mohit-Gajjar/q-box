@@ -580,14 +580,15 @@ class _SignUpState extends State<SignUp> {
             .collection('users')
             .doc('${_email}')
             .set(UserModel(
-              firstName: _firstNameController.text.trim(),
-              lastName: _lastNameController.text.trim(),
-              phoneNumber: _phoneNumberController.text.trim(),
-              email: _emailController.text.trim(),
-              address: _addressController.text.trim(),
-              dateOfJoin: DateTime.now().toString(),
-              course: [],
-            ).toJson())
+                    firstName: _firstNameController.text.trim(),
+                    lastName: _lastNameController.text.trim(),
+                    phoneNumber: _phoneNumberController.text.trim(),
+                    email: _emailController.text.trim(),
+                    address: _addressController.text.trim(),
+                    dateOfJoin: DateTime.now().toString(),
+                    course: [],
+                    token: "")
+                .toJson())
             .then((value) => print("User Added"))
             .catchError((error) => print("Failed to add user: $error"));
       } on FirebaseAuthException catch (error) {
