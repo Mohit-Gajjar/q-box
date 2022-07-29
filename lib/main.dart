@@ -122,7 +122,6 @@ class _MyAppState extends State<MyApp> {
       AndroidNotification? android = message.notification?.android;
 
       if (notification != null && android != null) {
-        print("========>>>" + notification.hashCode.toString());
         print("Message: " + notification.body.toString());
         flutterLocalNotificationsPlugin.show(
             notification.hashCode,

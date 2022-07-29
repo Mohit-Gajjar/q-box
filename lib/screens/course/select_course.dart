@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/screens/payments/payment_option.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 class SelectCourse extends StatefulWidget {
@@ -114,12 +113,6 @@ class CourseTile extends StatelessWidget {
                         title: Text(subtitle[index]),
                         onTap: () {
                           print([paymentOptions[subtitle[index]]['payment']]);
-                          // Navigator.popAndPushNamed(
-                            
-                          //     arguments: {
-                          //       'course': subtitle[index],
-                          //       'payment': paymentOptions[subtitle[index]]['payment'],
-                          //     });
                         },
                       );
                     },
