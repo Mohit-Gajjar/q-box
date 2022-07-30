@@ -16,14 +16,7 @@ class AppBarActions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(right: Dimensions.padding20),
-          child: const Icon(
-            Icons.cast,
-            color: Colors.black,
-          ),
-        ),
+
         Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(right: Dimensions.padding20),
@@ -70,14 +63,7 @@ class AppBarActions2 extends StatelessWidget{
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.only(right: Dimensions.padding20),
-          child: const Icon(
-            Icons.cast,
-            color: Colors.black,
-          ),
-        ),
+
         Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(right: Dimensions.padding20),

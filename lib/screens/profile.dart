@@ -192,12 +192,12 @@ class _ProfileState extends State<Profile> {
                 ),
                 title: Text('Analytics'),
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.settings,
-                ),
-                title: Text('Coins'),
-              ),
+              // ListTile(
+              //   leading: Icon(
+              //     Icons.settings,
+              //   ),
+              //   title: Text('Coins'),
+              // ),
               ListTile(
                 onTap: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ActiveCourses())),

@@ -100,55 +100,55 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
                     },
                   ),
                   const Spacer(),
-                  CustomButton(
-                    backColor: Colors.green,
-                    onTapHandler: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Center(child: Text("Teachers")),
-                              content: StreamBuilder<QuerySnapshot>(
-                                stream: FirebaseFirestore.instance
-                                    .collection('teachers')
-                                    .snapshots(), // path to collection of documents that is listened to as a stream
-                                builder: (context,
-                                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Text('Something went wrong');
-                                  }
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                        child: CircularProgressIndicator());
-                                  }
-                                  return ListView(
-                                    shrinkWrap: true,
-                                    physics: ClampingScrollPhysics(),
-                                    children: snapshot.data!.docs
-                                        .map((DocumentSnapshot document) {
-                                      // Map<String, dynamic> data = document
-                                      //     .data()! as Map<String, dynamic>;
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            teacherName = document.id;
-                                          });
-                                        },
-                                        child: ListTile(
-                                          title: Text(document.id),
-                                        ),
-                                      );
-                                    }).toList(),
-                                  );
-                                },
-                              ),
-                            );
-                          });
-                    },
-                    text: teacherName == '' ? 'Select Teacher' : teacherName,
-                  ),
-                  const Spacer()
+                  // CustomButton(
+                  //   backColor: Colors.green,
+                  //   onTapHandler: () {
+                  //     showDialog(
+                  //         context: context,
+                  //         builder: (BuildContext context) {
+                  //           return AlertDialog(
+                  //             title: Center(child: Text("Teachers")),
+                  //             content: StreamBuilder<QuerySnapshot>(
+                  //               stream: FirebaseFirestore.instance
+                  //                   .collection('teachers')
+                  //                   .snapshots(), // path to collection of documents that is listened to as a stream
+                  //               builder: (context,
+                  //                   AsyncSnapshot<QuerySnapshot> snapshot) {
+                  //                 if (snapshot.hasError) {
+                  //                   return Text('Something went wrong');
+                  //                 }
+                  //                 if (snapshot.connectionState ==
+                  //                     ConnectionState.waiting) {
+                  //                   return Center(
+                  //                       child: CircularProgressIndicator());
+                  //                 }
+                  //                 return ListView(
+                  //                   shrinkWrap: true,
+                  //                   physics: ClampingScrollPhysics(),
+                  //                   children: snapshot.data!.docs
+                  //                       .map((DocumentSnapshot document) {
+                  //                     // Map<String, dynamic> data = document
+                  //                     //     .data()! as Map<String, dynamic>;
+                  //                     return GestureDetector(
+                  //                       onTap: () {
+                  //                         setState(() {
+                  //                           teacherName = document.id;
+                  //                         });
+                  //                       },
+                  //                       child: ListTile(
+                  //                         title: Text(document.id),
+                  //                       ),
+                  //                     );
+                  //                   }).toList(),
+                  //                 );
+                  //               },
+                  //             ),
+                  //           );
+                  //         });
+                  //   },
+                  //   text: teacherName == '' ? 'Select Teacher' : teacherName,
+                  // ),
+                  // const Spacer()
                 ],
               ),
               SizedBox(

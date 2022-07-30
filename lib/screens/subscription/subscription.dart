@@ -48,6 +48,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   }
 
   bool trialChecker() {
+    print(dateOfJoin);
     int days = DateTime.now().difference(DateTime.parse(dateOfJoin)).inDays;
     if (days >= 7) return false;
     return true;

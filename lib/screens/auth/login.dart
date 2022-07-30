@@ -5,6 +5,8 @@ import 'package:notes_app/screens/auth/signUp.dart';
 import 'package:notes_app/screens/tabs_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
+import 'ForgotPassScreen.dart';
+
 class Login extends StatefulWidget {
   static String routeName = 'login';
   Login({Key? key}) : super(key: key);
@@ -170,39 +172,49 @@ class _LoginState extends State<Login> {
                       SizedBox(
                         height: 40,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _signInFetching = true;
-                          });
-                          signIn(
-                              _emailController.text, _passwordController.text);
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.all(Dimensions.padding20 / 2),
-                          child: Container(
-                            width: double.infinity,
-                            height: 51,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(
-                                  Dimensions.borderRadius5),
-                            ),
-                            child: Center(
-                              child: _signInFetching
-                                  ? CircularProgressIndicator(
-                                      color: Colors.white,
-                                    )
-                                  : Text(
-                                      "Sign In",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _signInFetching = true;
+                              });
+                              signIn(
+                                  _emailController.text, _passwordController.text);
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(Dimensions.padding20 / 2),
+                              child: Container(
+                                width: double.infinity,
+                                height: 51,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.borderRadius5),
+                                ),
+                                child: Center(
+                                  child: _signInFetching
+                                      ? CircularProgressIndicator(
+                                          color: Colors.white,
+                                        )
+                                      : Text(
+                                          "Sign In",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          TextButton(onPressed: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>  ForgotPassScreen()),
+                            );
+                          }, child: Text("Forgot password"))
+                        ],
                       ),
                     ],
                   ),
