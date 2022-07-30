@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/models/practice_model.dart';
@@ -36,10 +36,9 @@ class _PracticeState extends State<Practice> {
   @override
   void initState() {
     getQuestions();
+    getUserEmail();
     super.initState();
   }
-
-
 
   bool isLoading = false;
 
@@ -71,8 +70,15 @@ class _PracticeState extends State<Practice> {
     return {};
   }
 
+  String userEmail = "";
   List<bool> correctOptions = [];
   List<String> options = [];
+  getUserEmail() async {
+    var email = await FirebaseAuth.instance.currentUser!.email;
+    setState(() {
+      userEmail = email!;
+    });
+  }
 
   @override
   void dispose() {
@@ -304,18 +310,22 @@ class _PracticeState extends State<Practice> {
                               CustomButton(
                                 backColor: Colors.purple,
                                 onTapHandler: () {
-                                  setState(() {
-                                    isVideoSolenabled = !isVideoSolenabled;
-                                  });
-
+                                  if (isCorrenctOptionChosen1 ||
+                                      isCorrenctOptionChosen2 ||
+                                      isCorrenctOptionChosen3 ||
+                                      isCorrenctOptionChosen4) {
+                                    setState(() {
+                                      isVideoSolenabled = !isVideoSolenabled;
+                                    });
+                                    flickManager = FlickManager(
+                                      videoPlayerController:
+                                          VideoPlayerController.network(
+                                        'https://github.com/GeekyAnts/flick-video-player-demo-videos/blob/master/example/the_valley_compressed.mp4?raw=true',
+                                        // closedCaptionFile: _loadCaptions(),
+                                      ),
+                                    );
+                                  }
                                   //Video Controller start
-                                  flickManager = FlickManager(
-                                    videoPlayerController:
-                                        VideoPlayerController.network(
-                                      'https://github.com/GeekyAnts/flick-video-player-demo-videos/blob/master/example/the_valley_compressed.mp4?raw=true',
-                                      // closedCaptionFile: _loadCaptions(),
-                                    ),
-                                  );
                                 },
                                 text: 'Video Solution',
                               ),
@@ -324,15 +334,20 @@ class _PracticeState extends State<Practice> {
                                 // backColor: Color(0xffFAD207),
                                 backColor: Colors.orange,
                                 text: 'Mark as Imp',
-                                onTapHandler:
-                                    _allSelectedChoices[questionNumber] == 0
-                                        ? () {}
-                                        : () {
-                                            setState(() {
-                                              _allSelectedChoices[
-                                                  questionNumber] = 2;
-                                            });
-                                          },
+                                onTapHandler:(){
+                                  // FirebaseFirestore.instance.collection("users").doc("dpbTests").collection()
+                                }
+                                    // _allSelectedChoices[questionNumber] == 0
+                                    //     ? () {}
+                                    //     : () {
+                                    //         setState(() {
+                                    //           _allSelectedChoices[
+                                    //               questionNumber] = 2;
+                                    //         });
+
+
+
+                                    //       },
                               ),
                               const Spacer(),
                             ],
