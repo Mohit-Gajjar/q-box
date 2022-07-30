@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/teacher/TeacherProfileScreen.dart';
 
 class FollowedTeachersScreen extends StatefulWidget {
   const FollowedTeachersScreen({Key? key}) : super(key: key);
@@ -53,6 +54,10 @@ class _FollowedTeachersScreenState extends State<FollowedTeachersScreen> {
               return ListTile(
                 title: Text(followedTeachersList[index].toString().split("@")[0]),
                 onTap: (() {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherProfileScreen(
+                    collectionPath: "teachers/${followedTeachersList[index]}",
+                    batchName: "",
+                  )));
                 }),
               );
             }));

@@ -49,7 +49,7 @@ class BatcheDetailsScreen extends StatelessWidget {
                 children: [
                   for (var teach in routeArgs['teachers'])
                     TeacherProfileCard(
-                        text: teach.toString(),
+                        collectionPath: teach.toString(),
                         batch: routeArgs['batchName'],
                         ),
                 ],

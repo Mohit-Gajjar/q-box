@@ -162,6 +162,8 @@ class _HomeState extends State<Home> {
                           imageUrl: data['imageUrl'],
                           title: data['title'],
                           likes: data['likes'],
+                          teacherEmail: data['uploadedTeacherEmail'],
+                          batchName: data['batchName'],
                         ),
                       );
                     }).toList(),
