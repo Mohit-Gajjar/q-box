@@ -9,10 +9,10 @@ import 'custom_button.dart';
 
 class TeacherProfileCard extends StatefulWidget {
   const TeacherProfileCard(
-      {Key? key, required this.text, required this.batch})
+      {Key? key, required this.collectionPath, required this.batch})
       : super(key: key);
 
-  final String text;
+  final String collectionPath;
   final String batch;
 
   @override
@@ -26,9 +26,11 @@ class _TeacherProfileCardState extends State<TeacherProfileCard> {
 
   @override
   Widget build(BuildContext context) {
-    int startIndex = widget.text.indexOf("(");
-    int endIndex = widget.text.indexOf(")", startIndex + 1);
-    final collectionPath = "${widget.text.substring(startIndex + 1, endIndex)}/informationToShowStudent";
+    int startIndex = widget.collectionPath.indexOf("(");
+    int endIndex = widget.collectionPath.indexOf(")", startIndex + 1);
+    final collectionPath = (startIndex==-1)
+        ?"${widget.collectionPath}/informationToShowStudent"
+        :"${widget.collectionPath.substring(startIndex + 1, endIndex)}/informationToShowStudent";
     print("----->>> ${collectionPath}");
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection(collectionPath).snapshots(),

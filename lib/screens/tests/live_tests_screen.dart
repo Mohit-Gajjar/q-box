@@ -7,44 +7,56 @@ import './test_start_screen.dart';
 import '../../helpers/helpers.dart';
 import '../../widgets/custom_button.dart';
 
-class LiveTestsScreen extends StatelessWidget {
-  LiveTestsScreen({Key? key}) : super(key: key);
+class LiveTestsScreen extends StatefulWidget {
+  LiveTestsScreen({Key? key, required this.tests}) : super(key: key);
+  final List tests;
   static const String routeName = '/live-tests-screen';
+
+  @override
+  State<LiveTestsScreen> createState() => _LiveTestsScreenState();
+}
+
+class _LiveTestsScreenState extends State<LiveTestsScreen> {
 
   final PageController _pageController = PageController();
 
-  Column page1(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: Dimensions.height10 * 8,
-          decoration: BoxDecoration(
-            color: Colors.yellow,
-            borderRadius: BorderRadius.circular(Dimensions.borderRadius15),
-          ),
-          child: Center(
-            child: Text(
-              'Test Name',
-              style: HelperFunctions.textStyleCard(),
+  Container page1(BuildContext context) {
+    return Container(
+      child: ListView.builder(
+        itemCount: widget.tests.length,
+        itemBuilder:(context, index)=> Column(
+          children: [
+            Container(
+              height: Dimensions.height10 * 8,
+              decoration: BoxDecoration(
+                color: Colors.yellow,
+                borderRadius: BorderRadius.circular(Dimensions.borderRadius15),
+              ),
+              child: Center(
+                child: Text(
+                  widget.tests[index],
+                  style: HelperFunctions.textStyleCard(),
+                ),
+              ),
             ),
-          ),
+            SizedBox(
+              height: Dimensions.height10 * 2.5,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: CustomButton(
+                backColor: Theme.of(context).primaryColor,
+                onTapHandler: () {
+                  _pageController.animateToPage(2,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeIn);
+                },
+                text: 'Take Test',
+              ),
+            )
+          ],
         ),
-        SizedBox(
-          height: Dimensions.height10 * 2.5,
-        ),
-        Align(
-          alignment: Alignment.center,
-          child: CustomButton(
-            backColor: Theme.of(context).primaryColor,
-            onTapHandler: () {
-              _pageController.animateToPage(2,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeIn);
-            },
-            text: 'Take Test',
-          ),
-        )
-      ],
+      ),
     );
   }
 

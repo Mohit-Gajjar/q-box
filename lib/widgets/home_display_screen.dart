@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/teacher/TeacherProfileScreen.dart';
 import 'package:notes_app/screens/video_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
@@ -6,13 +7,15 @@ class HomeDisplayScreen extends StatelessWidget {
   final String title;
   final String imageUrl;
   final String videoLink;
+  final String teacherEmail;
+  final String batchName;
   final int likes;
   const HomeDisplayScreen(
       {Key? key,
       required this.title,
       required this.imageUrl,
       required this.likes,
-      required this.videoLink})
+      required this.videoLink, required this.teacherEmail, required this.batchName})
       : super(key: key);
 
   @override
@@ -46,6 +49,14 @@ class HomeDisplayScreen extends StatelessWidget {
           children: [
             SizedBox(
               width: Dimensions.width15,
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherProfileScreen(collectionPath: "teachers/$teacherEmail", batchName: batchName)));
+              },
+              child: CircleAvatar(
+                child: Text(teacherEmail[0]),
+              ),
             ),
             SizedBox(
               width: Dimensions.width10 * 30,

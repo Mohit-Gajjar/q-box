@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/models/question_model.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
@@ -6,9 +8,59 @@ import '../../helpers/helpers.dart';
 import './completed_tests_screen.dart';
 import './live_tests_screen.dart';
 
-class FullLengthTestsScreen extends StatelessWidget {
+class FullLengthTestsScreen extends StatefulWidget {
   const FullLengthTestsScreen({Key? key}) : super(key: key);
   static const String routeName = '/full-length-screen';
+
+  @override
+  State<FullLengthTestsScreen> createState() => _FullLengthTestsScreenState();
+}
+
+class _FullLengthTestsScreenState extends State<FullLengthTestsScreen> {
+  List liveTest = [];
+
+  List cmptTest=[];
+  @override
+  void initState() {
+    getFullLengthTests();
+    super.initState();
+  }
+
+  void getFullLengthTests(){
+    FirebaseFirestore.instance.collection("fullLengthTest").get().then((docSnapshot){
+      docSnapshot.docs.forEach((snapshot) {
+        var data = snapshot.data();
+        // print(snapshot.data()['id']);
+        // QuestionModel qn = new QuestionModel(
+        //     id : snapshot.data()['id'],
+        //     question : snapshot.data()['question'],
+        //     description : snapshot.data()['description'],
+        //     // answers :
+        //     // json['answers'] != null ? new Answers.fromJson(json['answers']) : null,
+        //     // multipleCorrectAnswers : json['multiple_correct_answers'],
+        //     // correctAnswers : json['correct_answers'] != null
+        //     //     ? new CorrectAnswers.fromJson(json['correct_answers'])
+        //     //     : null,
+        //     correctAnswer : snapshot.data()['correct_answer'],
+        //     explanation : snapshot.data()['explanation'],
+        //     tip : snapshot.data()['tip'],
+        //     tags : snapshot.data()['tags'].cast<String>(),
+        //     category : snapshot.data()['category'],
+        //     difficulty : snapshot.data()['difficulty'],
+        //     chapterName : snapshot.data()['chapterName']
+        // );
+        // print(qn.difficulty);
+        if(DateTime.now().difference(DateTime.parse(data['examTime'])).inDays < 3){
+              cmptTest.add(data["testName"]);
+        }
+        else{
+          liveTest.add(data["testName"]);
+        }
+      });
+
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +90,7 @@ class FullLengthTestsScreen extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.of(context).pushNamed(LiveTestsScreen.routeName);
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LiveTestsScreen(tests: liveTest)));
                 },
                 child: Container(
                   height: Dimensions.height10 * 20,
@@ -59,8 +111,8 @@ class FullLengthTestsScreen extends StatelessWidget {
                 height: Dimensions.height10 * 2,
               ),
               GestureDetector(
-                onTap: () => Navigator.of(context)
-                    .pushNamed(CompletedTestsScreen.routeName),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CompletedTestsScreen(tests: cmptTest))),
+
                 child: Container(
                   height: Dimensions.height10 * 20,
                   decoration: BoxDecoration(

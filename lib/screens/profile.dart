@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/provider/get_user_details.dart';
 import 'package:notes_app/helpers/auth_path.dart';
+import 'package:notes_app/screens/anotherCourse/AnotherCourseScreen.dart';
 import 'package:notes_app/screens/followedTeachers/followedTeachersScreen.dart';
 import 'package:notes_app/screens/analytics/analytic.dart';
 import 'package:notes_app/utilities/dimensions.dart';
@@ -192,12 +193,12 @@ class _ProfileState extends State<Profile> {
                 ),
                 title: Text('Analytics'),
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.settings,
-                ),
-                title: Text('Coins'),
-              ),
+              // ListTile(
+              //   leading: Icon(
+              //     Icons.settings,
+              //   ),
+              //   title: Text('Coins'),
+              // ),
               ListTile(
                 onTap: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => ActiveCourses())),
@@ -205,6 +206,14 @@ class _ProfileState extends State<Profile> {
                   Icons.class_,
                 ),
                 title: Text('Active Courses'),
+              ),
+              ListTile(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AnotherCourseScreen())),
+                leading: Icon(
+                  Icons.add_box_rounded,
+                ),
+                title: Text('Add another course'),
               ),
               ListTile(
                 onTap: ()=> Navigator.push(context, MaterialPageRoute(builder:(context) => FollowedTeachersScreen() )),

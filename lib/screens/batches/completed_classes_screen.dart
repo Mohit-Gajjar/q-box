@@ -44,7 +44,7 @@ class _CompletedClassesScreenState extends State<CompletedClassesScreen> {
                           videoLink: singleVideo.videoLink!,
                           title: singleVideo.title!,
                           imageUrl: singleVideo.imageUrl!,
-                          likes: singleVideo.likes!),
+                          likes: singleVideo.likes!, batchName: '', teacherEmail: '',),
                   ],
                 ),
               ),

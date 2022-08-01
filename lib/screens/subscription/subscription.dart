@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:notes_app/screens/course/aboutCourse.dart';
 import 'package:notes_app/screens/payments/payment_option.dart';
 
 class SubscriptionPage extends StatefulWidget {
@@ -48,6 +49,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   }
 
   bool trialChecker() {
+    print(dateOfJoin);
     int days = DateTime.now().difference(DateTime.parse(dateOfJoin)).inDays;
     if (days >= 7) return false;
     return true;
@@ -77,11 +79,20 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               )
             : Expanded(
                 child: ListView.builder(
+                  shrinkWrap: true,
                     itemCount: selectedCourses.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        title: Text("${index + 1}). " +
-                            selectedCourses[index].toString().split("@")[0]),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("${index + 1}). " +
+                                selectedCourses[index].toString().split("@")[0]),
+                            IconButton(onPressed: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AboutCoursePage(desc: "Sample desc")));
+                            }, icon: Icon(Icons.info))
+                          ],
+                        ),
                         onTap: (() {
                           (showPayment(selectedCourses[index]
                                   .toString()
