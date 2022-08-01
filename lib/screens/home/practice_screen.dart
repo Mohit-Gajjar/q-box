@@ -26,6 +26,8 @@ class _PracticeState extends State<Practice> {
   bool isCorrenctOptionChosen3 = false;
   bool isCorrenctOptionChosen4 = false;
   bool isVideoSolenabled = false;
+  int totalMarks = 0;
+  bool open =false;
   bool isSliderOpen = true;
   final List<int> _allSelectedChoices = List.filled(20, 0);
   PracticeModel? practiceModel;
@@ -33,9 +35,24 @@ class _PracticeState extends State<Practice> {
   Map<String, dynamic>? _userQuestions = {};
   Map<String, dynamic>? _options = {};
   Map<String, dynamic>? _correctAnswers = {};
+  List<int> marks=[];
+  List<int> counts=[];
+  List<Color> colors = [];
+  void initializeMarksCounts(int n){
+    for(int i=0;i<n;i++){
+      setState(() {
+        marks.add(0);
+        counts.add(0);
+        colors.add(Colors.grey);
+      });
+    }
+  }
   @override
   void initState() {
-    getQuestions();
+    getQuestions().then((value){
+      print(_userQuestions!.keys.length);
+      initializeMarksCounts(_userQuestions!.keys.length);
+    });
     getUserEmail();
     super.initState();
   }
@@ -132,6 +149,7 @@ class _PracticeState extends State<Practice> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
+                          (open)?Text("TOTAL MARKS : $totalMarks"):SizedBox(),
                           FadeInUp(
                             from: 50,
                             duration: const Duration(milliseconds: 375),
@@ -170,6 +188,12 @@ class _PracticeState extends State<Practice> {
                           OptionsTile(0, context, () {
                             if (correctOptions[1] == true) {
                               setState(() {
+                                counts[questionNumber-1]++;
+                                print("count${questionNumber-1} ${counts[questionNumber-1]}");
+                                if(counts[questionNumber-1]==1){
+                                  marks[questionNumber - 1]++;
+                                }
+                                print("marks${questionNumber-1} ${marks[questionNumber-1]}");
                                 isCorrenctOptionChosen1 = true;
                               });
                               showCustomSnackbar(
@@ -178,6 +202,13 @@ class _PracticeState extends State<Practice> {
                                 context: context,
                               );
                             } else {
+                              setState(() {
+                                counts[questionNumber-1]++;
+                                if(counts[questionNumber-1]==1){
+                                  marks[questionNumber - 1]--;
+                                }
+                                isCorrenctOptionChosen1 = true;
+                              });
                               showCustomSnackbar(
                                 text: 'Wrong',
                                 icon: Icons.close,
@@ -186,11 +217,15 @@ class _PracticeState extends State<Practice> {
                             }
                           },
                               isCorrenctOptionChosen1
-                                  ? Colors.green
+                                  ? (correctOptions[1])?Colors.green:Colors.red
                                   : Colors.white),
                           OptionsTile(1, context, () {
                             if (correctOptions[2] == true) {
                               setState(() {
+                                counts[questionNumber-1]++;
+                                if(counts[questionNumber-1]==1){
+                                  marks[questionNumber - 1]++;
+                                }
                                 isCorrenctOptionChosen2 = true;
                               });
                               showCustomSnackbar(
@@ -199,6 +234,13 @@ class _PracticeState extends State<Practice> {
                                 context: context,
                               );
                             } else {
+                              setState(() {
+                                counts[questionNumber-1]++;
+                                if(counts[questionNumber-1]==1){
+                                  marks[questionNumber - 1]--;
+                                }
+                                isCorrenctOptionChosen2 = true;
+                              });
                               showCustomSnackbar(
                                 text: 'Wrong',
                                 icon: Icons.close,
@@ -207,11 +249,15 @@ class _PracticeState extends State<Practice> {
                             }
                           },
                               isCorrenctOptionChosen2
-                                  ? Colors.green
+                                  ? (correctOptions[2])?Colors.green:Colors.red
                                   : Colors.white),
                           OptionsTile(2, context, () {
                             if (correctOptions[3] == true) {
                               setState(() {
+                                counts[questionNumber-1]++;
+                                if(counts[questionNumber-1]==1){
+                                  marks[questionNumber - 1]++;
+                                }
                                 isCorrenctOptionChosen3 = true;
                               });
                               showCustomSnackbar(
@@ -220,6 +266,13 @@ class _PracticeState extends State<Practice> {
                                 context: context,
                               );
                             } else {
+                              setState(() {
+                                counts[questionNumber-1]++;
+                                if(counts[questionNumber-1]==1){
+                                  marks[questionNumber - 1]--;
+                                }
+                                isCorrenctOptionChosen3 = true;
+                              });
                               showCustomSnackbar(
                                 text: 'Wrong',
                                 icon: Icons.close,
@@ -228,11 +281,15 @@ class _PracticeState extends State<Practice> {
                             }
                           },
                               isCorrenctOptionChosen3
-                                  ? Colors.green
+                                  ? (correctOptions[3])?Colors.green:Colors.red
                                   : Colors.white),
                           OptionsTile(3, context, () {
                             if (correctOptions[4] == true) {
                               setState(() {
+                                counts[questionNumber-1]++;
+                                if(counts[questionNumber-1]==1){
+                                  marks[questionNumber - 1]++;
+                                }
                                 isCorrenctOptionChosen4 = true;
                               });
                               showCustomSnackbar(
@@ -241,6 +298,13 @@ class _PracticeState extends State<Practice> {
                                 context: context,
                               );
                             } else {
+                              setState(() {
+                                counts[questionNumber-1]++;
+                                if(counts[questionNumber-1]==1){
+                                  marks[questionNumber - 1]--;
+                                }
+                                isCorrenctOptionChosen4 = true;
+                              });
                               showCustomSnackbar(
                                 text: 'Wrong',
                                 icon: Icons.close,
@@ -249,7 +313,7 @@ class _PracticeState extends State<Practice> {
                             }
                           },
                               isCorrenctOptionChosen4
-                                  ? Colors.green
+                                  ? (correctOptions[4])?Colors.green:Colors.red
                                   : Colors.white),
                           SizedBox(
                             height: Dimensions.height10 * 2,
@@ -284,9 +348,7 @@ class _PracticeState extends State<Practice> {
                                             ),
                                             child: CircleAvatar(
                                               backgroundColor:
-                                                  HelperFunctions.getColor(
-                                                _allSelectedChoices[idx],
-                                              ),
+                                                  colors[questionNumber-1],
                                               child: Center(
                                                   child: Text(
                                                 '${idx + 1}',
@@ -301,6 +363,11 @@ class _PracticeState extends State<Practice> {
                                   )
                                 : null,
                           ),
+                          SizedBox(
+                            height: Dimensions.height10 * 1.6,
+                          ),
+                          Center(child: Text("obtained mark : ${(marks.isEmpty)?"0"
+                              :marks[questionNumber-1].toString()}"),),
                           SizedBox(
                             height: Dimensions.height10 * 1.6,
                           ),
@@ -335,7 +402,9 @@ class _PracticeState extends State<Practice> {
                                 backColor: Colors.orange,
                                 text: 'Mark as Imp',
                                 onTapHandler:(){
-                                  // FirebaseFirestore.instance.collection("users").doc("dpbTests").collection()
+                                  setState(() {
+                                    colors[questionNumber-1]=Colors.orange;
+                                  });
                                 }
                                     // _allSelectedChoices[questionNumber] == 0
                                     //     ? () {}
@@ -379,8 +448,12 @@ class _PracticeState extends State<Practice> {
                               CustomButton(
                                 backColor: const Color(0xff000088),
                                 onTapHandler: () {
-                                  if (_userQuestions!.keys.toList().length >=
+                                  if (_userQuestions!.keys.toList().length >
                                       questionNumber) {
+                                    setState(() {
+                                      colors[questionNumber-1]=(marks[questionNumber-1]==1)?Colors.green:Colors.red;
+                                    });
+                                    print("${questionNumber-1} --> ${colors[questionNumber-1].toString()}");
                                     setState(() {
                                       questionNumber++;
                                       isCorrenctOptionChosen1 = false;
@@ -389,6 +462,15 @@ class _PracticeState extends State<Practice> {
                                       isCorrenctOptionChosen4 = false;
                                       isVideoSolenabled = false;
                                     });
+                                  }
+                                  else{
+                                    setState(() {
+                                      marks.forEach((i) {
+                                        totalMarks = totalMarks + i;
+                                      });
+                                      open=true;
+                                    });
+                                    print(totalMarks);
                                   }
                                 },
                                 text: 'Next',
