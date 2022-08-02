@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/provider/get_user_details.dart';
 import 'package:notes_app/helpers/auth_path.dart';
 import 'package:notes_app/screens/anotherCourse/AnotherCourseScreen.dart';
+import 'package:notes_app/screens/doubtSolving.dart';
 import 'package:notes_app/screens/followedTeachers/followedTeachersScreen.dart';
 import 'package:notes_app/screens/analytics/analytic.dart';
 import 'package:notes_app/utilities/dimensions.dart';
@@ -214,6 +215,14 @@ class _ProfileState extends State<Profile> {
                   Icons.add_box_rounded,
                 ),
                 title: Text('Add another course'),
+              ),
+              ListTile(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DoubtSolvingScreen())),
+                leading: Icon(
+                  Icons.add_box_rounded,
+                ),
+                title: Text('Doubt Solving'),
               ),
               ListTile(
                 onTap: ()=> Navigator.push(context, MaterialPageRoute(builder:(context) => FollowedTeachersScreen() )),
