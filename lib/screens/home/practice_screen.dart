@@ -8,6 +8,7 @@ import 'package:notes_app/utilities/dimensions.dart';
 import 'package:video_player/video_player.dart';
 import '../../helpers/helpers.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/testTimer.dart';
 
 class Practice extends StatefulWidget {
   final String subjectName, chapter;
@@ -150,6 +151,7 @@ class _PracticeState extends State<Practice> {
                       child: Column(
                         children: [
                           (open)?Text("TOTAL MARKS : $totalMarks"):SizedBox(),
+                          TestTimer(),
                           FadeInUp(
                             from: 50,
                             duration: const Duration(milliseconds: 375),

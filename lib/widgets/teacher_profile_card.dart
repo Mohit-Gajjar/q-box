@@ -110,7 +110,7 @@ class _TeacherProfileCardState extends State<TeacherProfileCard> {
                   backColor: Colors.pink,
                   onTapHandler: () async{
                     await FirebaseFirestore.instance.collection("users").doc(user?.email).set(
-                        {"followedTeachers":FieldValue.arrayUnion([snapshot.data!.docs[0]['name']])},
+                        {"followedTeachers":FieldValue.arrayUnion([snapshot.data!.docs[0]['email']])},
                         SetOptions(merge: true)
                     ).then((value){
                       Fluttertoast.showToast(msg: "Followed!");

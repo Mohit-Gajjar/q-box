@@ -23,11 +23,13 @@ class _ActiveCoursesState extends State<ActiveCourses> {
     setState(() {
       userEmail = user.email!;
     });
-    getSelectedCourses();
+    getPurchasedCourse();
+    getTrialCourses();
   }
 
-  List selectedCourses = [];
-  void getSelectedCourses() async {
+  List purchasedCourse = [];
+  List trialCourse = [];
+  void getPurchasedCourse() async {
     FirebaseFirestore.instance
         .collection('users')
         .doc(userEmail)
@@ -35,10 +37,80 @@ class _ActiveCoursesState extends State<ActiveCourses> {
         .then((value) {
       Map<String, dynamic>? data = value.data();
       setState(() {
-        selectedCourses = data!['selectedCourse'] as List;
+        purchasedCourse = data!['purchasedCourse'] as List;
       });
-      print(selectedCourses);
+      print(purchasedCourse);
     });
+  }
+
+  void getTrialCourses() async {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userEmail)
+        .get()
+        .then((value) {
+      Map<String, dynamic>? data = value.data();
+      setState(() {
+        trialCourse = data!['trialCourse'] as List;
+      });
+      print(trialCourse);
+    });
+  }
+
+  Widget purchasedListTile(){
+    return ListView.builder(
+      shrinkWrap: true,
+        itemCount: purchasedCourse.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("ID : ${purchasedCourse[index]['cid']})  |  " +
+                        purchasedCourse[index]['courseName'].toString()),
+                    Text("duration : ${purchasedCourse[index]['duration']}")
+                  ],
+                ),
+                Text("Amount paid : ${purchasedCourse[index]['amount']}"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text("Date of purchase : ${purchasedCourse[index]['dateOfPurchase']}")
+                  ],
+                )
+              ],
+            ),
+            onTap: (() {
+            }),
+          );
+        });
+  }
+
+  Widget trialListTile(){
+    return ListView.builder(
+      shrinkWrap: true,
+        itemCount: trialCourse.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("ID : ${trialCourse[index]['cid']})  |  " +
+                        trialCourse[index]['courseName']),
+                    Text("Duration : 7 DAYS")
+                  ],
+                ),
+                Text("TRIAL COURSE"),
+              ],
+            ),
+            onTap: (() {
+            }),
+          );
+        });
   }
 
   @override
@@ -47,14 +119,15 @@ class _ActiveCoursesState extends State<ActiveCourses> {
         appBar: AppBar(
           title: Text('Active Courses'),
         ),
-        body: ListView.builder(
-            itemCount: selectedCourses.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(selectedCourses[index].toString().split("@")[0]),
-                onTap: (() {
-                }),
-              );
-            }));
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Purchased Course : "),
+            purchasedListTile(),
+            Text("Trial Course : "),
+            trialListTile()
+          ],
+        )
+    );
   }
 }

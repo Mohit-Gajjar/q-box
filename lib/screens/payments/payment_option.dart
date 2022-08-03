@@ -17,6 +17,7 @@ class _PaymentOptionState extends State<PaymentOption> {
   @override
   void initState() {
     getData();
+
     super.initState();
   }
 
@@ -253,6 +254,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                                             price: courseDurationPrice[0],
                                                             selectedCourse:
                                                                 widget.courseName,
+                                                            duration: courseDuration[0],
                                                           ))));
                                             },
                                             child: Text('Pay Now'),
@@ -350,6 +352,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                                             price: courseDurationPrice[1],
                                                             selectedCourse:
                                                             widget.courseName,
+                                                            duration: courseDuration[1],
                                                           ))));
                                             },
                                             child: Text('Pay Now'),
@@ -447,6 +450,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                                             price: courseDurationPrice[2],
                                                             selectedCourse:
                                                             widget.courseName,
+                                                            duration: courseDuration[2],
                                                           ))));
                                             },
                                             child: Text('Pay Now'),
@@ -544,6 +548,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                                             price: courseDurationPrice[3],
                                                             selectedCourse:
                                                             widget.courseName,
+                                                            duration: courseDuration[3],
                                                           ))));
                                             },
                                             child: Text('Pay Now'),
