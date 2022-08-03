@@ -127,6 +127,7 @@ class JoinMeetingState extends State<JoinMeeting> {
     options.videoMuted = isVideoMuted;
     options.featureFlags.addAll(featureFlags);
 
+
     featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
     options.iosAppBarRGBAColor = "#0080FF80";
     options.webOptions = {

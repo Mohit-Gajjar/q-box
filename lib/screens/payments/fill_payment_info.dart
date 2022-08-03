@@ -11,9 +11,10 @@ import 'package:notes_app/utilities/dimensions.dart';
 
 class FillPaymentInformation extends StatefulWidget {
   final String selectedCourse, price;
+  final String duration;
   const
   FillPaymentInformation(
-      {Key? key, required this.selectedCourse, required this.price})
+      {Key? key, required this.selectedCourse, required this.price, required this.duration})
       : super(key: key);
 
   @override
@@ -75,7 +76,7 @@ class _FillPaymentInformationState extends State<FillPaymentInformation> {
     //   hash,
     // );
 
-    initializePayment(_userData['email'], _userData['firstName'], _userData['phone'].toString().replaceFirst("91", ""), widget.price, widget.selectedCourse);
+    initializePayment(_userData['email'], _userData['firstName'], _userData['phone'].toString().replaceFirst("91", ""), widget.price, widget.selectedCourse, widget.duration);
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 import '../../helpers/helpers.dart';
+import '../../initFunctions.dart';
 import '../../widgets/custom_button.dart';
 
 class LevelUpTestsScreen extends StatefulWidget {
@@ -290,9 +291,22 @@ class GetTestName extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return ListTile(
+          bool flag = false;
+          for(int i=0;i<gTrialCourse.length;i++){
+
+            if(data['cid']==gTrialCourse[i]['cid']){
+              flag = true;
+            }
+          }
+          for(int i=0;i<gPurchasedCourse.length;i++){
+            if(data['cid']==gPurchasedCourse[i]['cid']){
+              flag = true;
+            }
+          }
+          print("${data['cid']} -- $flag");
+          return(flag)? ListTile(
             title: data['subjectName'],
-          );
+          ):SizedBox(width: 0,height: 0,);
         });
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/teacher/teacherReview.dart';
 import 'package:notes_app/widgets/teacher_profile_card.dart';
 
 import '../../widgets/appbar_actions.dart';
@@ -32,7 +33,10 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
               padding: const EdgeInsets.all(12.0),
               child: TeacherProfileCard(collectionPath: widget.collectionPath, batch: widget.batchName),
 
-            )
+            ),
+            TextButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherReviewScreen()));
+            }, child: Text("Review"))
           ],
         ),
       ),

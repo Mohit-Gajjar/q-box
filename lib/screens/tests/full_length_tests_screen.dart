@@ -5,6 +5,7 @@ import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
 import '../../helpers/helpers.dart';
+import '../../initFunctions.dart';
 import './completed_tests_screen.dart';
 import './live_tests_screen.dart';
 
@@ -54,7 +55,20 @@ class _FullLengthTestsScreenState extends State<FullLengthTestsScreen> {
               cmptTest.add(data["testName"]);
         }
         else{
-          liveTest.add(data["testName"]);
+          bool flag = false;
+          for(int i=0;i<gTrialCourse.length;i++){
+
+            if(data['cid']==gTrialCourse[i]['cid']){
+              flag = true;
+            }
+          }
+          for(int i=0;i<gPurchasedCourse.length;i++){
+            if(data['cid']==gPurchasedCourse[i]['cid']){
+              flag = true;
+            }
+          }
+          print("${data['cid']} -- $flag");
+          if(flag)liveTest.add(data["testName"]);
         }
       });
 

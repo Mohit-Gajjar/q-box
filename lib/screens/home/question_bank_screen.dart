@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/screens/home/practice_screen.dart';
 import 'package:notes_app/screens/payments/payment_option.dart';
 import 'package:notes_app/utilities/dimensions.dart';
+import '../../initFunctions.dart';
 import '../../widgets/custom_button.dart';
 
 class QuestionsBank extends StatefulWidget {
@@ -57,8 +58,21 @@ class _QuestionsBankState extends State<QuestionsBank> {
                             Map<String, dynamic> data =
                                 snapshot.data!.docs[index].data()!
                                     as Map<String, dynamic>;
+                            bool flag = false;
+                            for(int i=0;i<gTrialCourse.length;i++){
 
-                            return ListTile(
+                              if(data['cid']==gTrialCourse[i]['cid']){
+                                flag = true;
+                              }
+                            }
+                            for(int i=0;i<gPurchasedCourse.length;i++){
+                              if(data['cid']==gPurchasedCourse[i]['cid']){
+                                flag = true;
+                              }
+                            }
+                            print("${data['cid']} -- $flag");
+
+                            return (flag)?ListTile(
                               title: Text(data['subject']),
                               onTap: () {
                                 showDialog(
@@ -69,38 +83,17 @@ class _QuestionsBankState extends State<QuestionsBank> {
                                         content: Container(
                                             width: Dimensions.height10,
                                             child: StreamBuilder(
-                                                stream: FirebaseFirestore
-                                                    .instance
-                                                    .collection('practice')
-                                                    .where("subject",
-                                                        isEqualTo:
-                                                            data['subject'])
-                                                    .snapshots(),
-                                                builder: (BuildContext context,
-                                                    AsyncSnapshot<QuerySnapshot>
-                                                        snapshot) {
+                                                stream: FirebaseFirestore.instance.collection('practice').where("subject", isEqualTo: data['subject']).snapshots(),
+                                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                                                   return snapshot.hasData
                                                       ? ListView.builder(
                                                           shrinkWrap: true,
-                                                          physics:
-                                                              ClampingScrollPhysics(),
-                                                          itemCount: snapshot
-                                                              .data!
-                                                              .docs
-                                                              .length,
-                                                          itemBuilder:
-                                                              (BuildContext
-                                                                      context,
-                                                                  int index) {
-                                                            Map<String, dynamic>
-                                                                data1 = snapshot
-                                                                        .data!
+                                                          physics: ClampingScrollPhysics(),
+                                                          itemCount: snapshot.data!.docs.length,
+                                                          itemBuilder: (BuildContext context, int index) {
+                                                            Map<String, dynamic> data1 = snapshot.data!
                                                                         .docs[index]
-                                                                        .data()!
-                                                                    as Map<
-                                                                        String,
-                                                                        dynamic>;
-                                                            print('chapter');
+                                                                        .data()! as Map<String, dynamic>;
                                                             return ListTile(
                                                                 title: Text(data1[
                                                                     'chapter']),
@@ -121,7 +114,7 @@ class _QuestionsBankState extends State<QuestionsBank> {
                                       );
                                     });
                               },
-                            );
+                            ):SizedBox(height: 0,width: 0,);
                           });
                     }),
                 const Spacer(),

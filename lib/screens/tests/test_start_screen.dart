@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/utilities/dimensions.dart';
+import 'package:notes_app/widgets/testTimer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../helpers/helpers.dart';
@@ -46,6 +47,7 @@ class _TestStartScreenState extends State<TestStartScreen> {
         child: Stack(
           alignment: Alignment.center,
           children: [
+
             Container(
               margin: EdgeInsets.only(
                   left: Dimensions.width10 * 1.8,
@@ -54,6 +56,7 @@ class _TestStartScreenState extends State<TestStartScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    TestTimer(),
                     Card(
                       elevation: 0.0,
                       shape: RoundedRectangleBorder(

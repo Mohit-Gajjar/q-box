@@ -59,6 +59,17 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     if (!trialChecker() && mode == "unpaid") return true;
     return false;
   }
+  
+  void purchaseOnTrial(String cid, String courseName){
+    print("users/$userEmail");
+    FirebaseFirestore.instance.collection("users").doc(userEmail).set(
+      {"trialCourse": FieldValue.arrayUnion([
+        {"cid":cid, "courseName":courseName}
+      ])}, SetOptions(merge: true)
+    ).then((value){
+      Fluttertoast.showToast(msg: "Can be accessed");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,24 +97,22 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("${index + 1}). " +
-                                selectedCourses[index].toString().split("@")[0]),
+                            Text("ID : ${selectedCourses[index]['cid']}  |  " +
+                                selectedCourses[index]['courseName'].toString().split("@")[0]),
                             IconButton(onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>AboutCoursePage(desc: "Sample desc")));
                             }, icon: Icon(Icons.info))
                           ],
                         ),
                         onTap: (() {
-                          (showPayment(selectedCourses[index]
-                                  .toString()
-                                  .split("@")[1]))
+                          (!trialChecker())
                               ? Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => PaymentOption(
-                                            courseName: selectedCourses[index],
+                                            courseName: "${selectedCourses[index]['cid']}***${selectedCourses[index]['courseName']}",
                                           )))
-                              : Fluttertoast.showToast(msg: "Can be accessed");
+                              : purchaseOnTrial(selectedCourses[index]['cid'], selectedCourses[index]['courseName']);
                         }),
                       );
                     }),
