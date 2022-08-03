@@ -5,6 +5,8 @@ import 'package:notes_app/models/live.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
+import '../../initFunctions.dart';
+
 class LiveClassesScreen extends StatelessWidget {
   const LiveClassesScreen({Key? key}) : super(key: key);
   static const String routeName = '/live-classes-screen';
@@ -53,7 +55,20 @@ class LiveClassesScreen extends StatelessWidget {
                         Map<String, dynamic> data = snapshot.data!.docs[index]
                             .data() as Map<String, dynamic>;
                         bool isLive = data['live'] as bool;
-                        return ListTile(
+                        bool flag = false;
+                        for(int i=0;i<gTrialCourse.length;i++){
+
+                          if(data['cid']==gTrialCourse[i]['cid']){
+                            flag = true;
+                          }
+                        }
+                        for(int i=0;i<gPurchasedCourse.length;i++){
+                          if(data['cid']==gPurchasedCourse[i]['cid']){
+                            flag = true;
+                          }
+                        }
+                        print("${data['cid']} -- $flag");
+                        return (flag)?ListTile(
                           onTap: () {
                             if (isLive) {
                               Navigator.push(
@@ -73,7 +88,7 @@ class LiveClassesScreen extends StatelessWidget {
                             data['title'],
                           ),
                           subtitle: Text(data['course']),
-                        );
+                        ):SizedBox(height: 0,width: 0);
                       })
                   : Center(
                       child: CircularProgressIndicator(),

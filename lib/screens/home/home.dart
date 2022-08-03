@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:notes_app/initFunctions.dart';
 import 'package:notes_app/screens/batches/live_classes_screen.dart';
 import 'package:notes_app/screens/course/select_course.dart';
 import 'package:notes_app/utilities/dimensions.dart';
@@ -15,7 +16,6 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
-
 class _HomeState extends State<Home> {
   List category = [
     'Select Course',
@@ -33,7 +33,14 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     getUserEmail();
+    initFunctions();
     super.initState();
+  }
+  initFunctions() {
+    setState(() {
+      getPurchasedCourse();
+      getTrialCourses();
+    });
   }
 
   String userEmail = "";
@@ -60,6 +67,7 @@ class _HomeState extends State<Home> {
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,13 +113,12 @@ class _HomeState extends State<Home> {
                                       Map<String, dynamic> courses =
                                           data['courses']
                                               as Map<String, dynamic>;
-
                                       return CourseTile(
                                         title: document.id.toUpperCase(),
                                         subtitle: courses.keys.toList(),
                                         paymentOptions: courses,
                                         email: userEmail,
-                                        selectedCourses: selectedCourses,
+                                        selectedCourses: selectedCourses, courses: courses,
                                       );
                                     }).toList(),
                                   ),
@@ -218,6 +225,7 @@ class _CategoryStyleSelectCourseState extends State<CategoryStyleSelectCourse> {
 class CourseTile extends StatelessWidget {
   final String title;
   final List subtitle;
+  final Map courses;
   final String email;
   final Map<String, dynamic> paymentOptions;
   final List selectedCourses;
@@ -227,7 +235,7 @@ class CourseTile extends StatelessWidget {
       required this.subtitle,
       required this.paymentOptions,
       required this.email,
-      required this.selectedCourses})
+      required this.selectedCourses, required this.courses})
       : super(key: key);
 
   @override
@@ -250,8 +258,9 @@ class CourseTile extends StatelessWidget {
                       return ListTile(
                         title: Text(subtitle[index]),
                         onTap: () {
+                          print(courses[subtitle[index]]);
                           selectedCourses
-                              .add(subtitle[index] + "@unpaid" + "@" + title);
+                              .add(courses[subtitle[index]]);
                           FirebaseFirestore.instance
                               .collection('users')
                               .doc(email)

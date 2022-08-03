@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/initFunctions.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 import './batch_details_screen.dart';
@@ -58,13 +59,27 @@ class _BatchesScreenState extends State<BatchesScreen> {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       }
+
                       return ListView.builder(
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             Map<String, dynamic>? data =
-                                snapshot.data!.docs[index].data()
-                                    as Map<String, dynamic>;
-                            return BatchNameListTile(
+                            snapshot.data!.docs[index].data()
+                            as Map<String, dynamic>;
+                            bool flag = false;
+                            for(int i=0;i<gTrialCourse.length;i++){
+
+                              if(data['cid']==gTrialCourse[i]['cid']){
+                                flag = true;
+                              }
+                            }
+                            for(int i=0;i<gPurchasedCourse.length;i++){
+                              if(data['cid']==gPurchasedCourse[i]['cid']){
+                                flag = true;
+                              }
+                            }
+                            print("${data['cid']} -- $flag");
+                            return(flag)? BatchNameListTile(
                               batchName: data['batchName'] as String,
                               onTapHandler: () {
                                 Navigator.of(context).pushNamed(
@@ -74,7 +89,7 @@ class _BatchesScreenState extends State<BatchesScreen> {
                                       'teachers': data['teachers'].toList(),
                                     });
                               },
-                            );
+                            ):SizedBox(height: 0,width: 0,);
                           },
                           itemCount: snapshot.data!.docs.length);
                       // return ListView(

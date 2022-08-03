@@ -68,7 +68,7 @@ class _ActiveCoursesState extends State<ActiveCourses> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("ID : ${purchasedCourse[index]['cid']})  |  " +
+                    Text("ID : ${purchasedCourse[index]['cid']}  |  " +
                         purchasedCourse[index]['courseName'].toString()),
                     Text("duration : ${purchasedCourse[index]['duration']}")
                   ],
@@ -99,7 +99,7 @@ class _ActiveCoursesState extends State<ActiveCourses> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("ID : ${trialCourse[index]['cid']})  |  " +
+                    Text("ID : ${trialCourse[index]['cid']}  |  " +
                         trialCourse[index]['courseName']),
                     Text("Duration : 7 DAYS")
                   ],

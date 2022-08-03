@@ -61,10 +61,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   }
   
   void purchaseOnTrial(String cid, String courseName){
-    FirebaseFirestore.instance.collection("users/$userEmail").add(
+    print("users/$userEmail");
+    FirebaseFirestore.instance.collection("users").doc(userEmail).set(
       {"trialCourse": FieldValue.arrayUnion([
         {"cid":cid, "courseName":courseName}
-      ])}
+      ])}, SetOptions(merge: true)
     ).then((value){
       Fluttertoast.showToast(msg: "Can be accessed");
     });
@@ -96,7 +97,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("ID : ${selectedCourses[index]['cid']})  |  " +
+                            Text("ID : ${selectedCourses[index]['cid']}  |  " +
                                 selectedCourses[index]['courseName'].toString().split("@")[0]),
                             IconButton(onPressed: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>AboutCoursePage(desc: "Sample desc")));
