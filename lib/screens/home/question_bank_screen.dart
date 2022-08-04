@@ -59,62 +59,103 @@ class _QuestionsBankState extends State<QuestionsBank> {
                                 snapshot.data!.docs[index].data()!
                                     as Map<String, dynamic>;
                             bool flag = false;
-                            for(int i=0;i<gTrialCourse.length;i++){
-
-                              if(data['cid']==gTrialCourse[i]['cid']){
+                            int length2 = 0;
+                            int length3 = 0;
+                            // ignore: unnecessary_null_comparison
+                            if (gTrialCourse != null &&
+                                // ignore: unnecessary_null_comparison
+                                gPurchasedCourse != null) {
+                              setState(() {
+                                length2 = gTrialCourse.length;
+                                length3 = gPurchasedCourse.length;
+                              });
+                            }
+                            for (int i = 0; i < length2; i++) {
+                              if (data['cid'] == gTrialCourse[i]['cid']) {
                                 flag = true;
                               }
                             }
-                            for(int i=0;i<gPurchasedCourse.length;i++){
-                              if(data['cid']==gPurchasedCourse[i]['cid']){
+
+                            for (int i = 0; i < length3; i++) {
+                              if (data['cid'] == gPurchasedCourse[i]['cid']) {
                                 flag = true;
                               }
                             }
                             print("${data['cid']} -- $flag");
 
-                            return (flag)?ListTile(
-                              title: Text(data['subject']),
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text('Select Chapter'),
-                                        content: Container(
-                                            width: Dimensions.height10,
-                                            child: StreamBuilder(
-                                                stream: FirebaseFirestore.instance.collection('practice').where("subject", isEqualTo: data['subject']).snapshots(),
-                                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                                                  return snapshot.hasData
-                                                      ? ListView.builder(
-                                                          shrinkWrap: true,
-                                                          physics: ClampingScrollPhysics(),
-                                                          itemCount: snapshot.data!.docs.length,
-                                                          itemBuilder: (BuildContext context, int index) {
-                                                            Map<String, dynamic> data1 = snapshot.data!
-                                                                        .docs[index]
-                                                                        .data()! as Map<String, dynamic>;
-                                                            return ListTile(
-                                                                title: Text(data1[
-                                                                    'chapter']),
-                                                                onTap: () {
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (context) => Practice(
-                                                                              subjectName: data['subject'],
-                                                                              chapter: data1['chapter'])));
-                                                                });
-                                                          },
-                                                        )
-                                                      : Center(
-                                                          child:
-                                                              CircularProgressIndicator());
-                                                })),
-                                      );
-                                    });
-                              },
-                            ):SizedBox(height: 0,width: 0,);
+                            return (flag)
+                                ? ListTile(
+                                    title: Text(data['subject']),
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text('Select Chapter'),
+                                              content: Container(
+                                                  width: Dimensions.height10,
+                                                  child: StreamBuilder(
+                                                      stream: FirebaseFirestore
+                                                          .instance
+                                                          .collection(
+                                                              'practice')
+                                                          .where("subject",
+                                                              isEqualTo: data[
+                                                                  'subject'])
+                                                          .snapshots(),
+                                                      builder: (BuildContext
+                                                              context,
+                                                          AsyncSnapshot<
+                                                                  QuerySnapshot>
+                                                              snapshot) {
+                                                        return snapshot.hasData
+                                                            ? ListView.builder(
+                                                                shrinkWrap:
+                                                                    true,
+                                                                physics:
+                                                                    ClampingScrollPhysics(),
+                                                                itemCount:
+                                                                    snapshot
+                                                                        .data!
+                                                                        .docs
+                                                                        .length,
+                                                                itemBuilder:
+                                                                    (BuildContext
+                                                                            context,
+                                                                        int index) {
+                                                                  Map<String,
+                                                                      dynamic> data1 = snapshot
+                                                                          .data!
+                                                                          .docs[
+                                                                              index]
+                                                                          .data()!
+                                                                      as Map<
+                                                                          String,
+                                                                          dynamic>;
+                                                                  return ListTile(
+                                                                      title: Text(
+                                                                          data1[
+                                                                              'chapter']),
+                                                                      onTap:
+                                                                          () {
+                                                                        Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(builder: (context) => Practice(subjectName: data['subject'], chapter: data1['chapter'])));
+                                                                      });
+                                                                },
+                                                              )
+                                                            : Center(
+                                                                child:
+                                                                    CircularProgressIndicator());
+                                                      })),
+                                            );
+                                          });
+                                    },
+                                  )
+                                : SizedBox(
+                                    height: 0,
+                                    width: 0,
+                                  );
                           });
                     }),
                 const Spacer(),

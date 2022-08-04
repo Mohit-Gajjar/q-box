@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-List gPurchasedCourse = [];
-List gTrialCourse = [];
+List gPurchasedCourse = List.empty(growable: true);
+List gTrialCourse = List.empty(growable: true);
 void getPurchasedCourse() async {
   String? userEmail = await FirebaseAuth.instance.currentUser?.email;
   await FirebaseFirestore.instance

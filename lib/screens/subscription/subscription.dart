@@ -59,14 +59,14 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     if (!trialChecker() && mode == "unpaid") return true;
     return false;
   }
-  
-  void purchaseOnTrial(String cid, String courseName){
+
+  void purchaseOnTrial(String cid, String courseName) {
     print("users/$userEmail");
-    FirebaseFirestore.instance.collection("users").doc(userEmail).set(
-      {"trialCourse": FieldValue.arrayUnion([
-        {"cid":cid, "courseName":courseName}
-      ])}, SetOptions(merge: true)
-    ).then((value){
+    FirebaseFirestore.instance.collection("users").doc(userEmail).set({
+      "trialCourse": FieldValue.arrayUnion([
+        {"cid": cid, "courseName": courseName}
+      ])
+    }, SetOptions(merge: true)).then((value) {
       Fluttertoast.showToast(msg: "Can be accessed");
     });
   }
@@ -90,18 +90,27 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               )
             : Expanded(
                 child: ListView.builder(
-                  shrinkWrap: true,
+                    shrinkWrap: true,
                     itemCount: selectedCourses.length,
                     itemBuilder: (context, index) {
                       return ListTile(
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("ID : ${selectedCourses[index]['cid']}  |  " +
-                                selectedCourses[index]['courseName'].toString().split("@")[0]),
-                            IconButton(onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>AboutCoursePage(desc: "Sample desc")));
-                            }, icon: Icon(Icons.info))
+                            Text(
+                                "ID : ${selectedCourses[2]['cid']}  |  " +
+                                    selectedCourses[2]['courseName']
+                                        .toString()
+                                        .split("@")[0]),
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AboutCoursePage(
+                                              desc: "Sample desc")));
+                                },
+                                icon: Icon(Icons.info))
                           ],
                         ),
                         onTap: (() {
@@ -110,9 +119,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => PaymentOption(
-                                            courseName: "${selectedCourses[index]['cid']}***${selectedCourses[index]['courseName']}",
+                                            courseName:
+                                                "${selectedCourses[index]['cid']}***${selectedCourses[index]['courseName']}",
                                           )))
-                              : purchaseOnTrial(selectedCourses[index]['cid'], selectedCourses[index]['courseName']);
+                              : purchaseOnTrial(selectedCourses[index]['cid'],
+                                  selectedCourses[index]['courseName']);
                         }),
                       );
                     }),

@@ -15,7 +15,9 @@ class HomeDisplayScreen extends StatelessWidget {
       required this.title,
       required this.imageUrl,
       required this.likes,
-      required this.videoLink, required this.teacherEmail, required this.batchName})
+      required this.videoLink,
+      required this.teacherEmail,
+      required this.batchName})
       : super(key: key);
 
   @override
@@ -45,30 +47,41 @@ class HomeDisplayScreen extends StatelessWidget {
         SizedBox(
           height: Dimensions.height10,
         ),
-        Row(
-          children: [
-            SizedBox(
-              width: Dimensions.width15,
-            ),
-            GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherProfileScreen(collectionPath: "teachers/$teacherEmail", batchName: batchName)));
-              },
-              child: CircleAvatar(
-                child: Text(teacherEmail[0]),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: [
+              SizedBox(
+                width: Dimensions.width15,
               ),
-            ),
-            SizedBox(
-              width: Dimensions.width10 * 30,
-              child: Text(
-                title,
-                textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TeacherProfileScreen(
+                              collectionPath: "teachers/$teacherEmail",
+                              batchName: batchName)));
+                },
+                child: CircleAvatar(
+                  child: Center(child: Text(teacherEmail[0])),
+                ),
               ),
-            ),
-            Spacer(),
-            IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_rounded))
-          ],
+              SizedBox(
+                width: 10,
+              ),
+              SizedBox(
+                // width: Dimensions.width10 * 30,
+                child: Text(
+                  title,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Spacer(),
+              IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_rounded))
+            ],
+          ),
         ),
         SizedBox(
           height: Dimensions.height10,
@@ -77,7 +90,6 @@ class HomeDisplayScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(),
-            Text('Figma '),
             Text('${likes} Likes'),
             Text('4 minutes ago'),
             SizedBox(),

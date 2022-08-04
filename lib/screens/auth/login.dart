@@ -23,16 +23,7 @@ class _LoginState extends State<Login> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  final _auth = FirebaseAuth.instance;
-
   String? errorMessage;
-
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -179,8 +170,8 @@ class _LoginState extends State<Login> {
                               setState(() {
                                 _signInFetching = true;
                               });
-                              signIn(
-                                  _emailController.text, _passwordController.text);
+                              signIn(_emailController.text,
+                                  _passwordController.text);
                             },
                             child: Padding(
                               padding: EdgeInsets.all(Dimensions.padding20 / 2),
@@ -208,12 +199,15 @@ class _LoginState extends State<Login> {
                               ),
                             ),
                           ),
-                          TextButton(onPressed: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) =>  ForgotPassScreen()),
-                            );
-                          }, child: Text("Forgot password"))
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ForgotPassScreen()),
+                                );
+                              },
+                              child: Text("Forgot password"))
                         ],
                       ),
                     ],
@@ -258,7 +252,7 @@ class _LoginState extends State<Login> {
   Future<void> signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        await _auth
+        await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: _emailController.text.trim(),
                 password: _passwordController.text.trim())

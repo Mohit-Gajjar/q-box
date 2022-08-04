@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/initFunctions.dart';
@@ -16,6 +17,7 @@ class Home extends StatefulWidget {
   @override
   State<Home> createState() => _HomeState();
 }
+
 class _HomeState extends State<Home> {
   List category = [
     'Select Course',
@@ -36,6 +38,7 @@ class _HomeState extends State<Home> {
     initFunctions();
     super.initState();
   }
+
   initFunctions() {
     setState(() {
       getPurchasedCourse();
@@ -68,6 +71,14 @@ class _HomeState extends State<Home> {
     }
   }
 
+  getToken() async {
+    FirebaseMessaging.instance.getToken().then((value) {
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userEmail)
+          .update({"token": value});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +129,8 @@ class _HomeState extends State<Home> {
                                         subtitle: courses.keys.toList(),
                                         paymentOptions: courses,
                                         email: userEmail,
-                                        selectedCourses: selectedCourses, courses: courses,
+                                        selectedCourses: selectedCourses,
+                                        courses: courses,
                                       );
                                     }).toList(),
                                   ),
@@ -235,7 +247,8 @@ class CourseTile extends StatelessWidget {
       required this.subtitle,
       required this.paymentOptions,
       required this.email,
-      required this.selectedCourses, required this.courses})
+      required this.selectedCourses,
+      required this.courses})
       : super(key: key);
 
   @override
@@ -259,8 +272,7 @@ class CourseTile extends StatelessWidget {
                         title: Text(subtitle[index]),
                         onTap: () {
                           print(courses[subtitle[index]]);
-                          selectedCourses
-                              .add(courses[subtitle[index]]);
+                          selectedCourses.add(courses[subtitle[index]]);
                           FirebaseFirestore.instance
                               .collection('users')
                               .doc(email)

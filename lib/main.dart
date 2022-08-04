@@ -8,6 +8,7 @@ import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/bin/video_player.dart';
 import 'package:notes_app/helpers/auth_path.dart';
+import 'package:notes_app/provider/get_user_details.dart';
 import 'package:notes_app/screens/auth/login.dart';
 import 'package:notes_app/screens/auth/signUp.dart';
 import 'package:notes_app/screens/batches/completed_classes_screen.dart';
@@ -22,7 +23,6 @@ import 'package:provider/provider.dart';
 import './screens/tabs_screen.dart';
 import './provider/data_provider.dart';
 import './screens/tests/test_solutions.dart';
-import './screens/tests/completed_tests_screen.dart';
 import './screens/batches/live_video_play_screen.dart';
 import './screens/batches/batch_details_screen.dart';
 import './screens/batches/batches_screen.dart';
@@ -31,7 +31,6 @@ import './screens/batches/teacher_details_screen.dart';
 import './screens/tests/tests_screen.dart';
 import './screens/tests/full_length_tests_screen.dart';
 import './screens/tests/level_up_screen.dart';
-import './screens/tests/live_tests_screen.dart';
 import './screens/tests/test_start_screen.dart';
 import 'firebase_options.dart';
 
@@ -58,7 +57,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
 
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
@@ -78,26 +77,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     fcbConfigutation();
-    getUserEmail();
-    getToken();
     super.initState();
-  }
-
-  String userEmail = "";
-  getUserEmail() async {
-    var user = await FirebaseAuth.instance.currentUser;
-    setState(() {
-      userEmail = user!.email!;
-    });
-  }
-
-  getToken() async {
-    FirebaseMessaging.instance.getToken().then((value) {
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(userEmail)
-          .update({"token": value});
-    });
   }
 
   void fcbConfigutation() async {

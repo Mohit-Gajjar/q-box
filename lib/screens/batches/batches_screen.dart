@@ -64,32 +64,46 @@ class _BatchesScreenState extends State<BatchesScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             Map<String, dynamic>? data =
-                            snapshot.data!.docs[index].data()
-                            as Map<String, dynamic>;
+                                snapshot.data!.docs[index].data()
+                                    as Map<String, dynamic>;
                             bool flag = false;
-                            for(int i=0;i<gTrialCourse.length;i++){
-
-                              if(data['cid']==gTrialCourse[i]['cid']){
+                            int tg = 0;
+                            int pc = 0;
+                            if (gTrialCourse != null &&
+                                gPurchasedCourse != null) {
+                              setState(() {
+                                tg = gTrialCourse.length;
+                                pc = gPurchasedCourse.length;
+                              });
+                            }
+                            for (int i = 0; i < tg; i++) {
+                              if (data['cid'] == gTrialCourse[i]['cid']) {
                                 flag = true;
                               }
                             }
-                            for(int i=0;i<gPurchasedCourse.length;i++){
-                              if(data['cid']==gPurchasedCourse[i]['cid']){
+                            for (int i = 0; i < pc; i++) {
+                              if (data['cid'] == gPurchasedCourse[i]['cid']) {
                                 flag = true;
                               }
                             }
                             print("${data['cid']} -- $flag");
-                            return(flag)? BatchNameListTile(
-                              batchName: data['batchName'] as String,
-                              onTapHandler: () {
-                                Navigator.of(context).pushNamed(
-                                    BatcheDetailsScreen.routeName,
-                                    arguments: {
-                                      'batchName': data['batchName'],
-                                      'teachers': data['teachers'].toList(),
-                                    });
-                              },
-                            ):SizedBox(height: 0,width: 0,);
+                            return (flag)
+                                ? BatchNameListTile(
+                                    batchName: data['batchName'] as String,
+                                    onTapHandler: () {
+                                      Navigator.of(context).pushNamed(
+                                          BatcheDetailsScreen.routeName,
+                                          arguments: {
+                                            'batchName': data['batchName'],
+                                            'teachers':
+                                                data['teachers'].toList(),
+                                          });
+                                    },
+                                  )
+                                : SizedBox(
+                                    height: 0,
+                                    width: 0,
+                                  );
                           },
                           itemCount: snapshot.data!.docs.length);
                       // return ListView(
