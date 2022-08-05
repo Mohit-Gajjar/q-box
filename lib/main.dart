@@ -1,5 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get.dart';
 import 'package:notes_app/bin/video_player.dart';
 import 'package:notes_app/helpers/auth_path.dart';
-import 'package:notes_app/provider/get_user_details.dart';
 import 'package:notes_app/screens/auth/login.dart';
 import 'package:notes_app/screens/auth/signUp.dart';
 import 'package:notes_app/screens/batches/completed_classes_screen.dart';

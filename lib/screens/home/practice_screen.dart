@@ -30,7 +30,7 @@ class _PracticeState extends State<Practice> {
   int totalMarks = 0;
   bool open =false;
   bool isSliderOpen = true;
-  final List<int> _allSelectedChoices = List.filled(20, 0);
+  // final List<int> _allSelectedChoices = List.filled(20, 0);
   PracticeModel? practiceModel;
   // ignore: unused_field
   Map<String, dynamic>? _userQuestions = {};

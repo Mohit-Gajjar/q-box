@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/initFunctions.dart';
@@ -62,6 +64,7 @@ class _BatchesScreenState extends State<BatchesScreen> {
 
                       return ListView.builder(
                           shrinkWrap: true,
+                          // ignore: duplicate_ignore
                           itemBuilder: (context, index) {
                             Map<String, dynamic>? data =
                                 snapshot.data!.docs[index].data()

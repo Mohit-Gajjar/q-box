@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
-import 'package:notes_app/models/userModel.dart';
 import  'package:payumoney_pro_unofficial/payumoney_pro_unofficial.dart';
 
 Future<bool> initializePayment(String email,String firstName,String? phone, String amount, String prodInf, String duration) async{

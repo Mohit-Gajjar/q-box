@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/home/practice_screen.dart';
-import 'package:notes_app/screens/payments/payment_option.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import '../../initFunctions.dart';
 import '../../widgets/custom_button.dart';

@@ -28,22 +28,7 @@ class JoinMeetingState extends State<JoinMeeting> {
   bool? isAudioMuted = true;
   bool? isVideoMuted = true;
 
-  void _onConferenceWillJoin(message) {
-    // debugPrint("_onConferenceWillJoin broadcasted with message: $message");
-  }
-
-  void _onConferenceJoined(message) {
-    // debugPrint("_onConferenceJoined broadcasted with message: $message");
-  }
-
-  void _onConferenceTerminated(message) {
-    // debugPrint("_onConferenceTerminated broadcasted with message: $message");
-    Navigator.pop(context);
-  }
-
-  _onError(error) {
-    debugPrint("_onError broadcasted: $error");
-  }
+  
 
   void initialize() {
     User? user = FirebaseAuth.instance.currentUser;

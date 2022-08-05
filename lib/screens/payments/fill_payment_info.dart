@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/constants/constants.dart';
-import 'package:notes_app/screens/payments/payment_helper.dart';
 import 'package:notes_app/screens/payments/payuIntegration.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 

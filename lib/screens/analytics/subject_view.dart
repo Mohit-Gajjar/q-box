@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
-import 'package:notes_app/screens/home/home.dart';
 import 'package:notes_app/screens/tabs_screen.dart';
 
 class SubjectView extends StatefulWidget {

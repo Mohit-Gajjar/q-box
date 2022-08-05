@@ -20,7 +20,6 @@ class TeacherProfileCard extends StatefulWidget {
 }
 
 class _TeacherProfileCardState extends State<TeacherProfileCard> {
-   FirebaseAuth _auth = FirebaseAuth.instance;
 
   User? user = FirebaseAuth.instance.currentUser;
 

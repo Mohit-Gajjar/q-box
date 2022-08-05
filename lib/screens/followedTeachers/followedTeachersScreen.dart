@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/teacher/TeacherProfileScreen.dart';
 
@@ -42,6 +41,7 @@ class _FollowedTeachersScreenState extends State<FollowedTeachersScreen> {
       print(followedTeachersList);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,12 +52,17 @@ class _FollowedTeachersScreenState extends State<FollowedTeachersScreen> {
             itemCount: followedTeachersList.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(followedTeachersList[index].toString().split("@")[0]),
+                title:
+                    Text(followedTeachersList[index].toString().split("@")[0]),
                 onTap: (() {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherProfileScreen(
-                    collectionPath: "teachers/${followedTeachersList[index]}",
-                    batchName: "",
-                  )));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TeacherProfileScreen(
+                                collectionPath:
+                                    "teachers/${followedTeachersList[index]}",
+                                batchName: "",
+                              )));
                 }),
               );
             }));
