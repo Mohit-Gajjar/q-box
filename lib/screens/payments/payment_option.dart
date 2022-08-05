@@ -4,8 +4,9 @@ import 'package:notes_app/screens/payments/fill_payment_info.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 class PaymentOption extends StatefulWidget {
-  final String courseName;
-  const PaymentOption({Key? key, required this.courseName}) : super(key: key);
+  final String courseName, cat;
+  const PaymentOption({Key? key, required this.courseName, required this.cat})
+      : super(key: key);
 
   @override
   State<PaymentOption> createState() => _PaymentOptionState();
@@ -17,7 +18,7 @@ class _PaymentOptionState extends State<PaymentOption> {
   @override
   void initState() {
     getData();
-
+    print(widget.courseName);
     super.initState();
   }
 
@@ -28,8 +29,9 @@ class _PaymentOptionState extends State<PaymentOption> {
   String courseName = "";
   void getData() async {
     setState(() {
-      catName = widget.courseName.split("@")[2].toLowerCase();
-      courseName = widget.courseName.split("@")[0];
+      //TODO: Bug here
+      catName = widget.cat.split("/")[1];
+      courseName = widget.courseName;
       isLoading = true;
     });
 
@@ -251,10 +253,15 @@ class _PaymentOptionState extends State<PaymentOption> {
                                                   MaterialPageRoute(
                                                       builder: ((context) =>
                                                           FillPaymentInformation(
-                                                            price: courseDurationPrice[0],
+                                                            price:
+                                                                courseDurationPrice[
+                                                                    0],
                                                             selectedCourse:
-                                                                widget.courseName,
-                                                            duration: courseDuration[0],
+                                                                widget
+                                                                    .courseName,
+                                                            duration:
+                                                                courseDuration[
+                                                                    0],
                                                           ))));
                                             },
                                             child: Text('Pay Now'),
@@ -349,10 +356,15 @@ class _PaymentOptionState extends State<PaymentOption> {
                                                   MaterialPageRoute(
                                                       builder: ((context) =>
                                                           FillPaymentInformation(
-                                                            price: courseDurationPrice[1],
+                                                            price:
+                                                                courseDurationPrice[
+                                                                    1],
                                                             selectedCourse:
-                                                            widget.courseName,
-                                                            duration: courseDuration[1],
+                                                                widget
+                                                                    .courseName,
+                                                            duration:
+                                                                courseDuration[
+                                                                    1],
                                                           ))));
                                             },
                                             child: Text('Pay Now'),
@@ -447,10 +459,15 @@ class _PaymentOptionState extends State<PaymentOption> {
                                                   MaterialPageRoute(
                                                       builder: ((context) =>
                                                           FillPaymentInformation(
-                                                            price: courseDurationPrice[2],
+                                                            price:
+                                                                courseDurationPrice[
+                                                                    2],
                                                             selectedCourse:
-                                                            widget.courseName,
-                                                            duration: courseDuration[2],
+                                                                widget
+                                                                    .courseName,
+                                                            duration:
+                                                                courseDuration[
+                                                                    2],
                                                           ))));
                                             },
                                             child: Text('Pay Now'),
@@ -545,10 +562,15 @@ class _PaymentOptionState extends State<PaymentOption> {
                                                   MaterialPageRoute(
                                                       builder: ((context) =>
                                                           FillPaymentInformation(
-                                                            price: courseDurationPrice[3],
+                                                            price:
+                                                                courseDurationPrice[
+                                                                    3],
                                                             selectedCourse:
-                                                            widget.courseName,
-                                                            duration: courseDuration[3],
+                                                                widget
+                                                                    .courseName,
+                                                            duration:
+                                                                courseDuration[
+                                                                    3],
                                                           ))));
                                             },
                                             child: Text('Pay Now'),

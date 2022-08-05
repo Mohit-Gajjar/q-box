@@ -19,15 +19,18 @@ class FullLengthTestsScreen extends StatefulWidget {
 class _FullLengthTestsScreenState extends State<FullLengthTestsScreen> {
   List liveTest = [];
 
-  List cmptTest=[];
+  List cmptTest = [];
   @override
   void initState() {
     getFullLengthTests();
     super.initState();
   }
 
-  void getFullLengthTests(){
-    FirebaseFirestore.instance.collection("fullLengthTest").get().then((docSnapshot){
+  void getFullLengthTests() {
+    FirebaseFirestore.instance
+        .collection("fullLengthTest")
+        .get()
+        .then((docSnapshot) {
       docSnapshot.docs.forEach((snapshot) {
         var data = snapshot.data();
         // print(snapshot.data()['id']);
@@ -50,29 +53,26 @@ class _FullLengthTestsScreenState extends State<FullLengthTestsScreen> {
         //     chapterName : snapshot.data()['chapterName']
         // );
         // print(qn.difficulty);
-        if(DateTime.now().difference(DateTime.parse(data['examTime'])).inDays < 3){
-              cmptTest.add(data["testName"]);
-        }
-        else{
+        if (DateTime.now().difference(DateTime.parse(data['examTime'])).inDays <
+            3) {
+          cmptTest.add(data["testName"]);
+        } else {
           bool flag = false;
-          for(int i=0;i<gTrialCourse.length;i++){
-
-            if(data['cid']==gTrialCourse[i]['cid']){
+          for (int i = 0; i < gTrialCourse.length; i++) {
+            if (data['cid'] == gTrialCourse[i]['cid']) {
               flag = true;
             }
           }
-          for(int i=0;i<gPurchasedCourse.length;i++){
-            if(data['cid']==gPurchasedCourse[i]['cid']){
+          for (int i = 0; i < gPurchasedCourse.length; i++) {
+            if (data['cid'] == gPurchasedCourse[i]['cid']) {
               flag = true;
             }
           }
           print("${data['cid']} -- $flag");
-          if(flag)liveTest.add(data["testName"]);
+          if (flag) liveTest.add(data["testName"]);
         }
       });
-
     });
-
   }
 
   @override
@@ -103,7 +103,8 @@ class _FullLengthTestsScreenState extends State<FullLengthTestsScreen> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LiveTestsScreen(tests: liveTest)));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => LiveTestsScreen(tests: liveTest)));
                 },
                 child: Container(
                   height: Dimensions.height10 * 20,
@@ -124,8 +125,9 @@ class _FullLengthTestsScreenState extends State<FullLengthTestsScreen> {
                 height: Dimensions.height10 * 2,
               ),
               GestureDetector(
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CompletedTestsScreen(tests: cmptTest))),
-
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) =>
+                        CompletedTestsScreen(tests: cmptTest))),
                 child: Container(
                   height: Dimensions.height10 * 20,
                   decoration: BoxDecoration(

@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  getToken() async {
+  getToken()  {
     FirebaseMessaging.instance.getToken().then((value) {
       FirebaseFirestore.instance
           .collection('users')

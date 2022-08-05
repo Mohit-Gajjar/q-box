@@ -7,10 +7,15 @@ import 'package:notes_app/widgets/appbar_actions.dart';
 
 import '../../initFunctions.dart';
 
-class LiveClassesScreen extends StatelessWidget {
+class LiveClassesScreen extends StatefulWidget {
   const LiveClassesScreen({Key? key}) : super(key: key);
   static const String routeName = '/live-classes-screen';
 
+  @override
+  State<LiveClassesScreen> createState() => _LiveClassesScreenState();
+}
+
+class _LiveClassesScreenState extends State<LiveClassesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +51,7 @@ class LiveClassesScreen extends StatelessWidget {
                 FirebaseFirestore.instance.collection('liveVideos').snapshots(),
             builder:
                 ((BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              print(snapshot.data!.docs[0].data());
+              // print(snapshot.data!.docs[0].data());
               return snapshot.hasData
                   ? ListView.builder(
                       shrinkWrap: true,
@@ -56,13 +61,21 @@ class LiveClassesScreen extends StatelessWidget {
                             .data() as Map<String, dynamic>;
                         bool isLive = data['live'] as bool;
                         bool flag = false;
-                        for(int i=0;i<gTrialCourse.length;i++){
+                        int k = 0;
+                        int j = 0;
+                        if(gTrialCourse != null && gPurchasedCourse != null){
+                          setState(() {
+                            k = gTrialCourse.length;
+                            j = gPurchasedCourse.length;
+                          });
+                        }
+                        for(int i=0;i<k;i++){
 
                           if(data['cid']==gTrialCourse[i]['cid']){
                             flag = true;
                           }
                         }
-                        for(int i=0;i<gPurchasedCourse.length;i++){
+                        for(int i=0;i<j;i++){
                           if(data['cid']==gPurchasedCourse[i]['cid']){
                             flag = true;
                           }

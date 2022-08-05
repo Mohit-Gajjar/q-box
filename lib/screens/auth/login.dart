@@ -252,7 +252,7 @@ class _LoginState extends State<Login> {
   Future<void> signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        await FirebaseAuth.instance
+         FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: _emailController.text.trim(),
                 password: _passwordController.text.trim())

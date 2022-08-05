@@ -64,17 +64,7 @@ class _FillPaymentInformationState extends State<FillPaymentInformation> {
   }
 
   void fillPaymentInfo() {
-    // var hash = await generateHash();
-    // PaymentHelper().initializePayment(
-    //   _userId,
-    //   widget.price,
-    //   widget.selectedCourse,
-    //   _userData['firstName'],
-    //   _userData['email'],
-    //   _userData['phone'].toString().replaceFirst("91", ""),
-    //   hash,
-    // );
-
+   
     initializePayment(_userData['email'], _userData['firstName'], _userData['phone'].toString().replaceFirst("91", ""), widget.price, widget.selectedCourse, widget.duration);
   }
 

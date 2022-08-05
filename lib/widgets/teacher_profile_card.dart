@@ -20,114 +20,112 @@ class TeacherProfileCard extends StatefulWidget {
 }
 
 class _TeacherProfileCardState extends State<TeacherProfileCard> {
-
   User? user = FirebaseAuth.instance.currentUser;
-
   @override
   Widget build(BuildContext context) {
     int startIndex = widget.collectionPath.indexOf("(");
     int endIndex = widget.collectionPath.indexOf(")", startIndex + 1);
-    final collectionPath = (startIndex==-1)
-        ?"${widget.collectionPath}/informationToShowStudent"
-        :"${widget.collectionPath.substring(startIndex + 1, endIndex)}/informationToShowStudent";
+    final collectionPath = (startIndex == -1)
+        ? "${widget.collectionPath}/informationToShowStudent"
+        : "${widget.collectionPath.substring(startIndex + 1, endIndex)}/informationToShowStudent";
     print("----->>> ${collectionPath}");
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection(collectionPath).snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-       return (snapshot.hasData)?
-           Container(
-            height: 300,
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(
-                horizontal: Dimensions.width10 * 1.5,
-                vertical: Dimensions.height10 * 2),
-            margin: EdgeInsets.symmetric(vertical: Dimensions.height10),
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+        stream:
+            FirebaseFirestore.instance.collection(collectionPath).snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          return (snapshot.hasData)
+              ? Container(
+                  height: 300,
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.width10 * 1.5,
+                      vertical: Dimensions.height10 * 2),
+                  margin: EdgeInsets.symmetric(vertical: Dimensions.height10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Column(
                     children: [
-                      Text(
-                        snapshot.data!.docs[0]['name']
-                        ,
-                        style:
-                        const TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              snapshot.data!.docs[0]['name'],
+                              style: const TextStyle(
+                                  fontSize: 22.0, fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text("${snapshot.data!.docs[0]['qualification']}")
+                          ],
+                        ),
                       ),
-                      SizedBox(width: 10,),
-                      Text("${snapshot.data!.docs[0]['qualification']}")
+                      SizedBox(
+                        height: Dimensions.height10 * 2,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "experience : ${snapshot.data!.docs[0]['experience']}",
+                          style: const TextStyle(
+                              fontSize: 17.0, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Dimensions.height10 * 2,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "subjects : ${snapshot.data!.docs[0]['subjectExpertise']}",
+                          style: const TextStyle(
+                              fontSize: 17.0, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Dimensions.height10 * 2,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "languages : ${snapshot.data!.docs[0]['teachingLanguage']}",
+                          style: const TextStyle(
+                              fontSize: 17.0, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const Spacer(),
+                      CustomButton(
+                        backColor: Colors.pink,
+                        onTapHandler: () async {
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(user?.email)
+                              .set({
+                            "followedTeachers": FieldValue.arrayUnion(
+                                [snapshot.data!.docs[0]['email']])
+                          }, SetOptions(merge: true)).then((value) {
+                            Fluttertoast.showToast(msg: "Followed!");
+                          });
+                          Navigator.of(context).pushNamed(
+                              TeacherDetailsScreen.routeName,
+                              arguments: {
+                                'batchName': widget.batch,
+                                'teacher': snapshot.data!.docs[0]['name'],
+                              });
+                        },
+                        text: 'Follow',
+                      )
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: Dimensions.height10 * 2,
-                ),
-
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "experience : ${snapshot.data!.docs[0]['experience']}"
-                    ,
-                    style:
-                    const TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  height: Dimensions.height10 * 2,
-                ),
-
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "subjects : ${snapshot.data!.docs[0]['subjectExpertise']}"
-                    ,
-                    style:
-                    const TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  height: Dimensions.height10 * 2,
-                ),
-
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "languages : ${snapshot.data!.docs[0]['teachingLanguage']}"
-                    ,
-                    style:
-                    const TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const Spacer(),
-                CustomButton(
-                  backColor: Colors.pink,
-                  onTapHandler: () async{
-                    await FirebaseFirestore.instance.collection("users").doc(user?.email).set(
-                        {"followedTeachers":FieldValue.arrayUnion([snapshot.data!.docs[0]['email']])},
-                        SetOptions(merge: true)
-                    ).then((value){
-                      Fluttertoast.showToast(msg: "Followed!");
-                    });
-                    Navigator.of(context).pushNamed(
-                        TeacherDetailsScreen.routeName,
-                        arguments: {
-                          'batchName': widget.batch,
-                          'teacher': snapshot.data!.docs[0]['name'],
-                        });
-                  },
-                  text: 'Follow',
                 )
-              ],
-            ),
-          )
-           : Center(child: Text("NOT FOUND"),);
-        }
-    );
+              : Center(
+                  child: Text("NOT FOUND"),
+                );
+        });
   }
 }

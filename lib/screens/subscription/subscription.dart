@@ -43,8 +43,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         selectedCourses = data!['selectedCourse'] as List;
         dateOfJoin = data['dateOfJoin'];
       });
-      print(selectedCourses);
-      print(dateOfJoin);
     });
   }
 
@@ -98,8 +96,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                                "ID : ${selectedCourses[2]['cid']}  |  " +
-                                    selectedCourses[2]['courseName']
+                                "ID : ${selectedCourses[index]['cid']}  |  " +
+                                    selectedCourses[index]['courseName']
                                         .toString()
                                         .split("@")[0]),
                             IconButton(
@@ -120,7 +118,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                   MaterialPageRoute(
                                       builder: (context) => PaymentOption(
                                             courseName:
-                                                "${selectedCourses[index]['cid']}***${selectedCourses[index]['courseName']}",
+                                                selectedCourses[index]['courseName'], cat: selectedCourses[index]['reference'],
                                           )))
                               : purchaseOnTrial(selectedCourses[index]['cid'],
                                   selectedCourses[index]['courseName']);
