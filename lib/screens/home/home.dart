@@ -272,6 +272,7 @@ class CourseTile extends StatelessWidget {
                         title: Text(subtitle[index]),
                         onTap: () {
                           print(courses[subtitle[index]]);
+                          courses[subtitle[index]]['reference']="cat/$title";
                           selectedCourses.add(courses[subtitle[index]]);
                           FirebaseFirestore.instance
                               .collection('users')
