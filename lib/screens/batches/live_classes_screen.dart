@@ -7,15 +7,10 @@ import 'package:notes_app/widgets/appbar_actions.dart';
 
 import '../../initFunctions.dart';
 
-class LiveClassesScreen extends StatefulWidget {
-  const LiveClassesScreen({Key? key}) : super(key: key);
+class LiveClassesScreen extends StatelessWidget {
   static const String routeName = '/live-classes-screen';
+  const LiveClassesScreen({Key? key}) : super(key: key);
 
-  @override
-  State<LiveClassesScreen> createState() => _LiveClassesScreenState();
-}
-
-class _LiveClassesScreenState extends State<LiveClassesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,48 +55,52 @@ class _LiveClassesScreenState extends State<LiveClassesScreen> {
                         Map<String, dynamic> data = snapshot.data!.docs[index]
                             .data() as Map<String, dynamic>;
                         bool isLive = data['live'] as bool;
-                        bool flag = false;
+                        bool flag = true;
                         int k = 0;
                         int j = 0;
-                        if(gTrialCourse != null && gPurchasedCourse != null){
-                          setState(() {
+                        // ignore: unnecessary_null_comparison
+                        if (gTrialCourse != null && gPurchasedCourse != null) {
+                         
                             k = gTrialCourse.length;
                             j = gPurchasedCourse.length;
-                          });
                         }
-                        for(int i=0;i<k;i++){
-
-                          if(data['cid']==gTrialCourse[i]['cid']){
+                        for (int i = 0; i < k; i++) {
+                          if (data['cid'] == gTrialCourse[i]['cid']) {
                             flag = true;
                           }
                         }
-                        for(int i=0;i<j;i++){
-                          if(data['cid']==gPurchasedCourse[i]['cid']){
+                        for (int i = 0; i < j; i++) {
+                          if (data['cid'] == gPurchasedCourse[i]['cid']) {
                             flag = true;
                           }
                         }
                         print("${data['cid']} -- $flag");
-                        return (flag)?ListTile(
-                          onTap: () {
-                            if (isLive) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => JoinMeeting(
-                                            nameText: data['title'],
-                                            roomText:
-                                                snapshot.data!.docs[index].id,
-                                            subjectText: data['course'],
-                                          )));
-                            } else
-                              Fluttertoast.showToast(
-                                  msg: "Live Class not started");
-                          },
-                          title: Text(
-                            data['title'],
-                          ),
-                          subtitle: Text(data['course']),
-                        ):SizedBox(height: 0,width: 0);
+                        return (flag)
+                            ? ListTile(
+                                onTap: () {
+                                  if (isLive) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => JoinMeeting(
+                                                  nameText: data['title'],
+                                                  roomText: snapshot
+                                                      .data!.docs[index].id,
+                                                  subjectText: data['course'],
+                                                )));
+                                  } else
+                                    Fluttertoast.showToast(
+                                        msg: "Live Class not started");
+                                },
+                                title: Text(
+                                  data['title'],
+                                ),
+                                subtitle: Text("Course: " +
+                                    data['course'] +
+                                    "Chapter: " +
+                                    data['chapter']),
+                              )
+                            : SizedBox(height: 0, width: 0);
                       })
                   : Center(
                       child: CircularProgressIndicator(),

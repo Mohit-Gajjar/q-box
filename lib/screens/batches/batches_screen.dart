@@ -17,17 +17,9 @@ class BatchesScreen extends StatefulWidget {
 }
 
 class _BatchesScreenState extends State<BatchesScreen> {
-  @override
-  void initState() {
-    getData();
-    super.initState();
-  }
 
-  getData() async {
-    FirebaseFirestore.instance.collection('batches').get().then((value) {
-      print(value.docs[0].data());
-    });
-  }
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +66,9 @@ class _BatchesScreenState extends State<BatchesScreen> {
                             int pc = 0;
                             if (gTrialCourse != null &&
                                 gPurchasedCourse != null) {
-                              setState(() {
-                                tg = gTrialCourse.length;
+                                   tg = gTrialCourse.length;
                                 pc = gPurchasedCourse.length;
-                              });
+                             
                             }
                             for (int i = 0; i < tg; i++) {
                               if (data['cid'] == gTrialCourse[i]['cid']) {
@@ -109,40 +100,7 @@ class _BatchesScreenState extends State<BatchesScreen> {
                                   );
                           },
                           itemCount: snapshot.data!.docs.length);
-                      // return ListView(
-                      //   shrinkWrap: true,
-                      //   physics: ClampingScrollPhysics(),
-                      //   children: snapshot.data!.docs
-                      //       .map((DocumentSnapshot document) {
-                      //     Map<String, dynamic> data =
-                      //         document.data()! as Map<String, dynamic>;
-                      //     return data.isNotEmpty
-                      //         ? BatchNameListTile(
-                      //             batchName: data['title'],
-                      //             onTapHandler: () async {
-                      //               List<TeacherModel> teachersData = [];
-                      //               for (var teacher in data['teachers']) {
-                      //                 final snapshot = await teacher.get();
-
-                      //                 if (snapshot.exists) {
-                      //                   var data = snapshot.data()
-                      //                       as Map<String, dynamic>;
-                      //                   teachersData
-                      //                       .add(TeacherModel.fromJson(data));
-                      //                 }
-                      //               }
-                      //               Navigator.of(context).pushNamed(
-                      //                   BatcheDetailsScreen.routeName,
-                      //                   arguments: {
-                      //                     'batchName': data['title'],
-                      //                     'teachers': teachersData,
-                      //                   });
-                      //             })
-                      //         : Center(
-                      //             child: Text("No Batches"),
-                      //           );
-                      //   }).toList(),
-                      // );
+                      
                     }),
               ],
             ),
