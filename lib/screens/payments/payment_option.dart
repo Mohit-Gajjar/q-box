@@ -18,7 +18,6 @@ class _PaymentOptionState extends State<PaymentOption> {
   @override
   void initState() {
     getData();
-    print(widget.courseName);
     super.initState();
   }
 
@@ -29,7 +28,6 @@ class _PaymentOptionState extends State<PaymentOption> {
   String courseName = "";
   void getData() async {
     setState(() {
-      //TODO: Bug here
       catName = widget.cat.split("/")[1];
       courseName = widget.courseName;
       isLoading = true;
