@@ -63,22 +63,28 @@ class _LiveClassesScreenState extends State<LiveClassesScreen> {
                         bool flag = false;
                         int k = 0;
                         int j = 0;
+                        int x = 0;
                         if(gTrialCourse != null && gPurchasedCourse != null){
                           setState(() {
                             k = gTrialCourse.length;
                             j = gPurchasedCourse.length;
+                            x = gFollowedTeachers.length;
                           });
                         }
                         for(int i=0;i<k;i++){
-
                           if(data['cid']==gTrialCourse[i]['cid']){
-                            flag = true;
+                            for(int y=0;y<x;y++)
+                              if(data['postedTeacher']==gFollowedTeachers[y])
+                                flag = true;
                           }
                         }
                         for(int i=0;i<j;i++){
                           if(data['cid']==gPurchasedCourse[i]['cid']){
-                            flag = true;
+                            for(int y=0;y<x;y++)
+                              if(data['postedTeacher']==gFollowedTeachers[y])
+                                flag = true;
                           }
+
                         }
                         print("${data['cid']} -- $flag");
                         return (flag)?ListTile(
