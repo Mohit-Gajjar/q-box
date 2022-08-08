@@ -74,10 +74,8 @@ class _BatchesScreenState extends State<BatchesScreen> {
                             int pc = 0;
                             if (gTrialCourse != null &&
                                 gPurchasedCourse != null) {
-                              setState(() {
                                 tg = gTrialCourse.length;
                                 pc = gPurchasedCourse.length;
-                              });
                             }
                             for (int i = 0; i < tg; i++) {
                               if (data['cid'] == gTrialCourse[i]['cid']) {

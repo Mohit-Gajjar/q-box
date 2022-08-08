@@ -40,9 +40,11 @@ class _PaymentOptionState extends State<PaymentOption> {
         .where("title", isEqualTo: catName)
         .snapshots()
         .listen((event) {
+          print(event.docs[0].data());
       Map<String, dynamic> data = event.docs[0].data();
+      print(data["courses"][courseName.toLowerCase()]);
       setState(() {
-        payments = data["courses"][courseName]["payment"];
+        payments = data["courses"][courseName.toLowerCase()]["payment"];
         courseDuration = payments.keys.toList();
         courseDurationPrice = payments.values.toList();
         isLoading = false;

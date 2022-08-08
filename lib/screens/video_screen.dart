@@ -1,14 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:notes_app/initFunctions.dart';
 import 'package:video_player/video_player.dart';
 
+import '../models/teacherModel.dart';
 import '../utilities/dimensions.dart';
+import 'batches/teacher_details_screen.dart';
 
 class VideoScreen extends StatefulWidget {
   static const String routeName = '/videoScreen';
   final String title;
   final String videoLink;
-  VideoScreen({Key? key, required this.title, required this.videoLink})
+  final int likes;
+  final bool isUserLiked;
+  final TeacherModel teacher;
+  
+  VideoScreen({Key? key, required this.title, required this.videoLink, required this.likes, required this.isUserLiked, required this.teacher})
       : super(key: key);
 
   @override
@@ -18,10 +28,28 @@ class VideoScreen extends StatefulWidget {
 class _VideoScreenState extends State<VideoScreen> {
   late FlickManager flickManager;
   late VideoPlayerController _controller;
+  User? user = FirebaseAuth.instance.currentUser!;
+  bool liked=false;
+  late int like;
+  bool followed=false;
+
+  isTeacherFollowed(){
+    for(var x in gFollowedTeachers){
+      if(x['email']==widget.teacher.email){
+        setState(() {
+          followed=true;
+        });
+        break;
+      }
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    isTeacherFollowed();
+    liked = widget.isUserLiked;
+    like = widget.likes;
     flickManager = FlickManager(
         videoPlayerController: VideoPlayerController.network(widget.videoLink)
           ..addListener(() {
@@ -49,6 +77,7 @@ class _VideoScreenState extends State<VideoScreen> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,33 +85,90 @@ class _VideoScreenState extends State<VideoScreen> {
         centerTitle: true,
         title: Text(widget.title),
       ),
-      body: Column(
-        children: [
-          Container(
-            height: Dimensions.height10 * 25,
-            padding: EdgeInsets.all(Dimensions.padding20 / 4),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(Dimensions.borderRadius5),
-              child: FlickVideoPlayer(
-                flickManager: flickManager,
-                flickVideoWithControls: FlickVideoWithControls(
-                  controls: FlickPortraitControls(),
-                ),
-                flickVideoWithControlsFullscreen: FlickVideoWithControls(
-                  controls: FlickLandscapeControls(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Container(
+              height: Dimensions.height10 * 25,
+              padding: EdgeInsets.all(Dimensions.padding20 / 4),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(Dimensions.borderRadius5),
+                child: FlickVideoPlayer(
+                  flickManager: flickManager,
+                  flickVideoWithControls: FlickVideoWithControls(
+                    controls: FlickPortraitControls(),
+                  ),
+                  flickVideoWithControlsFullscreen: FlickVideoWithControls(
+                    controls: FlickLandscapeControls(),
+                  ),
                 ),
               ),
             ),
-          ),
-          // Center(
-          //   child: _controller.value.isInitialized
-          //       ? AspectRatio(
-          //           aspectRatio: _controller.value.aspectRatio,
-          //           child: VideoPlayer(_controller),
-          //         )
-          //       : Container(),
-          // ),
-        ],
+            Card(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      IconButton(onPressed: (){
+                        setState(() {
+                          liked=!liked;
+                          like=(liked)?like+1:like-1;
+                        });
+                      }, icon: Icon(Icons.thumb_up_sharp, color: (liked)?Colors.amber:Colors.black,)),
+                      Text(like.toString())
+                    ],
+                  ),
+                  IconButton(onPressed: (){}, icon: Icon(Icons.comment)),
+                  SizedBox(width: 70,),
+                  IconButton(onPressed: (){}, icon: Icon(Icons.download_rounded)),
+                ],
+              ),
+            ),
+            Card(
+              child : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        child: (widget.teacher.profilePicUrl==null)?Text(widget.teacher.name![0]):Image.network(widget.teacher.profilePicUrl!),
+                      ),
+                      SizedBox(width: 10,),
+                      Text(widget.teacher.name!, style: TextStyle(fontSize: 18, fontWeight:FontWeight.bold),)
+                    ],
+                  ),
+                  TextButton(onPressed: ()async {
+                    await FirebaseFirestore.instance
+                        .collection("users")
+                        .doc(user?.email)
+                        .set({
+                      "followedTeachers":(followed)?FieldValue.arrayRemove(
+                          [widget.teacher.email]): FieldValue.arrayUnion(
+                          [widget.teacher.email])
+                    }, SetOptions(merge: true)).then((value) {
+                      Fluttertoast.showToast(msg: (followed)?"Unfollowed":"Followed!");
+                      setState(() {
+                        followed=!followed;
+                      });
+                    });
+                  }, child: Text((followed)?"Followed":"Follow"))
+                ],
+              )
+
+            )
+            // Center(
+            //   child: _controller.value.isInitialized
+            //       ? AspectRatio(
+            //           aspectRatio: _controller.value.aspectRatio,
+            //           child: VideoPlayer(_controller),
+            //         )
+            //       : Container(),
+            // ),
+          ],
+        ),
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {

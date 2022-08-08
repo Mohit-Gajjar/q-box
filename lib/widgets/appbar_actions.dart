@@ -21,8 +21,9 @@ class AppBarActions extends StatelessWidget {
           alignment: Alignment.center,
           padding: EdgeInsets.only(right: Dimensions.padding20),
           child: IconButton(
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ChatScreen())),
+            onPressed:(){},
+            // onPressed: () => Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => ChatScreen())),
             icon: const Icon(
               Icons.notifications_none_rounded,
               color: Colors.black,
@@ -68,8 +69,9 @@ class AppBarActions2 extends StatelessWidget{
           alignment: Alignment.center,
           padding: EdgeInsets.only(right: Dimensions.padding20),
           child: IconButton(
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ChatScreen())),
+            onPressed: (){},
+              // => Navigator.push(context,
+              //   MaterialPageRoute(builder: (context) => ChatScreen())),
             icon: const Icon(
               Icons.notifications_none_rounded,
               color: Colors.black,
