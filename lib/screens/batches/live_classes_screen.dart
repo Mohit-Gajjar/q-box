@@ -59,13 +59,6 @@ class LiveClassesScreen extends StatelessWidget {
                         int k = 0;
                         int j = 0;
                         int x = 0;
-                        if(gTrialCourse != null && gPurchasedCourse != null){
-                          setState(() {
-                            k = gTrialCourse.length;
-                            j = gPurchasedCourse.length;
-                            x = gFollowedTeachers.length;
-                          });
-                        }
                         for(int i=0;i<k;i++){
                           if(data['cid']==gTrialCourse[i]['cid']){
                             for(int y=0;y<x;y++)
@@ -77,7 +70,7 @@ class LiveClassesScreen extends StatelessWidget {
                           if(data['cid']==gPurchasedCourse[i]['cid']){
                             for(int y=0;y<x;y++)
                               if(data['postedTeacher']==gFollowedTeachers[y])
-                                flag = true;
+                                flag = true;}
 
                         }
                         print("${data['cid']} -- $flag");
