@@ -28,8 +28,6 @@ class JoinMeetingState extends State<JoinMeeting> {
   bool? isAudioMuted = true;
   bool? isVideoMuted = true;
 
-  
-
   void initialize() {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -95,11 +93,11 @@ class JoinMeetingState extends State<JoinMeeting> {
 
   _joinMeeting() async {
     Map<FeatureFlagEnum, bool> featureFlags = {
-      FeatureFlagEnum.WELCOME_PAGE_ENABLED: false,
-      FeatureFlagEnum.LIVE_STREAMING_ENABLED: false,
-      FeatureFlagEnum.ADD_PEOPLE_ENABLED: false,
-      FeatureFlagEnum.RAISE_HAND_ENABLED: false,
-      FeatureFlagEnum.TOOLBOX_ALWAYS_VISIBLE: false
+      // FeatureFlagEnum.WELCOME_PAGE_ENABLED: false,
+      // FeatureFlagEnum.LIVE_STREAMING_ENABLED: false,
+      // FeatureFlagEnum.ADD_PEOPLE_ENABLED: false,
+      // FeatureFlagEnum.RAISE_HAND_ENABLED: false,
+      // FeatureFlagEnum.TOOLBOX_ALWAYS_VISIBLE: false
     };
     setState(() {});
     var options = JitsiMeetingOptions(room: roomText);
@@ -112,7 +110,6 @@ class JoinMeetingState extends State<JoinMeeting> {
     options.videoMuted = isVideoMuted;
     options.featureFlags.addAll(featureFlags);
 
-
     featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
     options.iosAppBarRGBAColor = "#0080FF80";
     options.webOptions = {
@@ -121,7 +118,7 @@ class JoinMeetingState extends State<JoinMeeting> {
       "height": "100%",
       "enableWelcomePage": false,
       "chromeExtensionBanner": null,
-      "userInfo": {"displayName": nameText}
+      "userInfo": {"displayName": emailText}
     };
 
     await JitsiMeet.joinMeeting(
@@ -134,7 +131,7 @@ class JoinMeetingState extends State<JoinMeeting> {
             // debugPrint("${options.room} joined with message: $message");
           },
           onConferenceTerminated: (message) {
-            
+            Navigator.pop(context);
           },
           genericListeners: [
             JitsiGenericListener(
