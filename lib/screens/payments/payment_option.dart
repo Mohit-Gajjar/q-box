@@ -28,8 +28,8 @@ class _PaymentOptionState extends State<PaymentOption> {
   String courseName = "";
   void getData() async {
     setState(() {
-      catName = widget.cat.split("/")[1];
-      courseName = widget.courseName;
+      catName = widget.cat;
+      courseName = widget.courseName.toLowerCase();
       isLoading = true;
     });
 
@@ -193,29 +193,54 @@ class _PaymentOptionState extends State<PaymentOption> {
                                           "Selected Course: ${courseName}",
                                           textAlign: TextAlign.center,
                                         ),
-                                        Column(
-                                          children: [
-                                            FittedBox(
-                                              fit: BoxFit.fitWidth,
-                                              child: Text(
-                                                courseDurationPrice[0] != null
-                                                    ? '₹ ${courseDurationPrice[0]}/Inc GST'
-                                                    : '₹ 0/Inc GST',
+                                        SingleChildScrollView(
+                                          child: Column(
+                                            children: [
+                                              FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: Text(
+                                                  courseDurationPrice[0] != null
+                                                      ? '₹ ${courseDurationPrice[0]}/Inc GST'
+                                                      : '₹ 0/Inc GST',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Colors.blueAccent,
+                                                      fontSize: 22,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                              Text(
+                                                'Per Month',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                    color: Colors.blueAccent,
-                                                    fontSize: 22,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                  color: Colors.blueAccent,
+                                                ),
                                               ),
+                                            ],
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Live Classes')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
                                             ),
                                             Text(
-                                              'Per Month',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.blueAccent,
-                                              ),
-                                            ),
+                                                'Unlimited chapter\n wise practice\n question with \nindividual video\n solution ')
                                           ],
                                         ),
                                         Row(
@@ -226,7 +251,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Icons.check,
                                               color: Colors.green,
                                             ),
-                                            Text('You Saves 10%')
+                                            Text('PDF Notes')
                                           ],
                                         ),
                                         Row(
@@ -237,7 +262,51 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Icons.check,
                                               color: Colors.green,
                                             ),
-                                            Text('You Saves 10%')
+                                            Text('Level Up Test')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Full Length Test ')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('24*7 Doubt solving')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Teacher Review')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Parents – Teacher\n meeting')
                                           ],
                                         ),
                                         Material(
@@ -321,7 +390,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                             ),
                                           ],
                                         ),
-                                        Row(
+                                       Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
@@ -329,7 +398,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Icons.check,
                                               color: Colors.green,
                                             ),
-                                            Text('You Saves 12%')
+                                            Text('Live Classes')
                                           ],
                                         ),
                                         Row(
@@ -340,7 +409,74 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Icons.check,
                                               color: Colors.green,
                                             ),
-                                            Text('You Saves 12%')
+                                            Text(
+                                                'Unlimited chapter\n wise practice\n question with \nindividual video\n solution ')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('PDF Notes')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Level Up Test')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Full Length Test ')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('24*7 Doubt solving')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Teacher Review')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Parents – Teacher\n meeting')
                                           ],
                                         ),
                                         Material(
@@ -432,7 +568,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Icons.check,
                                               color: Colors.green,
                                             ),
-                                            Text('You Saves 15%')
+                                            Text('Live Classes')
                                           ],
                                         ),
                                         Row(
@@ -443,7 +579,74 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Icons.check,
                                               color: Colors.green,
                                             ),
-                                            Text('You Saves 15%')
+                                            Text(
+                                                'Unlimited chapter\n wise practice\n question with \nindividual video\n solution ')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('PDF Notes')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Level Up Test')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Full Length Test ')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('24*7 Doubt solving')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Teacher Review')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Parents – Teacher\n meeting')
                                           ],
                                         ),
                                         Material(
@@ -535,7 +738,7 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Icons.check,
                                               color: Colors.green,
                                             ),
-                                            Text('You Saves 18%')
+                                            Text('Live Classes')
                                           ],
                                         ),
                                         Row(
@@ -546,7 +749,74 @@ class _PaymentOptionState extends State<PaymentOption> {
                                               Icons.check,
                                               color: Colors.green,
                                             ),
-                                            Text('You Saves 18%')
+                                            Text(
+                                                'Unlimited chapter\n wise practice\n question with \nindividual video\n solution ')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('PDF Notes')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Level Up Test')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Full Length Test ')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('24*7 Doubt solving')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Teacher Review')
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Icon(
+                                              Icons.check,
+                                              color: Colors.green,
+                                            ),
+                                            Text('Parents – Teacher\n meeting')
                                           ],
                                         ),
                                         Material(
