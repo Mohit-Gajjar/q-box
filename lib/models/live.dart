@@ -45,11 +45,6 @@ class JoinMeetingState extends State<JoinMeeting> {
   void initState() {
     super.initState();
     initialize();
-    // JitsiMeet.addListener(JitsiMeetingListener(
-    //     onConferenceWillJoin: _onConferenceWillJoin,
-    //     onConferenceJoined: _onConferenceJoined,
-    //     onConferenceTerminated: _onConferenceTerminated,
-    //     onError: _onError));
   }
 
   @override
@@ -92,13 +87,7 @@ class JoinMeetingState extends State<JoinMeeting> {
   }
 
   _joinMeeting() async {
-    Map<FeatureFlagEnum, bool> featureFlags = {
-      // FeatureFlagEnum.WELCOME_PAGE_ENABLED: false,
-      // FeatureFlagEnum.LIVE_STREAMING_ENABLED: false,
-      // FeatureFlagEnum.ADD_PEOPLE_ENABLED: false,
-      // FeatureFlagEnum.RAISE_HAND_ENABLED: false,
-      // FeatureFlagEnum.TOOLBOX_ALWAYS_VISIBLE: false
-    };
+    Map<FeatureFlagEnum, bool> featureFlags = {};
     setState(() {});
     var options = JitsiMeetingOptions(room: roomText);
     options.serverURL = null;
@@ -124,12 +113,8 @@ class JoinMeetingState extends State<JoinMeeting> {
     await JitsiMeet.joinMeeting(
       options,
       listener: JitsiMeetingListener(
-          onConferenceWillJoin: (message) {
-            // debugPrint("${options.room} will join with message: $message");
-          },
-          onConferenceJoined: (message) {
-            // debugPrint("${options.room} joined with message: $message");
-          },
+          onConferenceWillJoin: (message) {},
+          onConferenceJoined: (message) {},
           onConferenceTerminated: (message) {
             Navigator.pop(context);
           },
