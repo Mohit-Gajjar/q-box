@@ -17,6 +17,30 @@ class LiveTestsScreen extends StatefulWidget {
 }
 
 class _LiveTestsScreenState extends State<LiveTestsScreen> {
+  String fltJEE = """
+  1.	As you are aware, all the examinations (FLT & Level up) are conducted by QRIOCTYBOX's R&D in online mode.\n
+  2.Full-Length test (FLT): The test is 3.00 hours in duration and the Test contains 90 multiple-choice questions (four options with a single correct answer) from Physics, Chemistry, and Mathematics where the total marks are 360. \n
+  3.MCQs: To answer a question, the candidates need to choose one option corresponding to the correct answer or the most appropriate answer. \n
+  4.Correct answer or the most appropriate answer: Four marks (+4).\n
+  5.Any incorrect option marked will be given minus one mark (-1).\n
+  6.	Unanswered Marked for Review will be given no mark (0).\n
+  """;
+  String fltNEET = """
+  1.	As you are aware, all the examinations (FLT & Level up) are conducted by QRIOCTYBOX's R&D in online mode.\n
+  2.Full-Length test (FLT): The test is 3.00 hours in duration and the Test contains 180 multiple-choice questions (four options with a single correct answer) from Physics, Chemistry, and Biology (Botany and Zoology), where the total marks are 720.\n
+  3.MCQs: To answer a question, the candidates need to choose one option corresponding to the correct answer or the most appropriate answer. \n
+  4.Correct answer or the most appropriate answer: Four marks (+4).\n
+  5.Any incorrect option marked will be given minus one mark (-1).\n
+  6.	Unanswered Marked for Review will be given no mark (0).\n
+  """;
+  String levelUp = """
+  1.	As you are aware, all the examinations (FLT & Level up) are conducted by QRIOCTYBOX's R&D in online mode.\n
+  2.Level up series: In these exams, we will follow the rules of QRIOCTYBOX R&D. Where three section are available and each level has 30 questions, for level 'A' clearing marks 75℅, level 'B' clearing marks 65℅ and level 'C' 55℅. At first students will clear the level A then B & C. A .has basic level question then B has moderate level and C has critical thinking level.\n
+  3.MCQs: To answer a question, the candidates need to choose one option corresponding to the correct answer or the most appropriate answer. \n
+  4.Correct answer or the most appropriate answer: Four marks (+4).\n
+  5.Any incorrect option marked will be given minus one mark (-1).\n
+  6.	Unanswered Marked for Review will be given no mark (0).\n
+  """;
 
   final PageController _pageController = PageController();
 
@@ -71,8 +95,9 @@ class _LiveTestsScreenState extends State<LiveTestsScreen> {
           ),
           child: Center(
             child: Text(
-              'Test Guidelines',
+              fltJEE,
               style: HelperFunctions.textStyleCard(),
+              overflow: TextOverflow.fade,
             ),
           ),
         ),

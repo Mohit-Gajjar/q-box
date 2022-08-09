@@ -70,27 +70,29 @@ class _TabsScreenState extends State<TabsScreen> {
           NavigationDestination(
             icon: Icon(
               Icons.home,
+              size: 28,
             ),
             label: 'Home',
           ),
           NavigationDestination(
               icon: Icon(
-                Icons.explore,
+                Icons.people_alt,
+
               ),
               label: 'Batches'),
           NavigationDestination(
               icon: Icon(
-                Icons.online_prediction_rounded,
+                Icons.library_books_outlined
               ),
               label: 'tests'),
           NavigationDestination(
               icon: Icon(
-                Icons.subscriptions_rounded,
+                Icons.menu_book,
               ),
               label: 'DPB'),
           NavigationDestination(
             icon: Icon(
-              Icons.video_library_rounded,
+              Icons.credit_card,
             ),
             label: 'Subscription',
           ),

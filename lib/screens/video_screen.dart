@@ -8,6 +8,7 @@ import 'package:video_player/video_player.dart';
 
 import '../models/teacherModel.dart';
 import '../utilities/dimensions.dart';
+import '../widgets/home_display_screen.dart';
 import 'batches/teacher_details_screen.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -158,6 +159,19 @@ class _VideoScreenState extends State<VideoScreen> {
                 ],
               )
 
+            ),
+            SizedBox(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: widget.teacher.completedClasses?.length,
+                itemBuilder: (context,index)=>HomeDisplayScreen(
+                videoLink: widget.teacher.completedClasses![index]['videoLink'],
+                imageUrl: widget.teacher.completedClasses![index]['imageUrl'],
+                title: widget.teacher.completedClasses![index]['title'],
+                likes: int.parse(widget.teacher.completedClasses![index]['likes']),
+                teacherEmail: widget.teacher.email! ,
+                batchName: widget.teacher.completedClasses![index]['batchName'],
+              ),),
             )
             // Center(
             //   child: _controller.value.isInitialized
