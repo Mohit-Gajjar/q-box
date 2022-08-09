@@ -58,21 +58,27 @@ class LiveClassesScreen extends StatelessWidget {
                         bool flag = true;
                         int k = 0;
                         int j = 0;
-                        // ignore: unnecessary_null_comparison
-                        if (gTrialCourse != null && gPurchasedCourse != null) {
-                         
+                        int x = 0;
+                        if(gTrialCourse != null && gPurchasedCourse != null){
+                          setState(() {
                             k = gTrialCourse.length;
                             j = gPurchasedCourse.length;
+                            x = gFollowedTeachers.length;
+                          });
                         }
-                        for (int i = 0; i < k; i++) {
-                          if (data['cid'] == gTrialCourse[i]['cid']) {
-                            flag = true;
+                        for(int i=0;i<k;i++){
+                          if(data['cid']==gTrialCourse[i]['cid']){
+                            for(int y=0;y<x;y++)
+                              if(data['postedTeacher']==gFollowedTeachers[y])
+                                flag = true;
                           }
                         }
-                        for (int i = 0; i < j; i++) {
-                          if (data['cid'] == gPurchasedCourse[i]['cid']) {
-                            flag = true;
-                          }
+                        for(int i=0;i<j;i++){
+                          if(data['cid']==gPurchasedCourse[i]['cid']){
+                            for(int y=0;y<x;y++)
+                              if(data['postedTeacher']==gFollowedTeachers[y])
+                                flag = true;
+
                         }
                         print("${data['cid']} -- $flag");
                         return (flag)
