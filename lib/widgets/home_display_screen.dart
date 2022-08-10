@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/teacher/TeacherProfileScreen.dart';
 import 'package:notes_app/screens/video_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
-class HomeDisplayScreen extends StatelessWidget {
+import '../models/teacherModel.dart';
+
+class HomeDisplayScreen extends StatefulWidget {
   final String title;
   final String imageUrl;
   final String videoLink;
@@ -21,6 +24,25 @@ class HomeDisplayScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<HomeDisplayScreen> createState() => _HomeDisplayScreenState();
+}
+
+class _HomeDisplayScreenState extends State<HomeDisplayScreen> {
+  late TeacherModel teach;
+  getTeacher()async{
+    await FirebaseFirestore.instance.doc("teachers/${widget.teacherEmail}").get(
+    ).then((value){
+      setState(() {
+        teach=TeacherModel.fromJson(value.data()!);
+      });
+    });
+  }
+  @override
+  void initState() {
+    getTeacher();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -30,8 +52,10 @@ class HomeDisplayScreen extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => VideoScreen(
-                          title: title,
-                          videoLink: videoLink,
+                      teacher: teach,
+                          title: widget.title,
+                          videoLink: widget.videoLink, isUserLiked: false, likes: widget.likes,
+
                         )));
           },
           child: Container(
@@ -40,7 +64,7 @@ class HomeDisplayScreen extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
               image: DecorationImage(
-                  image: NetworkImage(imageUrl), fit: BoxFit.cover),
+                  image: NetworkImage(widget.imageUrl), fit: BoxFit.cover),
             ),
           ),
         ),
@@ -60,11 +84,11 @@ class HomeDisplayScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => TeacherProfileScreen(
-                              collectionPath: "teachers/$teacherEmail",
-                              batchName: batchName)));
+                              collectionPath: "teachers/${widget.teacherEmail}",
+                              batchName: widget.batchName)));
                 },
                 child: CircleAvatar(
-                  child: Center(child: Text(teacherEmail[0])),
+                  child: Center(child: Text(widget.teacherEmail[0])),
                 ),
               ),
               SizedBox(
@@ -73,7 +97,7 @@ class HomeDisplayScreen extends StatelessWidget {
               SizedBox(
                 // width: Dimensions.width10 * 30,
                 child: Text(
-                  title,
+                  widget.title,
                   textAlign: TextAlign.start,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
@@ -90,7 +114,7 @@ class HomeDisplayScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(),
-            Text('${likes} Likes'),
+            Text('${widget.likes} Likes'),
             Text('4 minutes ago'),
             SizedBox(),
           ],
