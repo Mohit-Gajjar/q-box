@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -46,7 +48,6 @@ class LiveClassesScreen extends StatelessWidget {
                 FirebaseFirestore.instance.collection('liveVideos').snapshots(),
             builder:
                 ((BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              // print(snapshot.data!.docs[0].data());
               return snapshot.hasData
                   ? ListView.builder(
                       shrinkWrap: true,
@@ -59,29 +60,27 @@ class LiveClassesScreen extends StatelessWidget {
                         int k = 0;
                         int j = 0;
                         int x = 0;
-                        if(gTrialCourse != null && gPurchasedCourse != null){
-                          setState(() {
-                            k = gTrialCourse.length;
-                            j = gPurchasedCourse.length;
-                            x = gFollowedTeachers.length;
-                          });
+                        if (gTrialCourse != null && gPurchasedCourse != null) {
+                          k = gTrialCourse.length;
+                          j = gPurchasedCourse.length;
+                          x = gFollowedTeachers.length;
                         }
-                        for(int i=0;i<k;i++){
-                          if(data['cid']==gTrialCourse[i]['cid']){
-                            for(int y=0;y<x;y++)
-                              if(data['postedTeacher']==gFollowedTeachers[y])
+                        for (int i = 0; i < k; i++) {
+                          if (data['cid'] == gTrialCourse[i]['cid']) {
+                            for (int y = 0; y < x; y++)
+                              if (data['postedTeacher'] == gFollowedTeachers[y])
                                 flag = true;
                           }
                         }
-                        for(int i=0;i<j;i++){
-                          if(data['cid']==gPurchasedCourse[i]['cid']){
-                            for(int y=0;y<x;y++)
-                              if(data['postedTeacher']==gFollowedTeachers[y])
+                        for (int i = 0; i < j; i++) {
+                          if (data['cid'] == gPurchasedCourse[i]['cid']) {
+                            for (int y = 0; y < x; y++)
+                              if (data['postedTeacher'] == gFollowedTeachers[y])
                                 flag = true;
-
+                          }
                         }
                         print("${data['cid']} -- $flag");
-                        return (flag)
+                        return flag
                             ? ListTile(
                                 onTap: () {
                                   if (isLive) {

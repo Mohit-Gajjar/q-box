@@ -14,7 +14,6 @@ import 'package:notes_app/screens/explore.dart';
 import 'package:notes_app/screens/home/home.dart';
 import 'package:notes_app/screens/home/question_bank_screen.dart';
 import 'package:notes_app/screens/payments/checkout_page.dart';
-import 'package:notes_app/screens/payments/payment_option.dart';
 import 'package:notes_app/screens/profile.dart';
 import 'package:provider/provider.dart';
 

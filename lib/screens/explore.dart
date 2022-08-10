@@ -34,7 +34,7 @@ class Explore extends StatelessWidget {
               ),
             ),
             const Text(
-              'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Least sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+              "QRIOCTYBOX is an Ed-tech company that focuses on helping students to excel in exams through practice and learning. Q-BOX is India's only company to provide students with an unlimited plethora of practice questions with video solutions for every question. At Q-BOX, we believe 'practice makes a man perfect' hence dedicate our efforts to instill the same attitude in our students. So joining us will ensure you ace your exam with utmost confidence and will bring you success in a smart way! #keeppracticing.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
