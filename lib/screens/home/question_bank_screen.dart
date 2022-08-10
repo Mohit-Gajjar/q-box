@@ -64,10 +64,9 @@ class _QuestionsBankState extends State<QuestionsBank> {
                             if (gTrialCourse != null &&
                                 // ignore: unnecessary_null_comparison
                                 gPurchasedCourse != null) {
-                              setState(() {
+
                                 length2 = gTrialCourse.length;
                                 length3 = gPurchasedCourse.length;
-                              });
                             }
                             for (int i = 0; i < length2; i++) {
                               if (data['cid'] == gTrialCourse[i]['cid']) {

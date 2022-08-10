@@ -24,34 +24,35 @@ class _AnalyticsState extends State<Analytics> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                ListTile(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SubjectView())),
-                  title: const Text("Subject View"),
-                  trailing: const Icon(Icons.arrow_right_alt),
-                ),
-                ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const FullLengthTest())),
-                  title: const Text("Full Length Tests"),
-                  trailing: const Icon(Icons.arrow_right_alt),
-                ),
-                ListTile(
-                  onTap: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LadderBoard())),
-                  title: const Text("Ladder Board"),
-                  trailing: const Icon(Icons.arrow_right_alt),
-                ),
-                ListTile(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DigitalPracticeBook())),
-                  title: const Text("DPB"),
-                  trailing: const Icon(Icons.arrow_right_alt),
-                ),
+                Text("Coming Soon..", style:TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                // ListTile(
+                //   onTap: () => Navigator.push(context,
+                //       MaterialPageRoute(builder: (context) => SubjectView())),
+                //   title: const Text("Subject View"),
+                //   trailing: const Icon(Icons.arrow_right_alt),
+                // ),
+                // ListTile(
+                //   onTap: () => Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => const FullLengthTest())),
+                //   title: const Text("Full Length Tests"),
+                //   trailing: const Icon(Icons.arrow_right_alt),
+                // ),
+                // ListTile(
+                //   onTap: () => Navigator.push(context,
+                //       MaterialPageRoute(builder: (context) => LadderBoard())),
+                //   title: const Text("Ladder Board"),
+                //   trailing: const Icon(Icons.arrow_right_alt),
+                // ),
+                // ListTile(
+                //   onTap: () => Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => DigitalPracticeBook())),
+                //   title: const Text("DPB"),
+                //   trailing: const Icon(Icons.arrow_right_alt),
+                // ),
               ],
             ),
           ),

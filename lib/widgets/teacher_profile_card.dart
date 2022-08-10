@@ -35,92 +35,104 @@ class _TeacherProfileCardState extends State<TeacherProfileCard> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           return (snapshot.hasData)
               ? Container(
-                  height: 300,
+                  height: 350,
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimensions.width10 * 1.5,
                       vertical: Dimensions.height10 * 2),
                   margin: EdgeInsets.symmetric(vertical: Dimensions.height10),
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Colors.black12,
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  child: Column(
+                  child: Stack(
                     children: [
-                      Align(
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              snapshot.data!.docs[0]['name'],
-                              style: const TextStyle(
-                                  fontSize: 22.0, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text("${snapshot.data!.docs[0]['qualification']}")
-                          ],
+                      Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(snapshot.data!.docs[0]['profilePic']),
                         ),
-                      ),
-                      SizedBox(
-                        height: Dimensions.height10 * 2,
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "experience : ${snapshot.data!.docs[0]['experience']}",
-                          style: const TextStyle(
-                              fontSize: 17.0, fontWeight: FontWeight.bold),
+                        Container(
+                          height: 270,
+                          width: 2,
+                          color: Colors.grey
                         ),
-                      ),
-                      SizedBox(
-                        height: Dimensions.height10 * 2,
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "subjects : ${snapshot.data!.docs[0]['subjectExpertise']}",
-                          style: const TextStyle(
-                              fontSize: 17.0, fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                snapshot.data!.docs[0]['name'],
+                                style: const TextStyle(
+                                    fontSize: 18.0, fontWeight: FontWeight.bold),
+                              ),
+                              Text("${snapshot.data!.docs[0]['qualification']}"),
+                              SizedBox(
+                                height: Dimensions.height10 * 2,
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "experience : ${snapshot.data!.docs[0]['experience']}",
+                                  style: const TextStyle(
+                                      fontSize: 15.0, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              SizedBox(
+                                height: Dimensions.height10 * 2,
+                              ),
+                              Text(
+                                "subjects : ${snapshot.data!.docs[0]['subjectExpertise']}",
+                                overflow: TextOverflow.fade,
+                                style: const TextStyle(
+                                    fontSize: 15.0, fontWeight: FontWeight.bold),
+
+                              ),
+                              SizedBox(
+                                height: Dimensions.height10 * 2,
+                              ),
+                              Container(
+                                width: Dimensions.screenWidth/1.7,
+                                child: Text(
+                                  "languages : ${snapshot.data!.docs[0]['teachingLanguage']}",
+                                  overflow: TextOverflow.fade,
+                                  style: const TextStyle(
+                                      fontSize: 15.0, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: Dimensions.height10 * 2,
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "languages : ${snapshot.data!.docs[0]['teachingLanguage']}",
-                          style: const TextStyle(
-                              fontSize: 17.0, fontWeight: FontWeight.bold),
+                      ],
+                    ),
+                      Align(alignment: Alignment.bottomRight,
+                        child: CustomButton(
+                          backColor: Colors.pink,
+                          onTapHandler: () async {
+                            await FirebaseFirestore.instance
+                                .collection("users")
+                                .doc(user?.email)
+                                .set({
+                              "followedTeachers": FieldValue.arrayUnion(
+                                  [snapshot.data!.docs[0]['email']])
+                            }, SetOptions(merge: true)).then((value) {
+                              Fluttertoast.showToast(msg: "Followed!");
+                            });
+                            Navigator.of(context).pushNamed(
+                                TeacherDetailsScreen.routeName,
+                                arguments: {
+                                  'batchName': widget.batch,
+                                  'teacher': snapshot.data!.docs[0]['name'],
+                                });
+                          },
+                          text: 'Follow',
                         ),
-                      ),
-                      const Spacer(),
-                      CustomButton(
-                        backColor: Colors.pink,
-                        onTapHandler: () async {
-                          await FirebaseFirestore.instance
-                              .collection("users")
-                              .doc(user?.email)
-                              .set({
-                            "followedTeachers": FieldValue.arrayUnion(
-                                [snapshot.data!.docs[0]['email']])
-                          }, SetOptions(merge: true)).then((value) {
-                            Fluttertoast.showToast(msg: "Followed!");
-                          });
-                          Navigator.of(context).pushNamed(
-                              TeacherDetailsScreen.routeName,
-                              arguments: {
-                                'batchName': widget.batch,
-                                'teacher': snapshot.data!.docs[0]['name'],
-                              });
-                        },
-                        text: 'Follow',
                       )
-                    ],
+                    ]
                   ),
                 )
               : Center(

@@ -181,7 +181,7 @@ class _HomeState extends State<Home> {
                           imageUrl: data['imageUrl'],
                           title: data['title'],
                           likes: data['likes'],
-                          teacherEmail: data['uploadedTeacherEmail'],
+                          teacherEmail: data['uploadedTeacherEmail'] ,
                           batchName: data['batchName'],
                         ),
                       );
@@ -272,7 +272,7 @@ class CourseTile extends StatelessWidget {
                         title: Text(subtitle[index]),
                         onTap: () {
                           print(courses[subtitle[index]]);
-                          courses[subtitle[index]]['reference']="cat/$title";
+                          courses[subtitle[index]]['reference']="cat/${title.toLowerCase()}";
                           selectedCourses.add(courses[subtitle[index]]);
                           FirebaseFirestore.instance
                               .collection('users')

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/models/practice_model.dart';
+import 'package:notes_app/screens/home/totalMarksScreen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:video_player/video_player.dart';
 import '../../helpers/helpers.dart';
@@ -471,7 +472,7 @@ class _PracticeState extends State<Practice> {
                                         totalMarks = totalMarks + i;
                                       });
                                       open=true;
-                                    });
+                                    });Navigator.push(context, MaterialPageRoute(builder: (context)=>TotalMarksScreen(marks: totalMarks)));
                                     print(totalMarks);
                                   }
                                 },
