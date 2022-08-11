@@ -9,7 +9,6 @@ import 'package:video_player/video_player.dart';
 import '../models/teacherModel.dart';
 import '../utilities/dimensions.dart';
 import '../widgets/home_display_screen.dart';
-import 'batches/teacher_details_screen.dart';
 
 class VideoScreen extends StatefulWidget {
   static const String routeName = '/videoScreen';

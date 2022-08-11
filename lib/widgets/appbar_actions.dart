@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:notes_app/screens/ChatUi.dart';
 import 'package:notes_app/screens/profile.dart';
 import 'package:notes_app/screens/search/search_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';

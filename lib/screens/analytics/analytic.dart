@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/screens/analytics/subject_view.dart';
-import 'package:notes_app/screens/analytics/batches.dart';
-import 'package:notes_app/screens/analytics/practice.dart';
-import 'package:notes_app/screens/analytics/tests.dart';
 
 class Analytics extends StatefulWidget {
   const Analytics({

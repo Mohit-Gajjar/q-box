@@ -29,7 +29,7 @@ class _PracticeState extends State<Practice> {
   bool isCorrenctOptionChosen4 = false;
   bool isVideoSolenabled = false;
   int totalMarks = 0;
-  bool open =false;
+  bool open = false;
   bool isSliderOpen = true;
   // final List<int> _allSelectedChoices = List.filled(20, 0);
   PracticeModel? practiceModel;
@@ -37,11 +37,11 @@ class _PracticeState extends State<Practice> {
   Map<String, dynamic>? _userQuestions = {};
   Map<String, dynamic>? _options = {};
   Map<String, dynamic>? _correctAnswers = {};
-  List<int> marks=[];
-  List<int> counts=[];
+  List<int> marks = [];
+  List<int> counts = [];
   List<Color> colors = [];
-  void initializeMarksCounts(int n){
-    for(int i=0;i<n;i++){
+  void initializeMarksCounts(int n) {
+    for (int i = 0; i < n; i++) {
       setState(() {
         marks.add(0);
         counts.add(0);
@@ -49,9 +49,10 @@ class _PracticeState extends State<Practice> {
       });
     }
   }
+
   @override
   void initState() {
-    getQuestions().then((value){
+    getQuestions().then((value) {
       print(_userQuestions!.keys.length);
       initializeMarksCounts(_userQuestions!.keys.length);
     });
@@ -151,8 +152,10 @@ class _PracticeState extends State<Practice> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          (open)?Text("TOTAL MARKS : $totalMarks"):SizedBox(),
-                          TestTimer(),
+                          (open)
+                              ? Text("TOTAL MARKS : $totalMarks")
+                              : SizedBox(),
+                          // TestTimer(),
                           FadeInUp(
                             from: 50,
                             duration: const Duration(milliseconds: 375),
@@ -191,12 +194,14 @@ class _PracticeState extends State<Practice> {
                           OptionsTile(0, context, () {
                             if (correctOptions[1] == true) {
                               setState(() {
-                                counts[questionNumber-1]++;
-                                print("count${questionNumber-1} ${counts[questionNumber-1]}");
-                                if(counts[questionNumber-1]==1){
+                                counts[questionNumber - 1]++;
+                                print(
+                                    "count${questionNumber - 1} ${counts[questionNumber - 1]}");
+                                if (counts[questionNumber - 1] == 1) {
                                   marks[questionNumber - 1]++;
                                 }
-                                print("marks${questionNumber-1} ${marks[questionNumber-1]}");
+                                print(
+                                    "marks${questionNumber - 1} ${marks[questionNumber - 1]}");
                                 isCorrenctOptionChosen1 = true;
                               });
                               showCustomSnackbar(
@@ -206,8 +211,8 @@ class _PracticeState extends State<Practice> {
                               );
                             } else {
                               setState(() {
-                                counts[questionNumber-1]++;
-                                if(counts[questionNumber-1]==1){
+                                counts[questionNumber - 1]++;
+                                if (counts[questionNumber - 1] == 1) {
                                   marks[questionNumber - 1]--;
                                 }
                                 isCorrenctOptionChosen1 = true;
@@ -220,13 +225,15 @@ class _PracticeState extends State<Practice> {
                             }
                           },
                               isCorrenctOptionChosen1
-                                  ? (correctOptions[1])?Colors.green:Colors.red
+                                  ? (correctOptions[1])
+                                      ? Colors.green
+                                      : Colors.red
                                   : Colors.white),
                           OptionsTile(1, context, () {
                             if (correctOptions[2] == true) {
                               setState(() {
-                                counts[questionNumber-1]++;
-                                if(counts[questionNumber-1]==1){
+                                counts[questionNumber - 1]++;
+                                if (counts[questionNumber - 1] == 1) {
                                   marks[questionNumber - 1]++;
                                 }
                                 isCorrenctOptionChosen2 = true;
@@ -238,8 +245,8 @@ class _PracticeState extends State<Practice> {
                               );
                             } else {
                               setState(() {
-                                counts[questionNumber-1]++;
-                                if(counts[questionNumber-1]==1){
+                                counts[questionNumber - 1]++;
+                                if (counts[questionNumber - 1] == 1) {
                                   marks[questionNumber - 1]--;
                                 }
                                 isCorrenctOptionChosen2 = true;
@@ -252,13 +259,15 @@ class _PracticeState extends State<Practice> {
                             }
                           },
                               isCorrenctOptionChosen2
-                                  ? (correctOptions[2])?Colors.green:Colors.red
+                                  ? (correctOptions[2])
+                                      ? Colors.green
+                                      : Colors.red
                                   : Colors.white),
                           OptionsTile(2, context, () {
                             if (correctOptions[3] == true) {
                               setState(() {
-                                counts[questionNumber-1]++;
-                                if(counts[questionNumber-1]==1){
+                                counts[questionNumber - 1]++;
+                                if (counts[questionNumber - 1] == 1) {
                                   marks[questionNumber - 1]++;
                                 }
                                 isCorrenctOptionChosen3 = true;
@@ -270,8 +279,8 @@ class _PracticeState extends State<Practice> {
                               );
                             } else {
                               setState(() {
-                                counts[questionNumber-1]++;
-                                if(counts[questionNumber-1]==1){
+                                counts[questionNumber - 1]++;
+                                if (counts[questionNumber - 1] == 1) {
                                   marks[questionNumber - 1]--;
                                 }
                                 isCorrenctOptionChosen3 = true;
@@ -284,13 +293,15 @@ class _PracticeState extends State<Practice> {
                             }
                           },
                               isCorrenctOptionChosen3
-                                  ? (correctOptions[3])?Colors.green:Colors.red
+                                  ? (correctOptions[3])
+                                      ? Colors.green
+                                      : Colors.red
                                   : Colors.white),
                           OptionsTile(3, context, () {
                             if (correctOptions[4] == true) {
                               setState(() {
-                                counts[questionNumber-1]++;
-                                if(counts[questionNumber-1]==1){
+                                counts[questionNumber - 1]++;
+                                if (counts[questionNumber - 1] == 1) {
                                   marks[questionNumber - 1]++;
                                 }
                                 isCorrenctOptionChosen4 = true;
@@ -302,8 +313,8 @@ class _PracticeState extends State<Practice> {
                               );
                             } else {
                               setState(() {
-                                counts[questionNumber-1]++;
-                                if(counts[questionNumber-1]==1){
+                                counts[questionNumber - 1]++;
+                                if (counts[questionNumber - 1] == 1) {
                                   marks[questionNumber - 1]--;
                                 }
                                 isCorrenctOptionChosen4 = true;
@@ -316,7 +327,9 @@ class _PracticeState extends State<Practice> {
                             }
                           },
                               isCorrenctOptionChosen4
-                                  ? (correctOptions[4])?Colors.green:Colors.red
+                                  ? (correctOptions[4])
+                                      ? Colors.green
+                                      : Colors.red
                                   : Colors.white),
                           SizedBox(
                             height: Dimensions.height10 * 2,
@@ -351,7 +364,7 @@ class _PracticeState extends State<Practice> {
                                             ),
                                             child: CircleAvatar(
                                               backgroundColor:
-                                                  colors[questionNumber-1],
+                                                  colors[questionNumber - 1],
                                               child: Center(
                                                   child: Text(
                                                 '${idx + 1}',
@@ -369,8 +382,10 @@ class _PracticeState extends State<Practice> {
                           SizedBox(
                             height: Dimensions.height10 * 1.6,
                           ),
-                          Center(child: Text("obtained mark : ${(marks.isEmpty)?"0"
-                              :marks[questionNumber-1].toString()}"),),
+                          Center(
+                            child: Text(
+                                "obtained mark : ${(marks.isEmpty) ? "0" : marks[questionNumber - 1].toString()}"),
+                          ),
                           SizedBox(
                             height: Dimensions.height10 * 1.6,
                           ),
@@ -401,26 +416,25 @@ class _PracticeState extends State<Practice> {
                               ),
                               const Spacer(),
                               CustomButton(
-                                // backColor: Color(0xffFAD207),
-                                backColor: Colors.orange,
-                                text: 'Mark as Imp',
-                                onTapHandler:(){
-                                  setState(() {
-                                    colors[questionNumber-1]=Colors.orange;
-                                  });
-                                }
-                                    // _allSelectedChoices[questionNumber] == 0
-                                    //     ? () {}
-                                    //     : () {
-                                    //         setState(() {
-                                    //           _allSelectedChoices[
-                                    //               questionNumber] = 2;
-                                    //         });
+                                  // backColor: Color(0xffFAD207),
+                                  backColor: Colors.orange,
+                                  text: 'Mark as Imp',
+                                  onTapHandler: () {
+                                    setState(() {
+                                      colors[questionNumber - 1] =
+                                          Colors.orange;
+                                    });
+                                  }
+                                  // _allSelectedChoices[questionNumber] == 0
+                                  //     ? () {}
+                                  //     : () {
+                                  //         setState(() {
+                                  //           _allSelectedChoices[
+                                  //               questionNumber] = 2;
+                                  //         });
 
-
-
-                                    //       },
-                              ),
+                                  //       },
+                                  ),
                               const Spacer(),
                             ],
                           ),
@@ -454,9 +468,13 @@ class _PracticeState extends State<Practice> {
                                   if (_userQuestions!.keys.toList().length >
                                       questionNumber) {
                                     setState(() {
-                                      colors[questionNumber-1]=(marks[questionNumber-1]==1)?Colors.green:Colors.red;
+                                      colors[questionNumber - 1] =
+                                          (marks[questionNumber - 1] == 1)
+                                              ? Colors.green
+                                              : Colors.red;
                                     });
-                                    print("${questionNumber-1} --> ${colors[questionNumber-1].toString()}");
+                                    print(
+                                        "${questionNumber - 1} --> ${colors[questionNumber - 1].toString()}");
                                     setState(() {
                                       questionNumber++;
                                       isCorrenctOptionChosen1 = false;
@@ -465,14 +483,19 @@ class _PracticeState extends State<Practice> {
                                       isCorrenctOptionChosen4 = false;
                                       isVideoSolenabled = false;
                                     });
-                                  }
-                                  else{
+                                  } else {
                                     setState(() {
                                       marks.forEach((i) {
                                         totalMarks = totalMarks + i;
                                       });
-                                      open=true;
-                                    });Navigator.push(context, MaterialPageRoute(builder: (context)=>TotalMarksScreen(marks: totalMarks)));
+                                      open = true;
+                                    });
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                TotalMarksScreen(
+                                                    marks: totalMarks)));
                                     print(totalMarks);
                                   }
                                 },
