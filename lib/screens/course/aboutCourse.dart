@@ -12,6 +12,8 @@ class AboutCoursePage extends StatefulWidget {
 }
 
 class _AboutCoursePageState extends State<AboutCoursePage> {
+ 
+ // TODO: about course content missing, impliment dynamic course description
   @override
   Widget build(BuildContext context) {
     return Scaffold(

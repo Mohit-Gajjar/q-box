@@ -34,6 +34,7 @@ class _ProfileState extends State<Profile> {
     await _auth.signOut();
   }
 
+// TODO: Parents Teacher meeting page missing
   Future uploadProfile() async {
     String? errorMessage;
     final results = await FilePicker.platform.pickFiles(
@@ -209,23 +210,30 @@ class _ProfileState extends State<Profile> {
                 title: Text('Active Courses'),
               ),
               ListTile(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AnotherCourseScreen())),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AnotherCourseScreen())),
                 leading: Icon(
                   Icons.add_box_rounded,
                 ),
                 title: Text('Add another course'),
               ),
               ListTile(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => DoubtSolvingScreen())),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DoubtSolvingScreen())),
                 leading: Icon(
                   Icons.add_box_rounded,
                 ),
                 title: Text('Doubt Solving'),
               ),
               ListTile(
-                onTap: ()=> Navigator.push(context, MaterialPageRoute(builder:(context) => FollowedTeachersScreen() )),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FollowedTeachersScreen())),
                 leading: Icon(
                   Icons.follow_the_signs_rounded,
                 ),

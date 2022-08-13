@@ -420,6 +420,7 @@ class _PracticeState extends State<Practice> {
                                   text: 'Mark as Imp',
                                   onTapHandler: () {
                                     setState(() {
+                                      //TODO: Solve bug Mark as important question logic change
                                       colors[questionNumber - 1] =
                                           Colors.orange;
                                     });
@@ -446,6 +447,7 @@ class _PracticeState extends State<Practice> {
                               CustomButton(
                                 backColor: const Color(0xff0CBC8B),
                                 onTapHandler: () {
+                                  //TODO: Previous Question Button not working
                                   if (_userQuestions!.keys.toList().length <
                                       questionNumber) {
                                     setState(() {

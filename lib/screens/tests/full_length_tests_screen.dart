@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/tests/fulllengthguidelines.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
@@ -91,6 +92,12 @@ class _FullLengthTestsScreenState extends State<FullLengthTestsScreen> {
           AppBarProfileIcon(
             profileRadius: Dimensions.width10,
           ),
+          IconButton(
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => FullLengthTestsGuidelines()))),
+              icon: Icon(Icons.info_outline))
         ],
       ),
       body: SafeArea(
