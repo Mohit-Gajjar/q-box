@@ -106,39 +106,53 @@ class _FullLengthTestsScreenState extends State<FullLengthTestsScreen> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => LiveTestsScreen(tests: liveTest)));
                 },
-                child: Container(
-                  height: Dimensions.height10 * 20,
-                  decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.borderRadius15),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Live Tests',
-                      style: HelperFunctions.textStyleCard(),
+                child: Card(
+                 elevation: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 10, top: 8),
+                      height: 30,
+                      width: MediaQuery.of(context).size.width,
+                     child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Live Tests',
+                            style: HelperFunctions.textStyleCard(),
+                          ),
+                          Icon(Icons.arrow_forward_ios, color: Colors.black38,)
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: Dimensions.height10 * 2,
-              ),
+              // SizedBox(
+              //   height: Dimensions.height10 * 2,
+              // ),
               GestureDetector(
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) =>
                         CompletedTestsScreen(tests: cmptTest))),
-                child: Container(
-                  height: Dimensions.height10 * 20,
-                  decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.borderRadius15),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Completed Tests',
-                      style: HelperFunctions.textStyleCard(),
+                child: Card(
+                 elevation: 4,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 10, top: 8),
+                      height: 30,
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Completed Tests',
+                            style: HelperFunctions.textStyleCard(),
+                          ),
+                          Icon(Icons.arrow_forward_ios, color: Colors.black38,)
+                        ],
+                      ),
                     ),
                   ),
                 ),

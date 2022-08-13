@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notes_app/main.dart';
-import 'package:notes_app/screens/notification/notification_list.dart';
+// import 'package:notes_app/screens/notification/notification_list.dart';
 
 class LocalNotificationService{
 
