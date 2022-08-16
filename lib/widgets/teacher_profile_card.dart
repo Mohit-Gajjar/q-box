@@ -35,7 +35,7 @@ class _TeacherProfileCardState extends State<TeacherProfileCard> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           return (snapshot.hasData)
               ? Container(
-                  height: 350,
+                  height: 330,
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(
                       horizontal: Dimensions.width10 * 1.5,
@@ -51,57 +51,69 @@ class _TeacherProfileCardState extends State<TeacherProfileCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(snapshot.data!.docs[0]['profilePic']),
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Image.network(snapshot.data!.docs[0]['profilePic'],),
                         ),
                         Container(
-                          height: 270,
+                          height: 380,
                           width: 2,
                           color: Colors.grey
                         ),
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(18.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  snapshot.data!.docs[0]['name'],
+                                  "Teacher Name :   ${snapshot.data!.docs[0]['name']}",
+                                 
                                   style: const TextStyle(
-                                      fontSize: 18.0, fontWeight: FontWeight.bold),
+                                      fontSize: 17.0, fontWeight: FontWeight.normal),
                                 ),
-                                Text("${snapshot.data!.docs[0]['qualification']}"),
+                                 SizedBox(
+                                  height: Dimensions.height10 * 1,
+                                ),
+                                Text("Qualification   :     ${snapshot.data!.docs[0]['qualification']}",
+                                 style: const TextStyle(
+                                        fontSize: 17.0, fontWeight: FontWeight.normal),
+                                ),
                                 SizedBox(
-                                  height: Dimensions.height10 * 2,
+                                  height: Dimensions.height10 * 1,
                                 ),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "experience : ${snapshot.data!.docs[0]['experience']}",
+                                // Align(
+                                //   alignment: Alignment.center,
+                                //   child: Text(
+                                //     "experience : ${snapshot.data!.docs[0]['experience']}",
+                                //     style: const TextStyle(
+                                //         fontSize: 15.0, fontWeight: FontWeight.bold),
+                                //   ),
+                                // ),
+                                Text(
+                                    "Experience     :      ${snapshot.data!.docs[0]['experience']}",
                                     style: const TextStyle(
-                                        fontSize: 15.0, fontWeight: FontWeight.bold),
+                                        fontSize: 17.0, fontWeight: FontWeight.normal),
                                   ),
-                                ),
                                 SizedBox(
-                                  height: Dimensions.height10 * 2,
+                                  height: Dimensions.height10 * 1,
                                 ),
                                 Text(
-                                  "subjects : ${snapshot.data!.docs[0]['subjectExpertise']}",
+                                  "Subjects         :  ${snapshot.data!.docs[0]['subjectExpertise']}",
                                   overflow: TextOverflow.fade,
                                   style: const TextStyle(
-                                      fontSize: 15.0, fontWeight: FontWeight.bold),
+                                      fontSize: 17.0, fontWeight: FontWeight.normal),
                                               
                                 ),
                                 SizedBox(
-                                  height: Dimensions.height10 * 2,
+                                height: Dimensions.height10 * 1,
                                 ),
                                 Container(
                                   width: Dimensions.screenWidth/1.7,
                                   child: Text(
-                                    "languages : ${snapshot.data!.docs[0]['teachingLanguage']}",
+                                    "Languages     :   ${snapshot.data!.docs[0]['teachingLanguage']}",
                                     overflow: TextOverflow.fade,
                                     style: const TextStyle(
-                                        fontSize: 15.0, fontWeight: FontWeight.bold),
+                                        fontSize: 17.0, fontWeight: FontWeight.normal),
                                   ),
                                 ),
                                 const Spacer(),

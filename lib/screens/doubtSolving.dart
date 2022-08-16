@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../utilities/dimensions.dart';
 import '../widgets/appbar_actions.dart';
 
 class DoubtSolvingScreen extends StatefulWidget {
@@ -36,57 +37,197 @@ class _DoubtSolvingScreenState extends State<DoubtSolvingScreen> {
         actions: <Widget>[AppBarActions2()],
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(28.0),
+            padding: const EdgeInsets.only(top: 20),
             child: ListTile(
-              title: Text("Group Link Here for JEE "),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        _launchURL("https://t.me/mathematicsqrioctybox");
-                      },
-                      child: Text('Mathematics')),
-                  TextButton(
-                      onPressed: () {
-                        _launchURL("https://t.me/physicsqrioctybox");
-                      },
-                      child: Text('Physics')),
-                  TextButton(
-                      onPressed: () {
-                        _launchURL("https://t.me/chemistryqrioctybox");
-                      },
-                      child: Text('Chemistry'))
-                ],
+              title: Text("Doubt Solving Only For JEE ",
+              style: TextStyle(color: Colors.black87, fontSize: 17, fontWeight: FontWeight.w700),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 65,
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 6.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7.0),
+                  border: Border.all(
+                      color: Colors.black45, style: BorderStyle.solid, width: 0.80),
+                ),
+                      
+                        child: TextButton(
+                            onPressed: () {
+                              _launchURL("https://t.me/mathematicsqrioctybox");
+                            },
+                            child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Image.asset('assets/images/doubt_solving.png', height: 70,),
+                              Text('Mathematics Group', 
+                                style: TextStyle(color: Colors.black87, fontSize: 16),
+                                ),
+                                Icon(Icons.arrow_forward_ios, color: Colors.black12,)
+                            ],
+                          )),
+                    ),
+                     SizedBox(
+                                  height: Dimensions.height10 * 1,
+                                ),
+                    Container(
+                       height: 65,
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 6.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7.0),
+                  border: Border.all(
+                      color: Colors.black38, style: BorderStyle.solid, width: 0.80),
+                ),
+                      child: TextButton(
+                          onPressed: () {
+                            _launchURL("https://t.me/physicsqrioctybox");
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Image.asset('assets/images/doubt_solving.png', height: 70,),
+                              Text('Physics Group', 
+                                style: TextStyle(color: Colors.black87, fontSize: 16),
+                                ),
+                                Icon(Icons.arrow_forward_ios, color: Colors.black12,)
+                            ],
+                          )),
+                    ),
+                     SizedBox(
+                                  height: Dimensions.height10 * 1,
+                                ),
+                    Container(
+                       height: 65,
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 6.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7.0),
+                  border: Border.all(
+                      color: Colors.black38, style: BorderStyle.solid, width: 0.80),
+                ),
+                      child: TextButton(
+                          onPressed: () {
+                            _launchURL("https://t.me/chemistryqrioctybox");
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                             Image.asset('assets/images/doubt_solving.png', height: 70,),
+                              Text('Chemistry Group', 
+                                style: TextStyle(color: Colors.black87, fontSize: 16),
+                                ),
+                                Icon(Icons.arrow_forward_ios, color: Colors.black12,)
+                            ],
+                          )),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(28.0),
+            padding: const EdgeInsets.all(2.0),
             child: ListTile(
-              title: Text("Group Link Here for NEET "),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        _launchURL("https://t.me/biologyqrioctybox");
-                      },
-                      child: Text('Biology')),
-                  TextButton(
-                      onPressed: () {
-                        _launchURL("https://t.me/physicsqrioctybox");
-                      },
-                      child: Text('Physics')),
-                  TextButton(
-                      onPressed: () {
-                        _launchURL("https://t.me/chemistryqrioctybox");
-                      },
-                      child: Text('Chemistry'))
-                ],
+              title: Text("Doubt Solving Only For NEET ",
+              style: TextStyle(color: Colors.black87, fontSize: 17, fontWeight: FontWeight.w600),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.symmetric( vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                         height: 65,
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 6.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7.0),
+                    border: Border.all(
+                        color: Colors.black38, style: BorderStyle.solid, width: 0.80),
+                  ),
+                      child: TextButton(
+                          onPressed: () {
+                            _launchURL("https://t.me/biologyqrioctybox");
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                             Image.asset('assets/images/doubt_solving.png', height: 70,),
+                              Text('Biology Group', 
+                                style: TextStyle(color: Colors.black87, fontSize: 16),
+                                ),
+                                Icon(Icons.arrow_forward_ios, color: Colors.black12,)
+                            ],
+                          )),
+                    ),
+                    SizedBox(
+                                  height: Dimensions.height10 * 1,
+                                ),
+                    Container(
+                         height: 65,
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 6.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7.0),
+                    border: Border.all(
+                        color: Colors.black38, style: BorderStyle.solid, width: 0.80),
+                  ),
+                      child: TextButton(
+                          onPressed: () {
+                            _launchURL("https://t.me/physicsqrioctybox");
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            Image.asset('assets/images/doubt_solving.png', height: 70,),
+                              Text('Physics Group', 
+                                style: TextStyle(color: Colors.black87, fontSize: 16),
+                                ),
+                                Icon(Icons.arrow_forward_ios, color: Colors.black12,)
+                            ],
+                          )),
+                    ),
+                     SizedBox(
+                                  height: Dimensions.height10 * 1,
+                                ),
+                    Container(
+                         height: 65,
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.symmetric(horizontal: 6.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(7.0),
+                    border: Border.all(
+                        color: Colors.black38, style: BorderStyle.solid, width: 0.80),
+                  ),
+                      child: TextButton(
+                          onPressed: () {
+                            _launchURL("https://t.me/chemistryqrioctybox");
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Image.asset('assets/images/doubt_solving.png', height: 70,),
+                              Text('Chemistry Group', 
+                                style: TextStyle(color: Colors.black87, fontSize: 16),
+                                ),
+                                Icon(Icons.arrow_forward_ios, color: Colors.black12,)
+                            ],
+                          )),
+                    ),
+                     SizedBox(
+                                  height: Dimensions.height10 * 1,
+                                ),
+                  ],
+                ),
               ),
             ),
           )
