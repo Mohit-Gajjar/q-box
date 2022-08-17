@@ -86,7 +86,6 @@ class JoinMeetingState extends State<JoinMeeting> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // JitsiMeet.closeMeeting();
           Navigator.pop(context);
         },
         label: Text("Leave Meeting"),
@@ -94,46 +93,4 @@ class JoinMeetingState extends State<JoinMeeting> {
     );
   }
 
-//   _joinMeeting() async {
-//     Map<FeatureFlagEnum, bool> featureFlags = {};
-//     setState(() {});
-//     var options = JitsiMeetingOptions(room: roomText);
-//     options.serverURL = null;
-//     options.subject = subjectText;
-//     options.userDisplayName = nameText;
-//     options.userEmail = emailText;
-//     options.audioOnly = isAudioOnly;
-//     options.audioMuted = isAudioMuted;
-//     options.videoMuted = isVideoMuted;
-//     options.featureFlags.addAll(featureFlags);
-
-//     featureFlags[FeatureFlagEnum.CALL_INTEGRATION_ENABLED] = false;
-//     options.iosAppBarRGBAColor = "#0080FF80";
-//     options.webOptions = {
-//       "roomName": roomText,
-//       "width": "100%",
-//       "height": "100%",
-//       "enableWelcomePage": false,
-//       "chromeExtensionBanner": null,
-//       "userInfo": {"displayName": emailText}
-//     };
-
-//     await JitsiMeet.joinMeeting(
-//       options,
-//       listener: JitsiMeetingListener(
-//           onConferenceWillJoin: (message) {},
-//           onConferenceJoined: (message) {},
-//           onConferenceTerminated: (message) {
-//             Navigator.pop(context);
-//           },
-//           genericListeners: [
-//             JitsiGenericListener(
-//                 eventName: 'readyToClose',
-//                 callback: (dynamic message) {
-//                   debugPrint("readyToClose callback");
-//                 }),
-//           ]),
-//     );
-//   }
-// }
 }

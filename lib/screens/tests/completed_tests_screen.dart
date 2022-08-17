@@ -14,6 +14,7 @@ class CompletedTestsScreen extends StatefulWidget {
 class _CompletedTestsScreenState extends State<CompletedTestsScreen> {
   @override
   Widget build(BuildContext context) {
+    //TODO:  Impliment the completed tests backend service, currently it is just a mockup 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

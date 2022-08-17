@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/tests/levelupguidelines.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
 import '../../helpers/helpers.dart';
@@ -41,6 +42,14 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
           'Level Up Tests',
           style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
+        actions: [
+            IconButton(
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => LevelUpTestGuideLines()))),
+              icon: Icon(Icons.info_outline))
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(

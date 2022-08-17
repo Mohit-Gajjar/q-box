@@ -11,6 +11,7 @@ class TestsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: impliment dynamic exam guidelines acording to the course choosen. 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
