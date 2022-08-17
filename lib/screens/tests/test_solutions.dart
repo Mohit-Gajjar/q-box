@@ -117,16 +117,17 @@ class TestSolutionsScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(5.0),
                           child: Row(
                             children: [
-                              Text('Option ${i + 1}',
-                                  style: HelperFunctions.textStyleCard()),
+                              Text(' ${i + 1}',
+                                  style: HelperFunctions.textStyleCard()
+                                  ),
                               SizedBox(
                                 width: Dimensions.height10 * 1.2,
                               ),
-                              CircleAvatar(
-                                backgroundColor:
-                                    i == 0 ? Colors.green : Colors.red,
-                                radius: 10.0,
-                              )
+                              // CircleAvatar(
+                              //   backgroundColor:
+                              //       i == 0 ? Colors.green : Colors.red,
+                              //   radius: 10.0,
+                              // )
                             ],
                           ),
                         ),

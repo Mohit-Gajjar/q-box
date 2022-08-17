@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
     return TextStyle(
       fontSize: 17.0,
       fontWeight: FontWeight.w500,
-      color: Colors.white,
+      color: Colors.black,
     );
   }
 
@@ -35,10 +35,17 @@ class CustomButton extends StatelessWidget {
             onTapHandler();
           },
           child: FittedBox(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: _textStyleWhite(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: _textStyleWhite(),
+                ),
+                 Icon(Icons.keyboard_arrow_down_outlined, color: Colors.black,)
+              ],
             ),
           ),
         ),

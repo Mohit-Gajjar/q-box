@@ -16,7 +16,7 @@ class CustomButtonFull extends StatelessWidget {
     return const TextStyle(
       fontSize: 17.0,
       fontWeight: FontWeight.w500,
-      color: Colors.white,
+      color: Colors.black,
     );
   }
 
@@ -27,7 +27,7 @@ class CustomButtonFull extends StatelessWidget {
         onTaphandler();
       },
       child: Material(
-        elevation: 4.0,
+        elevation: 1.6,
         borderRadius: BorderRadius.circular(8.0),
         child: Container(
           width: MediaQuery.of(context).size.width - (30),
@@ -36,10 +36,16 @@ class CustomButtonFull extends StatelessWidget {
             color: backColor,
             borderRadius: BorderRadius.circular(8.0),
           ),
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: _textstyleWhite(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                text,
+                textAlign: TextAlign.center,
+                style: _textstyleWhite(),
+              ),
+              Icon(Icons.arrow_forward_ios, color: Colors.black26,)
+            ],
           ),
         ),
       ),

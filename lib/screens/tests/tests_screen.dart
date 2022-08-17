@@ -21,39 +21,37 @@ class TestsScreen extends StatelessWidget {
               vertical: Dimensions.height10 * 3),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                'Tests',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: Dimensions.height10 * 3,
-              ),
-              Padding(
-                padding: EdgeInsets.all(Dimensions.padding20),
-                child: CustomButtonFull(
-                  backColor: Colors.purple,
+              // Text(
+              //   'Tests',
+              //   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              // ),
+             
+              // SizedBox(
+              //   height: Dimensions.height10 * 3,
+              // ),
+            CustomButtonFull(
+                  backColor: Colors.white,
                   onTaphandler: () {
                     Navigator.of(context)
                         .pushNamed(LevelUpTestsScreen.routeName);
                   },
                   text: 'Level up series',
+                  // icon: Icon(Icons.arrow_back_ios),
                 ),
+               SizedBox(
+                height: 10,
               ),
-              //  SizedBox(
-              //   height: 24,
-              // ),
-              Padding(
-                padding: EdgeInsets.all(Dimensions.padding20),
-                child: CustomButtonFull(
-                  backColor: Colors.orange,
+            CustomButtonFull(
+                  backColor: Colors.white,
                   onTaphandler: () {
                     Navigator.of(context)
                         .pushNamed(FullLengthTestsScreen.routeName);
                   },
                   text: 'Full Length Tests',
+                  //  icon: Icon(Icons.arrow_back_ios),
                 ),
-              )
             ],
           ),
         ),
