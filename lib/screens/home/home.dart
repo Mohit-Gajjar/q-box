@@ -22,8 +22,8 @@ class _HomeState extends State<Home> {
   List category = [
     'Select Course',
     'LIVE classes',
-    'Free classes',
-    'Did You Know?'
+    'Free classes', // TODO: Free classes screens missing  
+    'Did You Know?' // TODO: Did you know missing,  copy paste of the free classes screen
   ];
 
   List<String> categoryFunction = [

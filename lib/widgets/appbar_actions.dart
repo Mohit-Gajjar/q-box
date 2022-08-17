@@ -4,6 +4,8 @@ import 'package:notes_app/screens/profile.dart';
 import 'package:notes_app/screens/search/search_screen.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
+import '../screens/notification/notification_list.dart';
+
 class AppBarActions extends StatelessWidget {
   const AppBarActions({
     Key? key,
@@ -20,7 +22,9 @@ class AppBarActions extends StatelessWidget {
           alignment: Alignment.center,
           padding: EdgeInsets.only(right: Dimensions.padding20),
           child: IconButton(
-            onPressed:(){},
+            // onPressed:(){},
+             onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => NotificationList())),
             // onPressed: () => Navigator.push(context,
             //     MaterialPageRoute(builder: (context) => ChatScreen())),
             icon: const Icon(

@@ -57,58 +57,68 @@ class _ActiveCoursesState extends State<ActiveCourses> {
     });
   }
 
-  Widget purchasedListTile(){
+  Widget purchasedListTile() {
     return ListView.builder(
-      shrinkWrap: true,
+        shrinkWrap: true,
         itemCount: purchasedCourse.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("ID : ${purchasedCourse[index]['cid']}  |  " +
-                        purchasedCourse[index]['courseName'].toString()),
-                    Text("duration : ${purchasedCourse[index]['duration']}")
-                  ],
-                ),
-                Text("Amount paid : ${purchasedCourse[index]['amount']}"),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text("Date of purchase : ${purchasedCourse[index]['dateOfPurchase']}")
-                  ],
-                )
-              ],
-            ),
-            onTap: (() {
-            }),
+            title: purchasedCourse.length == 0
+                ? Text("0")
+                : Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                                "ID : ${purchasedCourse[index]['cid']}  |  " +
+                                    purchasedCourse[index]['courseName']
+                                        .toString()),
+                          ),
+                          Text(
+                              "duration : ${purchasedCourse[index]['duration']}")
+                        ],
+                      ),
+                      Text("Amount paid : ${purchasedCourse[index]['amount']}"),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                              "Date of purchase : ${purchasedCourse[index]['dateOfPurchase']}")
+                        ],
+                      )
+                    ],
+                  ),
+            onTap: (() {}),
           );
         });
   }
 
-  Widget trialListTile(){
+  Widget trialListTile() {
     return ListView.builder(
-      shrinkWrap: true,
+        shrinkWrap: true,
         itemCount: trialCourse.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("ID : ${trialCourse[index]['cid']}  |  " +
-                        trialCourse[index]['courseName']),
-                    Text("Duration : 7 DAYS")
-                  ],
-                ),
-                Text("TRIAL COURSE"),
-              ],
-            ),
-            onTap: (() {
-            }),
+            title: trialCourse.length == 0
+                ? Text("0")
+                : Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                                "ID : ${trialCourse[index]['cid']}  |  " +
+                                    trialCourse[index]['courseName']),
+                          ),
+                          const SizedBox(width: 10),
+                          Text("Duration : 7 DAYS")
+                        ],
+                      ),
+                      Text("TRIAL COURSE"),
+                    ],
+                  ),
+            onTap: (() {}),
           );
         });
   }
@@ -119,15 +129,17 @@ class _ActiveCoursesState extends State<ActiveCourses> {
         appBar: AppBar(
           title: Text('Active Courses'),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Purchased Course : "),
-            purchasedListTile(),
-            Text("Trial Course : "),
-            trialListTile()
-          ],
-        )
-    );
+        body: Container(
+          margin: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Purchased Course : "),
+              purchasedListTile(),
+              Text("Trial Course : "),
+              trialListTile()
+            ],
+          ),
+        ));
   }
 }

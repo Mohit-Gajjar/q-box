@@ -59,56 +59,58 @@ class _TeacherProfileCardState extends State<TeacherProfileCard> {
                           width: 2,
                           color: Colors.grey
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                snapshot.data!.docs[0]['name'],
-                                style: const TextStyle(
-                                    fontSize: 18.0, fontWeight: FontWeight.bold),
-                              ),
-                              Text("${snapshot.data!.docs[0]['qualification']}"),
-                              SizedBox(
-                                height: Dimensions.height10 * 2,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "experience : ${snapshot.data!.docs[0]['experience']}",
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  snapshot.data!.docs[0]['name'],
                                   style: const TextStyle(
-                                      fontSize: 15.0, fontWeight: FontWeight.bold),
+                                      fontSize: 18.0, fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              SizedBox(
-                                height: Dimensions.height10 * 2,
-                              ),
-                              Text(
-                                "subjects : ${snapshot.data!.docs[0]['subjectExpertise']}",
-                                overflow: TextOverflow.fade,
-                                style: const TextStyle(
-                                    fontSize: 15.0, fontWeight: FontWeight.bold),
-
-                              ),
-                              SizedBox(
-                                height: Dimensions.height10 * 2,
-                              ),
-                              Container(
-                                width: Dimensions.screenWidth/1.7,
-                                child: Text(
-                                  "languages : ${snapshot.data!.docs[0]['teachingLanguage']}",
+                                Text("${snapshot.data!.docs[0]['qualification']}"),
+                                SizedBox(
+                                  height: Dimensions.height10 * 2,
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "experience : ${snapshot.data!.docs[0]['experience']}",
+                                    style: const TextStyle(
+                                        fontSize: 15.0, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: Dimensions.height10 * 2,
+                                ),
+                                Text(
+                                  "subjects : ${snapshot.data!.docs[0]['subjectExpertise']}",
                                   overflow: TextOverflow.fade,
                                   style: const TextStyle(
                                       fontSize: 15.0, fontWeight: FontWeight.bold),
+                                              
                                 ),
-                              ),
-                              const Spacer(),
-                            ],
+                                SizedBox(
+                                  height: Dimensions.height10 * 2,
+                                ),
+                                Container(
+                                  width: Dimensions.screenWidth/1.7,
+                                  child: Text(
+                                    "languages : ${snapshot.data!.docs[0]['teachingLanguage']}",
+                                    overflow: TextOverflow.fade,
+                                    style: const TextStyle(
+                                        fontSize: 15.0, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                const Spacer(),
+                              ],
+                            ),
                           ),
                         ),
                       ],
-                    ),
+                                        ),
                       Align(alignment: Alignment.bottomRight,
                         child: CustomButton(
                           backColor: Colors.pink,

@@ -45,6 +45,7 @@ dependencies:
   firebase_in_app_messaging: ^0.6.0+20
   rename: ^2.0.1
   webviewx: ^0.2.1
+  url_launcher: ^6.1.5
 
 
 dev_dependencies:
