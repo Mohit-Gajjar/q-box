@@ -123,7 +123,11 @@ class _VideoScreenState extends State<VideoScreen> {
                   ),
                   IconButton(onPressed: (){}, icon: Icon(Icons.comment)),
                   SizedBox(width: 70,),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.download_rounded)),
+                  IconButton(
+                    onPressed: (){
+
+                    }, 
+                    icon: Icon(Icons.download_rounded)),
                 ],
               ),
             ),
