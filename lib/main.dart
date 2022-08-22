@@ -154,13 +154,13 @@ class _MyAppState extends State<MyApp> {
         title: 'Q-Box',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          fontFamily: 'Bai',
+          fontFamily: 'Lato',  //Roboto
           dividerColor: Colors.transparent,
           pageTransitionsTheme: const PageTransitionsTheme(builders: {
             TargetPlatform.android: ZoomPageTransitionsBuilder(),
           }),
-          primaryColor: const Color(0xFFFFC600),
-          primarySwatch: Colors.amber,
+          primaryColor: const Color(0xFFFFA466E3),
+          primarySwatch: Colors.deepPurple,
         ),
         home: AuthPath(),
         routes: {

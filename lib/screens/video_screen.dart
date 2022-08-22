@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:notes_app/initFunctions.dart';
 import 'package:video_player/video_player.dart';
-
+import 'package:path_provider/path_provider.dart';
 import '../models/teacherModel.dart';
 import '../utilities/dimensions.dart';
 import '../widgets/home_display_screen.dart';
@@ -43,10 +46,12 @@ class _VideoScreenState extends State<VideoScreen> {
       }
     }
   }
+  //  late Future<ListResult> futureFiles;
 
   @override
   void initState() {
     super.initState();
+    //  futureFiles = FirebaseStorage.instance.ref('/freeVideos/videos').listAll();
     isTeacherFollowed();
     liked = widget.isUserLiked;
     like = widget.likes;
@@ -112,7 +117,8 @@ class _VideoScreenState extends State<VideoScreen> {
                 children: [
                   Row(
                     children: [
-                      IconButton(onPressed: (){
+                      IconButton(
+                        onPressed: (){
                         setState(() {
                           liked=!liked;
                           like=(liked)?like+1:like-1;
@@ -121,10 +127,15 @@ class _VideoScreenState extends State<VideoScreen> {
                       Text(like.toString())
                     ],
                   ),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.comment)),
+                  IconButton(
+                    onPressed: (){}, 
+                    icon: Icon(Icons.comment)),
                   SizedBox(width: 70,),
                   IconButton(
                     onPressed: (){
+                           setState(() {
+                    });
+                                          // downloadFile();
 
                     }, 
                     icon: Icon(Icons.download_rounded)),
@@ -158,13 +169,14 @@ class _VideoScreenState extends State<VideoScreen> {
                         followed=!followed;
                       });
                     });
-                  }, child: Text((followed)?"Followed":"Follow"))
+                  }, 
+                  child: Text((followed)?"Follow":"Followed"))
                 ],
               )
 
             ),
             SizedBox(
-              child: ListView.builder(
+                child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: widget.teacher.completedClasses?.length,
                 itemBuilder: (context,index)=>HomeDisplayScreen(
@@ -175,7 +187,7 @@ class _VideoScreenState extends State<VideoScreen> {
                 teacherEmail: widget.teacher.email! ,
                 batchName: widget.teacher.completedClasses![index]['batchName'],
               ),),
-            )
+            ),
             // Center(
             //   child: _controller.value.isInitialized
             //       ? AspectRatio(
@@ -201,4 +213,25 @@ class _VideoScreenState extends State<VideoScreen> {
       // ),
     );
   }
+
+
+//    Future downloadFile(Reference ref) async{
+//     final url = await ref.getDownloadURL();
+    
+//     final tempDir = await getTemporaryDirectory();
+//     final path = '${tempDir.path}/${ref.name}';
+//      await Dio().download(url, path);
+
+//      if(url.contains('.mp4')){
+//       await GallerySaver.saveVideo(path, toDcim: true);
+
+//      }
+//      else if(url.contains('.png')){
+//       await GallerySaver.saveImage(path, toDcim: true);
+//      }
+//       else if(url.contains('.jpg')){
+//       await GallerySaver.saveImage(path, toDcim: true);
+//      }
+//     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('download ${ref.name}')));
+//   }
 }

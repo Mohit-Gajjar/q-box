@@ -48,32 +48,34 @@ class _LoginState extends State<Login> {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        'Login Account',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
+                      // Text(
+                      //   'Login Account',
+                      //   style: TextStyle(
+                      //     fontWeight: FontWeight.bold,
+                      //     fontSize: 24,
+                      //   ),
+                      // ),
                       SizedBox(
                         width: Dimensions.width10,
                       ),
-                      const Icon(Icons.person),
+                      // const Icon(Icons.person),
                       Expanded(
                         child: SizedBox(),
                       ),
-                      CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/indian_flag.png'),
-                      ),
-                      Icon(Icons.arrow_drop_down),
+                      // CircleAvatar(
+                      //   backgroundImage:
+                      //       AssetImage('assets/images/indian_flag.png'),
+                      // ),
+                      // Icon(Icons.arrow_drop_down),
                     ],
                   ),
                   Text(
-                    ' Q-Box ',
+                    ' Qriocty Box ',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 60,
+                      //roboto
+                      //lato
+                      fontSize: 40,
                     ),
                   ),
                   Column(

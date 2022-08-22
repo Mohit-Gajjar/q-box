@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/models/teacherModel.dart';
+import 'package:notes_app/screens/teacher/download_video.dart';
 import 'package:notes_app/screens/teacher/teacherReview.dart';
 import 'package:notes_app/widgets/teacher_profile_card.dart';
 
@@ -39,7 +40,14 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
             ),
             TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherReviewScreen()));
-            }, child: Text("Review")),
+            },
+             child: Text("Review")
+             ),
+
+                TextButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>DownloadVideo()));
+            }, child: Text("Download Video", style: TextStyle(color: Colors.black,)
+            )),
             SizedBox(
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance.collection("teachers").where("email", isEqualTo: widget.collectionPath.split("/")[1]).snapshots(),
@@ -62,7 +70,8 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
                     ),);
                 }
               ),
-            )
+            ),
+            
           ],
         ),
       ),
