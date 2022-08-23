@@ -24,19 +24,30 @@ class _TeacherReviewScreenState extends State<TeacherReviewScreen> {
         ),
         actions: <Widget>[AppBarActions2()],
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 70),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             ListTile(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Hey! wanna review Teacher? "),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.arrow_right_alt, color: Colors.black,))
-                ],
+              title: Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7.0),
+                  border: Border.all(
+                      color: Colors.black12, style: BorderStyle.solid, width: 0.80),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Hey! wanna review Teacher? "),
+                    IconButton(onPressed: (){}, icon: Icon(Icons.arrow_right_alt, color: Colors.black,))
+                  ],
+                ),
               ),
-              tileColor: Colors.black12,
+              // tileColor: Colors.black12,
             )
           ],
         ),

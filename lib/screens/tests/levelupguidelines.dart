@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 
-class LevelUpTestGuideLines extends StatelessWidget {
+import '../../utilities/dimensions.dart';
+
+class LevelUpTestGuideLines extends StatefulWidget {
   const LevelUpTestGuideLines({Key? key}) : super(key: key);
 
+  @override
+  State<LevelUpTestGuideLines> createState() => _LevelUpTestGuideLinesState();
+}
+
+class _LevelUpTestGuideLinesState extends State<LevelUpTestGuideLines> {
+   bool agree = false;
+   void _doSomething() {
+    // Do something
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +22,15 @@ class LevelUpTestGuideLines extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+             Padding(
+               padding: const EdgeInsets.only(top: 9, left: 15, bottom: 6),
+               child: Text(
+                    'Exam Guidelines', style: TextStyle(color: Color.fromARGB(255, 194, 23, 10), fontSize: 17, fontWeight: FontWeight.w400),
+                    ),
+             ),
             ListTile(
               title: Text(
                   "1. As you are aware, all the examinations (FLT & Level up) are conducted by QRIOCTYBOX's R&D in online mode."),
@@ -39,7 +58,38 @@ class LevelUpTestGuideLines extends StatelessWidget {
             ListTile(
               title: Text(
                   "7. Unanswered Marked for Review will be given no mark (0)"),
-            )
+            ),
+             SizedBox(
+                                  height: Dimensions.height10 * 2,
+                                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Material(
+              child: Checkbox(
+                    value: agree,
+                    onChanged: (value) {
+                      setState(() {
+                        agree = value ?? false;
+                      });
+                    },
+              ),
+            ),
+             const Text(
+              'I have read all the guidelines',
+              overflow: TextOverflow.ellipsis,
+            ),
+             ],
+                ),
+                
+                 Padding(
+                   padding: const EdgeInsets.only(left: 260, bottom: 13),
+                   child: ElevatedButton(
+            child: const Text('    Start Test     '),
+            onPressed: agree ? _doSomething : null,
+            ),
+                 ),
           ],
         ),
       ),

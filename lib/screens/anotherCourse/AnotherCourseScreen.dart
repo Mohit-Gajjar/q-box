@@ -11,7 +11,7 @@ class AnotherCourseScreen extends StatefulWidget {
 }
 
 class _AnotherCourseScreenState extends State<AnotherCourseScreen> {
-  final List<String> _dropdownValues = ["Select Course","Test nEET 1", "Test JEE 2"];
+  final List<String> _dropdownValues = ["Select Course","Test NEET 1", "Test JEE 2"];
   String selectedVal = "Select Course";
   //TODO: Incomplete page, no functionlality after course selection.
   @override
@@ -26,37 +26,54 @@ class _AnotherCourseScreenState extends State<AnotherCourseScreen> {
         ),
         actions: <Widget>[AppBarActions2()],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 55, left: 20, right: 20),
+            child: Container(
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
+                borderRadius: BorderRadius.circular(12.0),
                 border: Border.all(
                     color: Colors.black87, style: BorderStyle.solid, width: 0.80),
               ),
-              child: DropdownButton(
-                items: _dropdownValues
-                    .map((value) => DropdownMenuItem(
-                          child: Text(value),
-                          value: value,
-                        ))
-                    .toList(),
-                onChanged: (String? value) {
-                  setState(() {
-                    selectedVal=value!;
-                  });
-                },
-                isExpanded: false,
-                value: selectedVal,
+              child:  DropdownButton(
+                     icon: Visibility (visible:true, child: Icon(Icons.keyboard_arrow_down)),
+                    items: _dropdownValues
+                        .map((value) => DropdownMenuItem(
+                              child: Text(value),
+                              value: value,
+                            ))
+                        .toList(),
+                    onChanged: (String? value) {
+                      setState(() {
+                        selectedVal=value!;
+                      });
+                    },
+                    isExpanded: true,
+                    value: selectedVal,
+                  ),
+                
               ),
             ),
-            SizedBox()
-          ],
-        ),
+          // SizedBox(),
+           const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 28),
+                  child: Align(
+                    heightFactor: 2,
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                      onPressed: (){},
+                    child: Text('   Buy Now   '),
+                    ),
+                  ),
+                )
+        ],
       ),
     );
   }

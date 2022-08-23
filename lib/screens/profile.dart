@@ -11,6 +11,8 @@ import 'package:notes_app/screens/anotherCourse/AnotherCourseScreen.dart';
 import 'package:notes_app/screens/doubtSolving.dart';
 import 'package:notes_app/screens/followedTeachers/followedTeachersScreen.dart';
 import 'package:notes_app/screens/analytics/analytic.dart';
+import 'package:notes_app/screens/parent_teacher_meeting/parent_teacher_screen.dart';
+import 'package:notes_app/screens/teacher/teacherReview.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 import 'package:notes_app/widgets/appbar_actions.dart';
 
@@ -245,17 +247,25 @@ class _ProfileState extends State<Profile> {
                 ),
                 title: Text('Settings'),
               ),
-              ListTile(
+              ListTile( 
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TeacherReviewScreen())),
                 leading: Icon(
                   Icons.reviews,
                 ),
                 title: Text('Teacher Review'),
               ),
               ListTile(
+                 onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ParentTeacherScreen())),
                 leading: Icon(
-                  Icons.note,
+                  Icons.meeting_room,
                 ),
-                title: Text('Blogs'),
+                title: Text('Parent Teacher Meeting'),
               ),
               MaterialButton(
                 onPressed: () async {
