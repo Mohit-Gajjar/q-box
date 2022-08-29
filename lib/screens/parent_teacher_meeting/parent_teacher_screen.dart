@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../utilities/dimensions.dart';
 import '../../widgets/appbar_actions.dart';
@@ -16,6 +17,7 @@ class _ParentTeacherScreenState extends State<ParentTeacherScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         backgroundColor: Color.fromRGBO(196, 196, 196, 0.75),
         title: Text(
           "Parent Teacher Meeting",
@@ -26,23 +28,24 @@ class _ParentTeacherScreenState extends State<ParentTeacherScreen> {
       ),
       body: SafeArea(
           child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                child: Image.asset(
-                  'assets/images/meeting.png',
-                  height: 170,
-                ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              child: Image.asset(
+                'assets/images/meeting.png',
+                height: 170,
               ),
-              StreamBuilder(
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: StreamBuilder(
                   stream:
                       FirebaseFirestore.instance.collection('PTM').snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
+                        var item = snapshot.data!.docs.length;
                     return (snapshot.hasData)
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -56,11 +59,13 @@ class _ParentTeacherScreenState extends State<ParentTeacherScreen> {
                               SizedBox(
                                 height: Dimensions.height10 * 2,
                               ),
+                              for(int i=0; i<item;i++)
                               Container(
+                                margin: EdgeInsets.symmetric(vertical: 5),
                                 height: 120,
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 7),
+                                    horizontal: 10.0, vertical: 17),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.0),
                                   border: Border.all(
@@ -77,27 +82,33 @@ class _ParentTeacherScreenState extends State<ParentTeacherScreen> {
                                             MainAxisAlignment.start,
                                         children: [
                                           _completed('Course Name',
-                                              '${snapshot.data!.docs[0]['course']}'),
+                                              '${snapshot.data!.docs[i]['course']}'),
                                           SizedBox(
                                             height: Dimensions.height10 * 1,
                                           ),
                                           _completed('Batch Name   ',
-                                              '${snapshot.data!.docs[0]['batch']}'),
+                                              '${snapshot.data!.docs[i]['batch']}'),
                                           SizedBox(
                                             height: Dimensions.height10 * 1,
                                           ),
                                           _completed('Meeting Time',
-                                              '${snapshot.data!.docs[0]['time']}'),
+                                              '${snapshot.data!.docs[i]['time']}'),
                                         ]),
                                     Spacer(),
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 28),
+                                      padding: const EdgeInsets.only(right: 4),
                                       child: Align(
-                                        heightFactor: 2,
+                                        heightFactor: 4,
                                         alignment: Alignment.centerRight,
                                         child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text('     Join        '),
+                                          onPressed: () async{
+                                            // final url = 'https://github.com/UMA12345-cmdes/Music-App';
+                                           final url = snapshot.data!.docs[i]['meetingLink'];
+                                           if(await canLaunch(url)){
+                                            await launch(url);
+                                           }
+                                          },
+                                          child: Text('Join'),
                                         ),
                                       ),
                                     )
@@ -122,7 +133,7 @@ class _ParentTeacherScreenState extends State<ParentTeacherScreen> {
                                 height: 120,
                                 width: MediaQuery.of(context).size.width,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 7),
+                                    horizontal: 4, vertical: 10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12.0),
                                   border: Border.all(
@@ -153,14 +164,14 @@ class _ParentTeacherScreenState extends State<ParentTeacherScreen> {
                                         ]),
                                     Spacer(),
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 28),
+                                      padding: const EdgeInsets.only(right: 4),
                                       child: Align(
-                                        heightFactor: 2,
+                                        heightFactor: 4,
                                         alignment: Alignment.centerRight,
                                         child: MaterialButton(
                                           color: Colors.red,
                                           onPressed: () {},
-                                          child: Text('    Expiry     '),
+                                          child: Text('Expiry'),
                                         ),
                                       ),
                                     )
@@ -170,115 +181,15 @@ class _ParentTeacherScreenState extends State<ParentTeacherScreen> {
                               SizedBox(
                                 height: Dimensions.height10 * 1,
                               ),
-                              Container(
-                                height: 120,
-                                width: MediaQuery.of(context).size.width,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 7),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  border: Border.all(
-                                      color: Colors.black87,
-                                      style: BorderStyle.solid,
-                                      width: 0.80),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          _completed('Course Name',
-                                              '${snapshot.data!.docs[0]['course']}'),
-                                          SizedBox(
-                                            height: Dimensions.height10 * 1,
-                                          ),
-                                          _completed('Batch Name   ',
-                                              '${snapshot.data!.docs[0]['batch']}'),
-                                          SizedBox(
-                                            height: Dimensions.height10 * 1,
-                                          ),
-                                          _completed('Meeting Time',
-                                              '${snapshot.data!.docs[0]['time']}'),
-                                        ]),
-                                    Spacer(),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 28),
-                                      child: Align(
-                                        heightFactor: 2,
-                                        alignment: Alignment.centerRight,
-                                        child: MaterialButton(
-                                          color: Colors.red,
-                                          onPressed: () {},
-                                          child: Text('    Expiry     '),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: Dimensions.height10 * 1,
-                              ),
-                              Container(
-                                height: 120,
-                                width: MediaQuery.of(context).size.width,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 7),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  border: Border.all(
-                                      color: Colors.black87,
-                                      style: BorderStyle.solid,
-                                      width: 0.80),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          _completed('Course Name',
-                                              '${snapshot.data!.docs[0]['course']}'),
-                                          SizedBox(
-                                            height: Dimensions.height10 * 1,
-                                          ),
-                                          _completed('Batch Name   ',
-                                              '${snapshot.data!.docs[0]['batch']}'),
-                                          SizedBox(
-                                            height: Dimensions.height10 * 1,
-                                          ),
-                                          _completed('Meeting Time',
-                                              '${snapshot.data!.docs[0]['time']}'),
-                                        ]),
-                                    Spacer(),
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 28),
-                                      child: Align(
-                                        heightFactor: 2,
-                                        alignment: Alignment.centerRight,
-                                        child: MaterialButton(
-                                          color: Colors.red,
-                                          onPressed: () {},
-                                          child: Text('    Expiry     '),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                            
                             ],
                           )
                         : Center(
                             child: Text("NOT FOUND"),
                           );
                   }),
-            ],
-          ),
+            ),
+          ],
         ),
       )),
     );
