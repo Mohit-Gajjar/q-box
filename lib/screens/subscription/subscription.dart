@@ -91,6 +91,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                     shrinkWrap: true,
                     itemCount: selectedCourses.length,
                     itemBuilder: (context, index) {
+                      // print(selectedCourses[index]['courseName']);
+                      //     print(selectedCourses[index]['reference']);
                       return ListTile(
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -111,18 +113,27 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                 icon: Icon(Icons.info))
                           ],
                         ),
-                        onTap: (() {
+                        onTap: () {
                           (!trialChecker())
                               ? Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PaymentOption(
+                                      builder: (context) => 
+                                     
+                                      PaymentOption(
                                             courseName:
-                                                selectedCourses[index]['courseName'], cat: selectedCourses[index]['reference'],
-                                          )))
+                                                selectedCourses[index]['courseName'],
+                                                 cat: selectedCourses[index]['reference'],
+
+                                          )
+                                          )
+                                          )
+
                               : purchaseOnTrial(selectedCourses[index]['cid'],
                                   selectedCourses[index]['courseName']);
-                        }),
+                          // print(selectedCourses[index]['courseName']);
+                          // print(selectedCourses[index]['reference']);
+                        },
                       );
                     }),
               )

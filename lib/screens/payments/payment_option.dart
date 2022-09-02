@@ -26,40 +26,63 @@ class _PaymentOptionState extends State<PaymentOption> {
   List courseDurationPrice = [];
   String catName = "";
   String courseName = "";
+  
   void getData() async {
     setState(() {
-      catName = widget.cat;
+
+      catName = widget.cat.split('/').last;
+      
       courseName = widget.courseName.toLowerCase();
       isLoading = true;
     });
+    print(catName+ ' =  data ');
 
-    FirebaseFirestore.instance
-        .collection('cat')
-        .where("title", isEqualTo: catName)
+   await FirebaseFirestore.instance
+        .collection('cat')//.where('title')
+        .where("title",isEqualTo: catName)
         .snapshots()
         .listen((event) {
-          print(event.docs[0].data());
+        //   event.docs.forEach((element) {
+        //      Map<String, dynamic>? data = element.data();
+        //   payments = data["courses"][courseName.toLowerCase()]["payment"];
+        // courseDuration = payments.keys.toList();
+        // courseDurationPrice = payments.values.toList();
+        // isLoading = false;
+        // setState(() {
+          
+        // });
+        //   });
+          
+        
+        
       Map<String, dynamic> data = event.docs[0].data();
-      print(data["courses"][courseName.toLowerCase()]);
-      setState(() {
+      // print( data["courses"][courseName.toLowerCase()]);
+      print('data is ${data}');
+      // setState(() {
         payments = data["courses"][courseName.toLowerCase()]["payment"];
         courseDuration = payments.keys.toList();
         courseDurationPrice = payments.values.toList();
         isLoading = false;
-      });
+        setState(() {
+          
+        });
+      // });
     });
+    
   }
 
   @override
   Widget build(BuildContext context) {
+     print('payment = ${payments}');
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-        child: isLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Container(
+        // child: isLoading
+        //     ? Center(
+        //         child: CircularProgressIndicator(),
+        //       )
+        //     :
+          child: Container(
                 width: size.width,
                 height: size.height,
                 padding: EdgeInsets.all(Dimensions.padding20 / 2),
@@ -196,20 +219,20 @@ class _PaymentOptionState extends State<PaymentOption> {
                                         SingleChildScrollView(
                                           child: Column(
                                             children: [
-                                              FittedBox(
-                                                fit: BoxFit.fitWidth,
-                                                child: Text(
-                                                  courseDurationPrice[0] != null
-                                                      ? '₹ ${courseDurationPrice[0]}/Inc GST'
-                                                      : '₹ 0/Inc GST',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      color: Colors.blueAccent,
-                                                      fontSize: 22,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
+                                              // FittedBox(
+                                              //   fit: BoxFit.fitWidth,
+                                              //   child: Text(
+                                              //     courseDurationPrice[0] != null
+                                              //         ? '₹ ${courseDurationPrice[0]}/Inc GST'
+                                              //         : '₹ 0/Inc GST',
+                                              //     textAlign: TextAlign.center,
+                                              //     style: TextStyle(
+                                              //         color: Colors.blueAccent,
+                                              //         fontSize: 22,
+                                              //         fontWeight:
+                                              //             FontWeight.bold),
+                                              //   ),
+                                              // ),
                                               Text(
                                                 'Per Month',
                                                 textAlign: TextAlign.center,
