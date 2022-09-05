@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/tests/levelupguidelines.dart';
 import 'package:notes_app/utilities/dimensions.dart';
@@ -19,7 +20,10 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
   String subjectName = '';
   String chapterName = '';
   bool _isSelectedChapter = false;
-  bool _isChapter1 =  false;
+  String? _selectChapter;
+  String? _selectSubject;
+  // bool _isChapter1 =  false;
+  bool _ischapu = false;
 
   final Map<String, String> _chapter1 = const {
     'Level 1  ': 'easy',
@@ -43,7 +47,7 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
           style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
         ),
         actions: [
-            IconButton(
+          IconButton(
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -54,205 +58,189 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(
-                left: Dimensions.width10 * 1.5,
-                right: Dimensions.width10 * 1.5,
-                top: Dimensions.height10 * 3),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 19),
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const Spacer(),
-                    CustomButton(
-                      backColor: Colors.white,
-                      text: subjectName == '' ? 'Select Subject' : subjectName,
-                      onTapHandler: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                  title: Center(child: Text("Subjects")),
-                                  content: StreamBuilder<QuerySnapshot<Object>>(
-                                    stream: FirebaseFirestore.instance
-                                        .collection('levelUpTest')
-                                        .snapshots(), // path to collection of documents that is listened to as a stream
-                                    builder: (context,
-                                        AsyncSnapshot<QuerySnapshot<Object>> snapshot) {
-                                      if (snapshot.hasError) {
-                                        return Text('Something went wrong');
-                                      }
-                                      if (snapshot.connectionState == 
-                                          ConnectionState.waiting) {
-                                           
-                                      return Center(
-                                          child: CircularProgressIndicator(),
-                                        );
-                                          }
-                                          else{
-                                              return ListView(
-                                        // shrinkWrap: true,
-                                        physics: ClampingScrollPhysics(),
-                                        children: snapshot.data!.docs
-                                            .map((DocumentSnapshot document) {
-                                          // Map<String, dynamic> data = document
-                                          //     .data()! as Map<String, dynamic>;
-                                          return GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                subjectName = document.id;
-                                              });
-                                            },
-                                            child: ListTile(
-                                              title: Text(document.id),
-                                            ),
-                                          );
-                                        }).toList(), // casts to list for passing to children parameter
-                                      );
-                                      
-                                          }
-                                      //       return ListView(
-                                      //   shrinkWrap: true,
-                                      //   physics: ClampingScrollPhysics(),
-                                      //   children: snapshot.data!.docs
-                                      //       .map((DocumentSnapshot document) {
-                                      //     // Map<String, dynamic> data = document
-                                      //     //     .data()! as Map<String, dynamic>;
-                                      //     return GestureDetector(
-                                      //       onTap: () {
-                                      //         setState(() {
-                                      //           subjectName = document.id;
-                                      //         });
-                                      //       },
-                                      //       child: ListTile(
-                                      //         title: Text(document.id),
-                                      //       ),
-                                      //     );
-                                      //   }).toList(), // casts to list for passing to children parameter
-                                      // );
-                                      }
-                                    
-                                  ));
-                            });
-                      },
-                    ),
-                    const Spacer(),
-                    CustomButton(
-                      backColor: Colors.white,
-                      onTapHandler: () async {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Center(child: Text("Chapter ")),
-                                content: StreamBuilder<QuerySnapshot>(
-                                  stream: FirebaseFirestore.instance.collection("levelUpTest").snapshots(), // path to collection of documents that is listened to as a stream
-                                  builder: (BuildContext context, 
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (snapshot.hasError) {
-                                      return Text('Something went wrong');
-                                    }
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                          child: CircularProgressIndicator());
-                                    }
-                                    return ListView(
-                                      shrinkWrap: true,
-                                      physics: ClampingScrollPhysics(),
-                                      children: snapshot.data!.docs
-                                          .map((DocumentSnapshot document) {
-                                            
-                                        // Map<String, dynamic> data = document
-                                        //     .data()! as Map<String, dynamic>;
-                                        return GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              chapterName = document.id;
-                                              _isSelectedChapter=true;
-                                            });
-                                          },
-                                          child: ListTile(
-                                            title: Text(document.id),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    );
-                                  },
-                                ),
-                              );
-                            });
-                      },
-                      text: chapterName == '' ? 'Select Chapter' : chapterName,
-                    ),
-                    const Spacer()
-                  ],
-                ),
-      
-                 SizedBox(
-                  height: Dimensions.height10 * 2,
-                ),
-      
-               _isSelectedChapter == false ?
-                 Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.borderRadius5 * 3),
-                  ),
-                  color: Colors.white,
-                  elevation: 4.0,
-                  margin:
-                      EdgeInsets.symmetric(horizontal: Dimensions.width10 * 1.5),
-                  child: IgnorePointer(
-                    ignoring: true,
-                    child: ExpansionTile(
-                      childrenPadding: EdgeInsets.only(
-                        bottom: Dimensions.height10 * 1.5,
-                        left: Dimensions.width10 * 2,
-                        right: Dimensions.width10 * 2,
-                      ),
-                      title: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.width10 * 1.5),
-                        child: Text('Complete Test Series  '),
-                      ),
-                      children: _chapter2.entries
-                          .map((entry) => ListTile(
-                                title: Text(
-                                  entry.key,
-                                  style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w500,
+                    Column(
+                      children: [
+                        Container(
+                          height: 50,
+                          width: Dimensions.width10 * 19,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5.0,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15.0),
+                            border: Border.all(
+                                color: Colors.black12,
+                                style: BorderStyle.solid,
+                                width: 0.80),
+                          ),
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('chapter')
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const Center(
+                                  child: CupertinoActivityIndicator(),
+                                );
+                              }
+
+                              return Container(
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    icon: const Visibility(
+                                        visible: true,
+                                        child: Icon(Icons.keyboard_arrow_down)),
+                                    value: _selectSubject,
+                                    // isDense: true,
+                                    items: snapshot.data!.docs
+                                        .map((DocumentSnapshot doc) {
+                                      Map<String, dynamic> data =
+                                          doc.data() as Map<String, dynamic>;
+                                      return DropdownMenuItem<String>(
+                                          value: data['subject'],
+                                          child: Text(data['subject']));
+                                    }).toList(),
+                                    hint: const Text("Select Subject"),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _selectSubject = value as String?;
+                                      });
+                                    },
                                   ),
                                 ),
-                                leading: CircleAvatar(
-                                    backgroundColor:
-                                        HelperFunctions.getColortestsLevel(
-                                            entry.value),
-                                    radius: Dimensions.borderRadius12),
-                                enabled: true,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.borderRadius5 * 3),
-                                ),
-                                onTap: () {},
-                                trailing: const Icon(
-                                    Icons.keyboard_arrow_right_rounded),
-                              ))
-                          .toList(),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ) :  
-               SizedBox(height: 2,),
-      
-                SizedBox(
-                  height: Dimensions.height10 * 2,
+                    Container(
+                      height: 50,
+                      width: Dimensions.width10 * 19,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 6.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                            color: Colors.black12,
+                            style: BorderStyle.solid,
+                            width: 0.80),
+                      ),
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('chapter')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const Center(
+                              child: CupertinoActivityIndicator(),
+                            );
+                          }
+
+                          return Container(
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                icon: const Visibility(
+                                    visible: true,
+                                    child: Icon(Icons.keyboard_arrow_down)),
+                                value: _selectChapter,
+                                // isDense: true,
+                                items: snapshot.data!.docs
+                                    .map((DocumentSnapshot doc) {
+                                  Map<String, dynamic> data =
+                                      doc.data() as Map<String, dynamic>;
+                                  return DropdownMenuItem<String>(
+                                      value: data['chapter'],
+                                      child: Text(data['chapter']));
+                                }).toList(),
+                                hint: const Text("Select Chapter"),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectChapter = value as String?;
+                                    _ischapu = true;
+                                  });
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
+
+                SizedBox(
+                  height: 10,
+                ),
+                _ischapu == false
+                    ? Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              Dimensions.borderRadius5 * 3),
+                        ),
+                        color: Colors.white,
+                        elevation: 0.8,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: Dimensions.width10 * 0.8),
+                        child: IgnorePointer(
+                          ignoring: true,
+                          child: ExpansionTile(
+                            childrenPadding: EdgeInsets.only(
+                              bottom: Dimensions.height10 * 1.5,
+                              left: Dimensions.width10 * 2,
+                              right: Dimensions.width10 * 2,
+                            ),
+                            title: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: Dimensions.width10 * 1),
+                              child: Text('Complete Test Series  '),
+                            ),
+                            children: _chapter2.entries
+                                .map((entry) => ListTile(
+                                      title: Text(
+                                        entry.key,
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      leading: CircleAvatar(
+                                          backgroundColor: HelperFunctions
+                                              .getColortestsLevel(entry.value),
+                                          radius: Dimensions.borderRadius12),
+                                      enabled: true,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimensions.borderRadius5 * 3),
+                                      ),
+                                      onTap: () {},
+                                      trailing: const Icon(
+                                          Icons.keyboard_arrow_right_rounded),
+                                    ))
+                                .toList(),
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        // height: Dimensions.height10 * 1,
+                      ),
                 LevelUpSeriesCard1(chapter1: _chapter1),
                 SizedBox(
                   height: Dimensions.height10 * 3,
-                ) ,
-                _isSelectedChapter==true ?
-                LevelUpSeriesCard2(chapter2: _chapter2) : SizedBox()
-      
+                ),
+                // _isSelectedChapter == true ?
+                     LevelUpSeriesCard2(chapter2: _chapter2)
+                    // : SizedBox()
+
                 // Card(
                 //   shape: RoundedRectangleBorder(
                 //     borderRadius:
@@ -332,8 +320,8 @@ class LevelUpSeriesCard1 extends StatelessWidget {
         borderRadius: BorderRadius.circular(Dimensions.borderRadius12),
       ),
       color: Colors.white,
-      elevation: 4.0,
-      margin: EdgeInsets.symmetric(horizontal: Dimensions.width10 * 1.5),
+      elevation: 0.6,
+      margin: EdgeInsets.symmetric(horizontal: Dimensions.width10 * 0.8, vertical: 5),
       child: ExpansionTile(
         childrenPadding: EdgeInsets.only(
             bottom: Dimensions.height10 * 8.5,
@@ -354,7 +342,11 @@ class LevelUpSeriesCard1 extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Icon(Icons.lock_outline, size: 20, color: Colors.red,)
+                      Icon(
+                        Icons.lock_outline,
+                        size: 20,
+                        color: Colors.red,
+                      )
                     ],
                   ),
                   // leading: CircleAvatar(
@@ -366,9 +358,7 @@ class LevelUpSeriesCard1 extends StatelessWidget {
                   //   borderRadius:
                   //       BorderRadius.circular(Dimensions.borderRadius5 * 3),
                   // ),
-                  onTap: () {
-                    
-                  },
+                  onTap: () {},
                   trailing: const Icon(Icons.keyboard_arrow_right_rounded),
                 ))
             .toList(),
@@ -377,8 +367,7 @@ class LevelUpSeriesCard1 extends StatelessWidget {
   }
 }
 
-  
-   class LevelUpSeriesCard2 extends StatelessWidget {
+class LevelUpSeriesCard2 extends StatelessWidget {
   const LevelUpSeriesCard2({
     Key? key,
     required Map<String, String> chapter2,
@@ -406,7 +395,10 @@ class LevelUpSeriesCard1 extends StatelessWidget {
           child: Row(
             children: [
               Text('Chapter 2     '),
-              Icon(Icons.lock_outline, size: 20,)
+              Icon(
+                Icons.lock_outline,
+                size: 20,
+              )
             ],
           ),
         ),
@@ -421,10 +413,13 @@ class LevelUpSeriesCard1 extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      Icon(Icons.lock_outline, size: 20, color: Colors.red,)
+                      Icon(
+                        Icons.lock_outline,
+                        size: 20,
+                        color: Colors.red,
+                      )
                     ],
                   ),
-                 
                   onTap: () {},
                   trailing: const Icon(Icons.keyboard_arrow_right_rounded),
                 ))
@@ -433,9 +428,6 @@ class LevelUpSeriesCard1 extends StatelessWidget {
     );
   }
 }
-
-
-
 
 class GetTestName extends StatelessWidget {
   final DocumentReference list;
@@ -459,21 +451,25 @@ class GetTestName extends StatelessWidget {
             );
           }
           bool flag = false;
-          for(int i=0;i<gTrialCourse.length;i++){
-
-            if(data['cid']==gTrialCourse[i]['cid']){
+          for (int i = 0; i < gTrialCourse.length; i++) {
+            if (data['cid'] == gTrialCourse[i]['cid']) {
               flag = true;
             }
           }
-          for(int i=0;i<gPurchasedCourse.length;i++){
-            if(data['cid']==gPurchasedCourse[i]['cid']){
+          for (int i = 0; i < gPurchasedCourse.length; i++) {
+            if (data['cid'] == gPurchasedCourse[i]['cid']) {
               flag = true;
             }
           }
           print("${data['cid']} -- $flag");
-          return(flag)? ListTile(
-            title: data['subjectName'],
-          ):SizedBox(width: 0,height: 0,);
+          return (flag)
+              ? ListTile(
+                  title: data['subjectName'],
+                )
+              : SizedBox(
+                  width: 0,
+                  height: 0,
+                );
         });
   }
 }

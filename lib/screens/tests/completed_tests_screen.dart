@@ -33,17 +33,21 @@ class _CompletedTestsScreenState extends State<CompletedTestsScreen> {
             itemCount: widget.tests.length,
             itemBuilder: (context, index)=>Container(
             margin: const EdgeInsets.symmetric(vertical: 10.0),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.0),
+            child: Card(
+              elevation: 3,
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  
+                ),
+                tileColor: Colors.white,
+                trailing: const Icon(Icons.keyboard_arrow_right_rounded),
+                title: Text(widget.tests[index]),
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(TestSolutionsScreen.routeName);
+                },
               ),
-              tileColor: Colors.yellow,
-              trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-              title: Text(widget.tests[index]),
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(TestSolutionsScreen.routeName);
-              },
             ),
           ),)
         ),
