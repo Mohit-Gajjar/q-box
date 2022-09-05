@@ -117,7 +117,7 @@ class TestSolutionsScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(5.0),
                           child: Row(
                             children: [
-                              Text(' ${i + 1}',
+                              Text(' ${i + 1}' +' '+ 'options',
                                   style: HelperFunctions.textStyleCard()
                                   ),
                               SizedBox(

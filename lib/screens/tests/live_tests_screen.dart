@@ -55,7 +55,7 @@ class _LiveTestsScreenState extends State<LiveTestsScreen> {
                 Container(
                   height: Dimensions.height10 * 8,
                   decoration: BoxDecoration(
-                    color: Colors.yellow,
+                    color: Colors.deepPurple,
                     borderRadius:
                         BorderRadius.circular(Dimensions.borderRadius15),
                   ),
@@ -99,7 +99,7 @@ class _LiveTestsScreenState extends State<LiveTestsScreen> {
         Container(
           height: Dimensions.height10 * 50,
           decoration: BoxDecoration(
-            color: Colors.yellow,
+            color: Colors.deepPurple,
             borderRadius: BorderRadius.circular(Dimensions.borderRadius15),
           ),
           child: Center(
