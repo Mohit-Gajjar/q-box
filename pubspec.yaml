@@ -47,6 +47,8 @@ dependencies:
   webviewx: ^0.2.1
   url_launcher: ^6.1.5
   gallery_saver: ^2.3.2
+  image_picker: ^0.8.5+3
+  # image_picker: ^0.8.5+3
   # videos_player: ^0.1.3
   
 

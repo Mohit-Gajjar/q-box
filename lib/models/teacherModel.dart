@@ -1,6 +1,6 @@
 class TeacherModel {
   String? name;
-  // String? subjectName;
+  String? subjectName;
   String? profilePicUrl;
   List? completedClasses;
   String? email;
@@ -12,7 +12,7 @@ class TeacherModel {
 
   TeacherModel.fromJson(Map<String, dynamic> json) {
     name = json['firstName'];
-    // subjectName = json['subjectName'];
+    subjectName = json['subjectName'];
     profilePicUrl = json['profilePicUrl'];
     email = json['email'];
     completedClasses = json['completedClasses'];
@@ -22,6 +22,7 @@ class TeacherModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
     data['email']=this.email;
+    data['subject']=this.subjectName;
     data['completedClasses'] = this.completedClasses;
     data['profilePicUrl']=this.profilePicUrl;
     return data;

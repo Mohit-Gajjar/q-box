@@ -9,7 +9,9 @@ import 'custom_button.dart';
 
 class TeacherProfileCard extends StatefulWidget {
   const TeacherProfileCard(
-      {Key? key, required this.collectionPath, required this.batch})
+      {Key? key, required this.collectionPath, 
+      required this.batch
+      })
       : super(key: key);
 
   final String collectionPath;
@@ -139,7 +141,7 @@ class _TeacherProfileCardState extends State<TeacherProfileCard> {
                             Navigator.of(context).pushNamed(
                                 TeacherDetailsScreen.routeName,
                                 arguments: {
-                                  'batchName': widget.batch,
+                                  // 'batchName': widget.batch,
                                   'teacher': snapshot.data!.docs[0]['name'],
                                 });
                           },

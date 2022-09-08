@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes_app/screens/teacher/TeacherProfileScreen.dart';
@@ -12,6 +13,7 @@ class HomeDisplayScreen extends StatefulWidget {
   final String videoLink;
   final String teacherEmail;
   final String batchName;
+  final String uploadDate;
   final int likes;
   const HomeDisplayScreen(
       {Key? key,
@@ -20,7 +22,8 @@ class HomeDisplayScreen extends StatefulWidget {
       required this.likes,
       required this.videoLink,
       required this.teacherEmail,
-      required this.batchName})
+      required this.batchName,
+       required this.uploadDate})
       : super(key: key);
 
   @override
@@ -29,7 +32,7 @@ class HomeDisplayScreen extends StatefulWidget {
 
 class _HomeDisplayScreenState extends State<HomeDisplayScreen> {
   late TeacherModel teach;
-  getTeacher()async{
+  getTeacher() async{
     await FirebaseFirestore.instance.doc("teachers/${widget.teacherEmail}").get(
     ).then((value){
       setState(() {
@@ -54,7 +57,9 @@ class _HomeDisplayScreenState extends State<HomeDisplayScreen> {
                     builder: (context) => VideoScreen(
                       teacher: teach,
                           title: widget.title,
-                          videoLink: widget.videoLink, isUserLiked: false, likes: widget.likes,
+                          videoLink: widget.videoLink, 
+                          isUserLiked: false, likes: widget.likes,
+                         
 
                         )));
           },
@@ -64,7 +69,9 @@ class _HomeDisplayScreenState extends State<HomeDisplayScreen> {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.black),
               image: DecorationImage(
-                  image: NetworkImage(widget.imageUrl), fit: BoxFit.cover),
+                  image: NetworkImage(widget.imageUrl),
+                   fit: BoxFit.cover
+                   ),
             ),
           ),
         ),
@@ -85,7 +92,9 @@ class _HomeDisplayScreenState extends State<HomeDisplayScreen> {
                       MaterialPageRoute(
                           builder: (context) => TeacherProfileScreen(
                               collectionPath: "teachers/${widget.teacherEmail}",
-                              batchName: widget.batchName)));
+                              batchName: widget.batchName
+                              )
+                              ));
                 },
                 child: CircleAvatar(
                   child: Center(child: Text(widget.teacherEmail[0])),
@@ -110,17 +119,18 @@ class _HomeDisplayScreenState extends State<HomeDisplayScreen> {
         SizedBox(
           height: Dimensions.height10,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(),
-            Text('${widget.likes} Likes'),
-            Text('4 minutes ago'),
-            SizedBox(),
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 22),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('${widget.likes} Likes'),
+              Text(widget.uploadDate.toString().split(' ').first),
+            ],
+          ),
         ),
         SizedBox(
-          height: 12,
+          height: 19,
         ),
       ],
     );

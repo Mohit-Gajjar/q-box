@@ -175,7 +175,9 @@ class _HomeState extends State<Home> {
                       Map<String, dynamic> data =
                           document.data()! as Map<String, dynamic>;
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+
+                        },
                         child: HomeDisplayScreen(
                           videoLink: data['videoLink'],
                           imageUrl: data['imageUrl'],
@@ -183,6 +185,7 @@ class _HomeState extends State<Home> {
                           likes: data['likes'],
                           teacherEmail: data['uploadedTeacherEmail'] ,
                           batchName: data['batchName'],
+                          uploadDate: data['uploadDate'],
                         ),
                       );
                     }).toList(),

@@ -9,7 +9,9 @@ import '../../widgets/appbar_actions.dart';
 import '../../widgets/home_display_screen.dart';
 
 class TeacherProfileScreen extends StatefulWidget {
-  const TeacherProfileScreen({Key? key, required this.collectionPath, required this.batchName}) : super(key: key);
+  const TeacherProfileScreen({Key? key, required this.collectionPath,
+   required this.batchName
+   }) : super(key: key);
   final String collectionPath;
   final String batchName;
 
@@ -18,6 +20,7 @@ class TeacherProfileScreen extends StatefulWidget {
 }
 
 class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +38,10 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(12.0),
-              child: TeacherProfileCard(collectionPath: widget.collectionPath, batch: widget.batchName),
+              child: TeacherProfileCard(
+                collectionPath: widget.collectionPath,
+                 batch: widget.batchName
+                 ),
 
             ),
             TextButton(onPressed: (){
@@ -60,14 +66,17 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
                   return ListView.builder(
                     shrinkWrap: true,
                     itemCount: data["completedClasses"].length,
-                    itemBuilder: (context,index)=>HomeDisplayScreen(
+                    itemBuilder: (context,index)=>
+                    HomeDisplayScreen(
                       videoLink: teach.completedClasses![index]['videoLink'],
                       imageUrl: teach.completedClasses![index]['imageUrl'],
                       title: teach.completedClasses![index]['title'],
                       likes: int.parse(teach.completedClasses![index]['likes']),
                       teacherEmail: teach.email! ,
                       batchName: teach.completedClasses![index]['batchName'],
-                    ),);
+                      uploadDate: teach.completedClasses![index]['uploadDate'],
+                    ),
+                    );
                 }
               ),
             ),
