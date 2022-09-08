@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/levelUpTest/level_question.dart';
 import 'package:notes_app/screens/tests/levelupguidelines.dart';
 import 'package:notes_app/utilities/dimensions.dart';
 
@@ -23,13 +24,13 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
   String? _selectChapter;
   String? _selectSubject;
   // bool _isChapter1 =  false;
-  bool _ischapu = false;
+  bool _ishide = false;
 
-  final Map<String, String> _chapter1 = const {
-    'Level 1  ': 'easy',
-    'Level 2  ': 'easy',
-    'Level 3  ': 'medium',
-  };
+  // final Map<String, String> _chapter1 = const {
+  //   'Level 1  ': 'easy',
+  //   'Level 2  ': 'easy',
+  //   'Level 3  ': 'medium',
+  // };
 
   final Map<String, String> _chapter2 = const {
     'Level 1 ': 'easy',
@@ -82,7 +83,7 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
                           ),
                           child: StreamBuilder<QuerySnapshot>(
                             stream: FirebaseFirestore.instance
-                                .collection('chapter')
+                                .collection('levelUpTest')
                                 .snapshots(),
                             builder: (context, snapshot) {
                               if (!snapshot.hasData) {
@@ -137,7 +138,7 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
                       ),
                       child: StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
-                            .collection('chapter')
+                            .collection('levelUpTest')
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
@@ -166,7 +167,7 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
                                 onChanged: (value) {
                                   setState(() {
                                     _selectChapter = value as String?;
-                                    _ischapu = true;
+                                    _ishide = true;
                                   });
                                 },
                               ),
@@ -181,7 +182,7 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                _ischapu == false
+                _ishide == false
                     ? Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
@@ -230,16 +231,14 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
                           ),
                         ),
                       )
-                    : SizedBox(
-                        // height: Dimensions.height10 * 1,
-                      ),
-                LevelUpSeriesCard1(chapter1: _chapter1),
+                    : SizedBox(),
+                levelUpSeriesCard1(),
                 SizedBox(
                   height: Dimensions.height10 * 3,
                 ),
                 // _isSelectedChapter == true ?
-                     LevelUpSeriesCard2(chapter2: _chapter2)
-                    // : SizedBox()
+                //  LevelUpSeriesCard2(chapter2: _chapter2)
+                // : SizedBox()
 
                 // Card(
                 //   shape: RoundedRectangleBorder(
@@ -302,70 +301,130 @@ class _LevelUpTestsScreenState extends State<LevelUpTestsScreen> {
       ),
     );
   }
-}
 
-class LevelUpSeriesCard1 extends StatelessWidget {
-  const LevelUpSeriesCard1({
-    Key? key,
-    required Map<String, String> chapter1,
-  })  : _chapter1 = chapter1,
-        super(key: key);
 
-  final Map<String, String> _chapter1;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Dimensions.borderRadius12),
-      ),
-      color: Colors.white,
-      elevation: 0.6,
-      margin: EdgeInsets.symmetric(horizontal: Dimensions.width10 * 0.8, vertical: 5),
-      child: ExpansionTile(
-        childrenPadding: EdgeInsets.only(
-            bottom: Dimensions.height10 * 8.5,
-            left: Dimensions.width10 * 2,
-            right: Dimensions.width10 * 2),
-        title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.width10 * 1.5),
-          child: Text('Chapter 1 '),
-        ),
-        children: _chapter1.entries
-            .map((entry) => ListTile(
-                  title: Row(
-                    children: [
-                      Text(
-                        entry.key,
-                        style: const TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Icon(
-                        Icons.lock_outline,
-                        size: 20,
-                        color: Colors.red,
-                      )
-                    ],
+  Widget levelUpSeriesCard1(){
+    return StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('chapter').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Something went wrong!');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          // Map<String, dynamic> data = snapshot.data!.docs
+          return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimensions.borderRadius12),
+              ),
+              color: Colors.white,
+              elevation: 0.6,
+              margin: EdgeInsets.symmetric(
+                  horizontal: Dimensions.width10 * 0.8, vertical: 5),
+              child: ExpansionTile(
+                  childrenPadding: EdgeInsets.only(
+                      bottom: Dimensions.height10 * 8.5,
+                      left: Dimensions.width10 * 2,
+                      right: Dimensions.width10 * 2),
+                  title: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.width10 * 1.5),
+                    child: Text('Chapter 1 '),
                   ),
-                  // leading: CircleAvatar(
-                  //     backgroundColor:
-                  //         HelperFunctions.getColortestsLevel(entry.value),
-                  //     radius: Dimensions.borderRadius5 * 2),
-                  // enabled: true,
-                  // shape: RoundedRectangleBorder(
-                  //   borderRadius:
-                  //       BorderRadius.circular(Dimensions.borderRadius5 * 3),
-                  // ),
-                  onTap: () {},
-                  trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                ))
-            .toList(),
-      ),
-    );
+                  children: [
+                     ListTile(
+                                
+                                title: Text(
+                                  'Level 1',
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LevelQuestion(
+                                                subjectName: _selectSubject.toString(),
+                                                chapter: _selectChapter.toString(),
+                                              )));
+                                },
+                                trailing: const Icon(
+                                    Icons.keyboard_arrow_right_rounded),
+                              ),
+                              ListTile(
+                                title: Row(
+                                  children: [
+                                    Text(
+                                      'Level 2',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Icon(
+                                      Icons.lock_outline,
+                                      size: 20,
+                                      color: Colors.red,
+                                    )
+                                  ],
+                                ),
+                                onTap: () {},
+                                trailing: const Icon(
+                                    Icons.keyboard_arrow_right_rounded),
+                              ),
+                              ListTile(
+                                title: Row(
+                                  children: [
+                                    Text(
+                                      'Level 3',
+                                      style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 15,
+                                    ),
+                                    Icon(
+                                      Icons.lock_outline,
+                                      size: 20,
+                                      color: Colors.red,
+                                    )
+                                  ],
+                                ),
+                                onTap: () {},
+                                trailing: const Icon(
+                                    Icons.keyboard_arrow_right_rounded),
+                              ),
+                  ]
+                  //  snapshot.data!.docs.map((DocumentSnapshot document) {
+                  //   Map<String, dynamic> data =
+                  //       document.data()! as Map<String, dynamic>;
+
+                  // //     // leading: CircleAvatar(
+                  // //     //     backgroundColor:
+                  // //     //         HelperFunctions.getColortestsLevel(entry.value),
+                  // //     //     radius: Dimensions.borderRadius5 * 2),
+                  // //     // enabled: true,
+                  // //     // shape: RoundedRectangleBorder(
+                  // //     //   borderRadius:
+                  // //     //       BorderRadius.circular(Dimensions.borderRadius5 * 3),
+                  // //     // ),
+
+                  // }).toList(),
+                  ));
+
+          // }).toList(),
+        });
   }
 }
+
 
 class LevelUpSeriesCard2 extends StatelessWidget {
   const LevelUpSeriesCard2({
@@ -394,7 +453,7 @@ class LevelUpSeriesCard2 extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: Dimensions.width10 * 1.5),
           child: Row(
             children: [
-              Text('Chapter 2     '),
+              Text('Chapter 2  '),
               Icon(
                 Icons.lock_outline,
                 size: 20,
