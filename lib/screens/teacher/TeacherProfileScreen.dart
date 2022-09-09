@@ -68,6 +68,7 @@ class _TeacherProfileScreenState extends State<TeacherProfileScreen> {
                     itemCount: data["completedClasses"].length,
                     itemBuilder: (context,index)=>
                     HomeDisplayScreen(
+                      id: teach.completedClasses![index]['id'],
                       videoLink: teach.completedClasses![index]['videoLink'],
                       imageUrl: teach.completedClasses![index]['imageUrl'],
                       title: teach.completedClasses![index]['title'],
