@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -6,6 +8,7 @@ import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gallery_saver/gallery_saver.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:notes_app/initFunctions.dart';
 import 'package:notes_app/screens/teacher/TeacherProfileScreen.dart';
 import 'package:notes_app/widgets/comments_screen.dart';
@@ -20,10 +23,11 @@ class VideoScreen extends StatefulWidget {
   final String title;
   final String videoLink;
   final int likes;
+  final String id;
   final bool isUserLiked;
   final TeacherModel teacher;
   
-  VideoScreen({Key? key, required this.title, required this.videoLink, required this.likes, required this.isUserLiked, required this.teacher})
+  VideoScreen({Key? key, required this.title, required this.videoLink, required this.likes, required this.isUserLiked, required this.teacher, required this.id})
       : super(key: key);
 
   @override
@@ -123,10 +127,10 @@ class _VideoScreenState extends State<VideoScreen> {
                       children: [
                         IconButton(
                           onPressed: () async{
-                          //    final User user = await FirebaseAuth.instance.currentUser!;
-                          //    await FirebaseFirestore.instance
-                          // .collection("videos")
-                          // .doc().update({'likes': (liked) ? like!-1 :like!+1})
+                             final User user = await FirebaseAuth.instance.currentUser!;
+                             await FirebaseFirestore.instance
+                          .collection("videos").doc(widget.id)
+                          .update({'likes': (liked) ? like!-1 :like!+1});
                         //   .set({
                         // "likes": 
                         //     (liked) ? like!-1 :like!+1 });
@@ -144,11 +148,15 @@ class _VideoScreenState extends State<VideoScreen> {
                       ],
                     ),
                     IconButton(
-                      onPressed: (){
+                      onPressed: () async{
+                        setState(() {
+                          
+                        });
                         Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CommentsScreen()
+                            builder: (context) => 
+                            Comments(id: widget.id,)
                                 )); 
 
                       }, 
@@ -240,6 +248,7 @@ class _VideoScreenState extends State<VideoScreen> {
       
                           },
                           child: HomeDisplayScreen(
+                            id: data['id'],
                             videoLink: data['videoLink'],
                             imageUrl: data['imageUrl'],
                             title: data['title'],
@@ -293,4 +302,189 @@ class _VideoScreenState extends State<VideoScreen> {
 //      }
 //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('download ${ref.name}')));
 //   }
+}
+
+
+
+
+class Comments extends StatefulWidget {
+  final String id;
+  Comments({Key? key, required this.id}) : super(key: key);
+
+  @override
+  State<Comments> createState() => _CommentsState();
+}
+
+class _CommentsState extends State<Comments> {
+  List element = [];
+
+  @override
+  void initState() {
+displayCommments();
+setState(() {
+  
+});
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void displayCommments() async {
+    setState(() {
+      
+    });
+    FirebaseFirestore.instance
+        .collection('videos')
+        .doc(widget.id)
+        .get()
+        .then((value) {
+      Map<String, dynamic>? data = value.data();
+      setState(() {
+        element = data!['comments'] as List;
+      });
+    });
+  }
+  File? imageFile;
+
+  var _sendController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      
+       floatingActionButton: Container(
+        margin:  EdgeInsets.only(top: 30),
+        alignment: Alignment.topRight,
+        child: FloatingActionButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child:  Icon(Icons.close)),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 18 ),
+                child: Text('Comments', style: TextStyle(color: Colors.black, fontSize: 20),),
+              ),
+              Divider(
+                thickness: 0.8,
+                color: Colors.purple,
+              ),
+             SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+               child: Container(
+                // padding: EdgeInsets.only(top: 10),
+                  margin: EdgeInsets.all(Dimensions.padding20 / 2),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                          itemCount: element.length,
+                    itemBuilder: (context, index){
+                     return ListTile(
+                      leading: CircleAvatar(
+                                      backgroundColor: Colors.blue,
+                                      backgroundImage:
+                                          Image.asset('assets/images/user.jpg').image,
+                                    ), 
+                                     subtitle: Text(element[index]['text'].toString()),
+                     title: Text(element[index]['username'].toString()),
+                    
+                      );
+                
+                  }),
+                                   ),
+             ),
+            
+                                 
+                 ],
+            ),
+        ),
+      ),
+      bottomNavigationBar:  SingleChildScrollView(
+        child: Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: TextFormField(
+                      controller: _sendController,
+                      decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          label: const Text('You can reply any comment from here'),
+                          suffix: Wrap(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {});
+                                  _getFromGallery();
+                                },
+                                icon: Icon(
+                                  Icons.image_outlined,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _send();
+                                  });
+                                  _sendController.clear();
+                                },
+                                icon: Icon(
+                                  Icons.send_sharp,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ],
+                          )),
+                    ),
+                  ),
+      ),
+    );
+  }
+
+  _getFromGallery() async {
+    PickedFile? pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
+    );
+    if (pickedFile != null) {
+      setState(() {
+        imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  void _send() async {
+    DateTime _date = DateTime.now();
+    var collection = FirebaseFirestore.instance.collection('videos');
+    try {
+      List<Map<String, dynamic>> updatedList = [
+        {
+          'text': _sendController.text,
+          'createdAt': _date.toString(),
+          'username': FirebaseAuth.instance.currentUser!.email,
+          'userId': collection.id
+        }
+      ];
+      
+      Map<String, dynamic> updatedData = {
+        'comments': FieldValue.arrayUnion(updatedList),
+      };
+
+       collection.doc(widget.id)
+          .update(updatedData)
+          .then((value) => print("Comments send"))
+          .catchError((error) => print("Failed to send: $error"));
+      setState(() {});
+      _sendController.clear();
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+      }
+    }
+  }
 }

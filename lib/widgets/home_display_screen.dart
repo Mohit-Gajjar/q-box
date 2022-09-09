@@ -14,6 +14,7 @@ class HomeDisplayScreen extends StatefulWidget {
   final String teacherEmail;
   final String batchName;
   final String uploadDate;
+  final String id;
   final int likes;
   const HomeDisplayScreen(
       {Key? key,
@@ -23,7 +24,7 @@ class HomeDisplayScreen extends StatefulWidget {
       required this.videoLink,
       required this.teacherEmail,
       required this.batchName,
-       required this.uploadDate})
+       required this.uploadDate, required this.id})
       : super(key: key);
 
   @override
@@ -57,6 +58,7 @@ class _HomeDisplayScreenState extends State<HomeDisplayScreen> {
                     builder: (context) => VideoScreen(
                       teacher: teach,
                           title: widget.title,
+                          id: widget.id,
                           videoLink: widget.videoLink, 
                           isUserLiked: false, likes: widget.likes,
                          

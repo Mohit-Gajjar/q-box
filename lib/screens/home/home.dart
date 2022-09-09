@@ -179,6 +179,7 @@ class _HomeState extends State<Home> {
 
                         },
                         child: HomeDisplayScreen(
+                          id: data['id'],
                           videoLink: data['videoLink'],
                           imageUrl: data['imageUrl'],
                           title: data['title'],
