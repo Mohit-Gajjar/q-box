@@ -19,7 +19,7 @@ import '../utilities/dimensions.dart';
 import '../widgets/home_display_screen.dart';
 
 class VideoScreen extends StatefulWidget {
-  static const String routeName = '/videoScreen';
+  static  String routeName = '/videoScreen';
   final String title;
   final String videoLink;
   final int likes;
@@ -99,7 +99,7 @@ class _VideoScreenState extends State<VideoScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding:  EdgeInsets.all(8.0),
           child: Column(
             children: [
               Container(
@@ -321,6 +321,7 @@ class _CommentsState extends State<Comments> {
   @override
   void initState() {
 displayCommments();
+
 setState(() {
   
 });
@@ -361,13 +362,12 @@ setState(() {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 18 ),
+                padding:  EdgeInsets.only(left: 18, right: 18, top: 18),
                 child: Text('Comments', style: TextStyle(color: Colors.black, fontSize: 20),),
               ),
               Divider(
@@ -375,74 +375,77 @@ setState(() {
                 color: Colors.purple,
               ),
              SingleChildScrollView(
-              scrollDirection: Axis.vertical,
                child: Container(
+                height: 600,
                 // padding: EdgeInsets.only(top: 10),
-                  margin: EdgeInsets.all(Dimensions.padding20 / 2),
+                  // margin: EdgeInsets.all(Dimensions.padding20 / 2),
                   child: ListView.builder(
                     shrinkWrap: true,
                           itemCount: element.length,
                     itemBuilder: (context, index){
-                     return ListTile(
-                      leading: CircleAvatar(
-                                      backgroundColor: Colors.blue,
-                                      backgroundImage:
-                                          Image.asset('assets/images/user.jpg').image,
-                                    ), 
-                                     subtitle: Text(element[index]['text'].toString()),
-                     title: Text(element[index]['username'].toString()),
-                    
-                      );
+                     return SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                       child: ListTile(
+                        leading: CircleAvatar(
+                                        backgroundColor: Colors.blue,
+                                        backgroundImage:
+                                            Image.asset('assets/images/user.jpg').image,
+                                      ), 
+                                       subtitle: Text(element[index]['text'].toString()),
+                       title: Text(element[index]['username'].toString()),
+                                     
+                        ),
+                     );
                 
                   }),
                                    ),
              ),
             
-                                 
+                  Padding(
+                              padding:  EdgeInsets.all(0),
+                              child: TextField(
+                                controller: _sendController,
+                                decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    label:  Text('You can reply any comment from here'),
+                                    suffix: Wrap(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {});
+                                            _getFromGallery();
+                                          },
+                                          icon: Icon(
+                                            Icons.image_outlined,
+                                            color: Colors.blue,
+                                            size: 20,
+                                          ),
+                                        ),
+                                         SizedBox(
+                                          width: 15,
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              _send();
+                                            });
+                                            _sendController.clear();
+                                          },
+                                          icon: Icon(
+                                            Icons.send_sharp,
+                                            color: Colors.blue,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                              ),
+                            ),               
                  ],
             ),
         ),
       ),
-      bottomNavigationBar:  SingleChildScrollView(
-        child: Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: TextFormField(
-                      controller: _sendController,
-                      decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          label: const Text('You can reply any comment from here'),
-                          suffix: Wrap(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {});
-                                  _getFromGallery();
-                                },
-                                icon: Icon(
-                                  Icons.image_outlined,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _send();
-                                  });
-                                  _sendController.clear();
-                                },
-                                icon: Icon(
-                                  Icons.send_sharp,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ],
-                          )),
-                    ),
-                  ),
-      ),
+    
     );
   }
 
